@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ReturnToMapFrame</string>
+
+    <!-- Menu -->
+    <string name="create_new_map">Create new map</string>
+    <string name="use_saved_map">Use saved map</string>
 </resources>
