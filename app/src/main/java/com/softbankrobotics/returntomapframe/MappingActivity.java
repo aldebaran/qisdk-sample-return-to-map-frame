@@ -106,7 +106,7 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
         localizeAndMap.async().dumpMap()
                 .andThenConsume(map -> {
                     Log.d(TAG, "Saving map...");
-                    MapManager.getInstance().saveMap(map);
+                    MapManager.getInstance().saveMap(getApplicationContext(), map);
                 })
                 .thenConsume(future -> {
                     if (future.isSuccess()) {

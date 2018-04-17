@@ -26,7 +26,7 @@ public class MenuActivity extends AppCompatActivity {
         super.onResume();
 
         useMapButton.setEnabled(false);
-        if (MapManager.getInstance().hasMap()) {
+        if (MapManager.getInstance().hasMap(getApplicationContext())) {
             useMapButton.setEnabled(true);
         }
     }
