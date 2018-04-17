@@ -19,6 +19,9 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven {
+            url 'http://android.aldebaran.com/sdk/maven'
+        }
     }
 }
 
