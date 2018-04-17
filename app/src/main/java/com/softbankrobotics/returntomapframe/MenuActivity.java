@@ -1,5 +1,6 @@
 package com.softbankrobotics.returntomapframe;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -24,7 +25,7 @@ public class MenuActivity extends AppCompatActivity {
 
     @OnClick(R.id.createMapButton)
     public void onClickCreateMap() {
-        // TODO: impl
+        startActivity(new Intent(this, MappingActivity.class));
     }
 
     @OnClick(R.id.useMapButton)
