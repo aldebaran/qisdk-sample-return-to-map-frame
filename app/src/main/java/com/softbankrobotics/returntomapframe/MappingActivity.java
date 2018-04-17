@@ -106,16 +106,19 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
         localizeAndMap.async().dumpMap()
                 .andThenConsume(map -> {
                     Log.d(TAG, "Saving map...");
-                    // TODO: save map
+                    MapManager.getInstance().saveMap(map);
                 })
                 .thenConsume(future -> {
                     if (future.isSuccess()) {
                         Log.d(TAG, "Map saved successfully");
-                        // TODO: change screen
-                        // TODO: finish
+                        closeScreen();
                     } else if (future.hasError()) {
                         Log.e(TAG, "Error while saving map", future.getError());
                     }
                 });
+    }
+
+    private void closeScreen() {
+        runOnUiThread(this::finish);
     }
 }

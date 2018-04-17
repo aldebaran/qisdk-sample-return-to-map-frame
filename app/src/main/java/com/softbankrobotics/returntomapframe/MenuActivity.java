@@ -19,8 +19,16 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         useMapButton.setEnabled(false);
+        if (MapManager.getInstance().hasMap()) {
+            useMapButton.setEnabled(true);
+        }
     }
 
     @OnClick(R.id.createMapButton)
