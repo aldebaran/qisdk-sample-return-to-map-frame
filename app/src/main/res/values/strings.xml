@@ -4,4 +4,7 @@
     <!-- Menu -->
     <string name="create_new_map">Create new map</string>
     <string name="use_saved_map">Use saved map</string>
+
+    <!-- Mapping -->
+    <string name="start_mapping">Start mapping</string>
 </resources>
