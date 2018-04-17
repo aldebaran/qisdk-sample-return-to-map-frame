@@ -38,6 +38,6 @@ public class MenuActivity extends AppCompatActivity {
 
     @OnClick(R.id.useMapButton)
     public void onClickUseMap() {
-        // TODO: impl
+        startActivity(new Intent(this, LocalizationActivity.class));
     }
 }
