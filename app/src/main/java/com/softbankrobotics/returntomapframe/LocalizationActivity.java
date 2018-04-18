@@ -1,10 +1,12 @@
 package com.softbankrobotics.returntomapframe;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
@@ -70,25 +72,18 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
             return;
         }
 
-        Log.d(TAG, "Retrieving map...");
-        MapManager.getInstance().retrieveMap(qiContext)
-                .andThenCompose(map -> {
-                    Log.d(TAG, "Map retrieved");
-                    Log.d(TAG, "Building Localize...");
-                    return qiContext.getMapping().async().makeLocalize(qiContext.getRobotContext(), map);
-                })
+        retrieveLocalize(qiContext)
                 .andThenCompose(loc -> {
-                    Log.d(TAG, "Localize built");
+                    Log.d(TAG, "Localize retrieved successfully");
 
-                    localize = loc;
-
-                    localize.setOnStatusChangedListener(status -> {
+                    loc.setOnStatusChangedListener(status -> {
                         if (status == LocalizationStatus.LOCALIZED) {
                             Log.d(TAG, "Robot is localized");
                         }
                     });
 
-                    return localize.async().run();
+                    Log.d(TAG, "Running Localize...");
+                    return loc.async().run();
                 })
                 .thenConsume(future -> {
                     if (localize != null) {
@@ -116,6 +111,27 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
                     } else if (future.hasError()) {
                         Log.e(TAG, "Error while going to map frame", future.getError());
                     }
+                });
+    }
+
+    @NonNull
+    private Future<Localize> retrieveLocalize(@NonNull QiContext qiContext) {
+        if (localize != null) {
+            return Future.of(localize);
+        }
+
+        Log.d(TAG, "Retrieving map...");
+        return MapManager.getInstance().retrieveMap(qiContext)
+                .andThenCompose(map -> {
+                    Log.d(TAG, "Map retrieved successfully");
+                    Log.d(TAG, "Building Localize...");
+                    return qiContext.getMapping().async().makeLocalize(qiContext.getRobotContext(), map);
+                })
+                .andThenApply(loc -> {
+                    Log.d(TAG, "Localize built successfully");
+
+                    localize = loc;
+                    return localize;
                 });
     }
 }
