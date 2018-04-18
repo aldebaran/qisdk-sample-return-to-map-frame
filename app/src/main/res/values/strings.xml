@@ -7,4 +7,7 @@
 
     <!-- Mapping -->
     <string name="start_mapping">Start mapping</string>
+
+    <!-- Localization -->
+    <string name="start_localization">Start localization</string>
 </resources>
