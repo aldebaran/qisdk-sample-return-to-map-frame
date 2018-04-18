@@ -8,6 +8,7 @@ import android.util.Log;
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
+import com.aldebaran.qi.sdk.builder.GoToBuilder;
 import com.aldebaran.qi.sdk.object.actuation.LocalizationStatus;
 import com.aldebaran.qi.sdk.object.actuation.Localize;
 
@@ -58,6 +59,11 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
         startLocalization();
     }
 
+    @OnClick(R.id.goToMapFrameButton)
+    public void onClickGoToMapFrame() {
+        goToMapFrame();
+    }
+
     private void startLocalization() {
         if (qiContext == null) {
             Log.e(TAG, "Error while localizing: qiContext is null");
@@ -91,6 +97,24 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
 
                     if (future.hasError()) {
                         Log.e(TAG, "Error while localizing", future.getError());
+                    }
+                });
+    }
+
+    private void goToMapFrame() {
+        if (qiContext == null) {
+            Log.e(TAG, "Error while going to map frame: qiContext is null");
+            return;
+        }
+
+        qiContext.getMapping().async().mapFrame()
+                .andThenCompose(mapFrame -> GoToBuilder.with(qiContext).withFrame(mapFrame).buildAsync())
+                .andThenCompose(goTo -> goTo.async().run())
+                .thenConsume(future -> {
+                    if (future.isSuccess()) {
+                        Log.d(TAG, "Map frame reached successfully");
+                    } else if (future.hasError()) {
+                        Log.e(TAG, "Error while going to map frame", future.getError());
                     }
                 });
     }

@@ -10,4 +10,5 @@
 
     <!-- Localization -->
     <string name="start_localization">Start localization</string>
+    <string name="go_to_map_frame">Go to map frame</string>
 </resources>
