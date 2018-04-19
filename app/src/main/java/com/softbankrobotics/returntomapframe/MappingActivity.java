@@ -1,9 +1,11 @@
 package com.softbankrobotics.returntomapframe;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
@@ -12,12 +14,25 @@ import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.object.actuation.LocalizationStatus;
 import com.aldebaran.qi.sdk.object.actuation.LocalizeAndMap;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
 
 public class MappingActivity extends AppCompatActivity implements RobotLifecycleCallbacks {
 
     private static final String TAG = "MappingActivity";
+
+    @BindView(R.id.startMappingButton)
+    Button startMappingButton;
+
+    @NonNull
+    private final BehaviorSubject<MappingState> subject = BehaviorSubject.createDefault(MappingState.NOT_READY);
+    @Nullable
+    private Disposable disposable;
 
     @Nullable
     private QiContext qiContext;
@@ -36,6 +51,25 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        disposable = subject.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .distinctUntilChanged()
+                .subscribe(this::onMappingStateChanged);
+    }
+
+    @Override
+    protected void onPause() {
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
+
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         QiSDK.unregister(this, this);
         super.onDestroy();
@@ -44,11 +78,13 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
     @Override
     public void onRobotFocusGained(QiContext qiContext) {
         this.qiContext = qiContext;
+        subject.onNext(MappingState.READY);
     }
 
     @Override
     public void onRobotFocusLost() {
         this.qiContext = null;
+        subject.onNext(MappingState.NOT_READY);
     }
 
     @Override
@@ -66,6 +102,8 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
             Log.e(TAG, "Error while mapping: qiContext is null");
             return;
         }
+
+        subject.onNext(MappingState.MAPPING);
 
         mapping = qiContext.getMapping().async().makeLocalizeAndMap(qiContext.getRobotContext())
                 .andThenCompose(loc -> {
@@ -88,6 +126,14 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
                     if (future.hasError()) {
                         Log.e(TAG, "Error while mapping", future.getError());
                     }
+
+                    if (!future.isCancelled()) {
+                        if (qiContext != null) {
+                            subject.onNext(MappingState.READY);
+                        } else {
+                            subject.onNext(MappingState.NOT_READY);
+                        }
+                    }
                 });
     }
 
@@ -103,6 +149,8 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
             return;
         }
 
+        subject.onNext(MappingState.SAVING_MAP);
+
         localizeAndMap.async().dumpMap()
                 .andThenConsume(map -> {
                     Log.d(TAG, "Saving map...");
@@ -114,11 +162,34 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
                         closeScreen();
                     } else if (future.hasError()) {
                         Log.e(TAG, "Error while saving map", future.getError());
+
+                        if (qiContext != null) {
+                            subject.onNext(MappingState.READY);
+                        } else {
+                            subject.onNext(MappingState.NOT_READY);
+                        }
                     }
                 });
     }
 
     private void closeScreen() {
         runOnUiThread(this::finish);
+    }
+
+    private void onMappingStateChanged(@NonNull MappingState mappingState) {
+        Log.d(TAG, "onMappingStateChanged: " + mappingState);
+
+        switch (mappingState) {
+            case NOT_READY:
+                startMappingButton.setEnabled(false);
+                break;
+            case READY:
+                startMappingButton.setEnabled(true);
+                break;
+            case MAPPING:
+            case SAVING_MAP:
+                startMappingButton.setEnabled(false);
+                break;
+        }
     }
 }
