@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
+    android:padding="52dp"
     tools:context=".MenuActivity">
 
     <Button
@@ -12,7 +12,7 @@
         style="@style/Button"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="26dp"
         android:text="@string/create_new_map"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +26,7 @@
         style="@style/Button"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="26dp"
         android:text="@string/use_saved_map"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
