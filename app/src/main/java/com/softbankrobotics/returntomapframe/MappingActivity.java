@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
@@ -34,6 +35,9 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
 
     @BindView(R.id.startMappingButton)
     Button startMappingButton;
+
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     @NonNull
     private final BehaviorSubject<MappingState> subject = BehaviorSubject.createDefault(MappingState.NOT_READY);
@@ -188,14 +192,14 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
 
         switch (mappingState) {
             case NOT_READY:
-                startMappingButton.setEnabled(false);
-                break;
-            case READY:
-                startMappingButton.setEnabled(true);
-                break;
             case MAPPING:
             case SAVING_MAP:
                 startMappingButton.setEnabled(false);
+                progressBar.setVisibility(View.VISIBLE);
+                break;
+            case READY:
+                startMappingButton.setEnabled(true);
+                progressBar.setVisibility(View.GONE);
                 break;
         }
     }

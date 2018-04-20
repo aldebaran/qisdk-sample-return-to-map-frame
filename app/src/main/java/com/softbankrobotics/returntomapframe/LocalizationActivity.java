@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
@@ -38,6 +39,12 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
 
     @BindView(R.id.goToMapFrameButton)
     Button goToMapFrameButton;
+
+    @BindView(R.id.localizationProgressBar)
+    ProgressBar localizationProgressBar;
+
+    @BindView(R.id.goToProgressBar)
+    ProgressBar goToProgressBar;
 
     @NonNull
     private final BehaviorSubject<LocalizationState> subject = BehaviorSubject.createDefault(LocalizationState.NOT_READY);
@@ -208,17 +215,28 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
         switch (localizationState) {
             case NOT_READY:
             case LOCALIZING:
+                startLocalizationButton.setEnabled(false);
+                localizationProgressBar.setVisibility(View.VISIBLE);
+                goToMapFrameButton.setEnabled(false);
+                goToProgressBar.setVisibility(View.GONE);
+                break;
             case MOVING:
                 startLocalizationButton.setEnabled(false);
+                localizationProgressBar.setVisibility(View.GONE);
                 goToMapFrameButton.setEnabled(false);
+                goToProgressBar.setVisibility(View.VISIBLE);
                 break;
             case READY:
                 startLocalizationButton.setEnabled(true);
+                localizationProgressBar.setVisibility(View.GONE);
                 goToMapFrameButton.setEnabled(false);
+                goToProgressBar.setVisibility(View.GONE);
                 break;
             case LOCALIZED:
                 startLocalizationButton.setEnabled(false);
+                localizationProgressBar.setVisibility(View.GONE);
                 goToMapFrameButton.setEnabled(true);
+                goToProgressBar.setVisibility(View.GONE);
                 break;
         }
     }
