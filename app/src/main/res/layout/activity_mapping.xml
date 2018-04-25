@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="52dp"
-    tools:context=".MappingActivity">
+    tools:context=".mapping.MappingActivity">
 
     <Button
         android:id="@+id/startMappingButton"

@@ -3,7 +3,7 @@
  * See COPYING for the license
  */
 
-package com.softbankrobotics.returntomapframe;
+package com.softbankrobotics.returntomapframe.mapping;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +21,8 @@ import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.object.actuation.LocalizationStatus;
 import com.aldebaran.qi.sdk.object.actuation.LocalizeAndMap;
+import com.softbankrobotics.returntomapframe.core.MapManager;
+import com.softbankrobotics.returntomapframe.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

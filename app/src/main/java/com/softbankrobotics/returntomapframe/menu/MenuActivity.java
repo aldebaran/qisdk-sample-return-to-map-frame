@@ -3,13 +3,18 @@
  * See COPYING for the license
  */
 
-package com.softbankrobotics.returntomapframe;
+package com.softbankrobotics.returntomapframe.menu;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.softbankrobotics.returntomapframe.core.MapManager;
+import com.softbankrobotics.returntomapframe.R;
+import com.softbankrobotics.returntomapframe.localization.LocalizationActivity;
+import com.softbankrobotics.returntomapframe.mapping.MappingActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

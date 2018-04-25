@@ -3,7 +3,7 @@
  * See COPYING for the license
  */
 
-package com.softbankrobotics.returntomapframe;
+package com.softbankrobotics.returntomapframe.core;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -15,7 +15,7 @@ import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.object.actuation.ExplorationMap;
 import com.snatik.storage.Storage;
 
-class MapManager {
+public class MapManager {
 
     private static final String TAG = "MapManager";
     private static final String MAP_FILENAME = "map.txt";
@@ -26,11 +26,11 @@ class MapManager {
     private MapManager() {}
 
     @NonNull
-    static MapManager getInstance() {
+    public static MapManager getInstance() {
         return Holder.INSTANCE;
     }
 
-    void saveMap(@NonNull Context context, @NonNull ExplorationMap map) {
+    public void saveMap(@NonNull Context context, @NonNull ExplorationMap map) {
         this.explorationMap = map;
 
         Log.d(TAG, "Serializing map...");
@@ -46,7 +46,7 @@ class MapManager {
                 });
     }
 
-    boolean hasMap(@NonNull Context context) {
+    public boolean hasMap(@NonNull Context context) {
         if (explorationMap != null) {
             return true;
         }
@@ -56,7 +56,7 @@ class MapManager {
     }
 
     @NonNull
-    Future<ExplorationMap> retrieveMap(@NonNull QiContext qiContext) {
+    public Future<ExplorationMap> retrieveMap(@NonNull QiContext qiContext) {
         if (explorationMap != null) {
             return Future.of(explorationMap);
         }
