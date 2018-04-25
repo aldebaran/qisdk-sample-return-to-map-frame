@@ -61,10 +61,9 @@ public class MapManager {
             return Future.of(explorationMap);
         }
 
-        Storage storage = new Storage(qiContext);
-        String data = storage.readTextFile(mapFilePath(storage));
-
-        return qiContext.getMapping().async().makeMap(data)
+        return Future.of(new Storage(qiContext))
+                .andThenApply(storage -> storage.readTextFile(mapFilePath(storage)))
+                .andThenCompose(data -> qiContext.getMapping().async().makeMap(data))
                 .andThenApply(map -> {
                     explorationMap = map;
                     return explorationMap;
