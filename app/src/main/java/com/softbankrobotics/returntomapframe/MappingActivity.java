@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
@@ -136,6 +137,7 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
 
                     if (future.hasError()) {
                         Log.e(TAG, "Error while mapping", future.getError());
+                        runOnUiThread(() -> Toast.makeText(this, "Error while mapping", Toast.LENGTH_SHORT).show());
                     }
 
                     if (!future.isCancelled()) {

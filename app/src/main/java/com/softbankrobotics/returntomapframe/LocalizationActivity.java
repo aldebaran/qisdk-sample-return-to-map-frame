@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
@@ -147,6 +148,7 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
 
                     if (future.hasError()) {
                         Log.e(TAG, "Error while localizing", future.getError());
+                        runOnUiThread(() -> Toast.makeText(this, "Error while localizing", Toast.LENGTH_SHORT).show());
                     }
 
                     if (qiContext != null) {
@@ -174,6 +176,7 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
                         subject.onNext(LocalizationState.LOCALIZED);
                     } else if (future.hasError()) {
                         Log.e(TAG, "Error while going to map frame", future.getError());
+                        runOnUiThread(() -> Toast.makeText(this, "Error while going to map frame", Toast.LENGTH_SHORT).show());
 
                         if (qiContext != null) {
                             if (localize != null && localize.getStatus() == LocalizationStatus.LOCALIZED) {
