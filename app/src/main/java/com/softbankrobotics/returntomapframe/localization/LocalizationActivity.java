@@ -207,6 +207,7 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
                 .andThenCompose(map -> {
                     Log.d(TAG, "Map retrieved successfully");
                     Log.d(TAG, "Building Localize...");
+                    // The "makeLocalize" call can sometimes take a few minutes (see issue #41646).
                     return qiContext.getMapping().async().makeLocalize(qiContext.getRobotContext(), map);
                 })
                 .andThenApply(loc -> {
