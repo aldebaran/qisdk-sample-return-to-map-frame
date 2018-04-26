@@ -19,8 +19,11 @@ import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
+import com.aldebaran.qi.sdk.builder.HolderBuilder;
 import com.aldebaran.qi.sdk.object.actuation.LocalizationStatus;
 import com.aldebaran.qi.sdk.object.actuation.LocalizeAndMap;
+import com.aldebaran.qi.sdk.object.holder.AutonomousAbilitiesType;
+import com.aldebaran.qi.sdk.object.holder.Holder;
 import com.softbankrobotics.returntomapframe.core.MapManager;
 import com.softbankrobotics.returntomapframe.R;
 
@@ -119,7 +122,13 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
 
         subject.onNext(MappingState.MAPPING);
 
-        mapping = qiContext.getMapping().async().makeLocalizeAndMap(qiContext.getRobotContext())
+        // Hold basic awareness to avoid robot from tracking humans with his head (see issue #41596).
+        Holder basicAwarenessHolder = HolderBuilder.with(qiContext)
+                .withAutonomousAbilities(AutonomousAbilitiesType.BASIC_AWARENESS)
+                .build();
+
+        mapping = basicAwarenessHolder.async().hold()
+                .andThenCompose(ignored -> qiContext.getMapping().async().makeLocalizeAndMap(qiContext.getRobotContext()))
                 .andThenCompose(loc -> {
                     localizeAndMap = loc;
 
@@ -127,12 +136,15 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
                         if (status == LocalizationStatus.LOCALIZED) {
                             stopMapping();
                             saveMap();
+                            basicAwarenessHolder.async().release();
                         }
                     });
 
                     return localizeAndMap.async().run();
                 })
                 .thenConsume(future -> {
+                    basicAwarenessHolder.async().release();
+
                     if (localizeAndMap != null) {
                         localizeAndMap.setOnStatusChangedListener(null);
                     }

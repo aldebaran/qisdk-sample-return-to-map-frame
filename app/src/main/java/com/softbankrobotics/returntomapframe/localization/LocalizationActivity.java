@@ -20,8 +20,11 @@ import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.builder.GoToBuilder;
+import com.aldebaran.qi.sdk.builder.HolderBuilder;
 import com.aldebaran.qi.sdk.object.actuation.LocalizationStatus;
 import com.aldebaran.qi.sdk.object.actuation.Localize;
+import com.aldebaran.qi.sdk.object.holder.AutonomousAbilitiesType;
+import com.aldebaran.qi.sdk.object.holder.Holder;
 import com.softbankrobotics.returntomapframe.core.MapManager;
 import com.softbankrobotics.returntomapframe.R;
 
@@ -129,7 +132,13 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
 
         subject.onNext(LocalizationState.LOCALIZING);
 
-        retrieveLocalize(qiContext)
+        // Hold basic awareness to avoid robot from tracking humans with his head (see issue #41596).
+        Holder basicAwarenessHolder = HolderBuilder.with(qiContext)
+                .withAutonomousAbilities(AutonomousAbilitiesType.BASIC_AWARENESS)
+                .build();
+
+        basicAwarenessHolder.async().hold()
+                .andThenCompose(ignored -> retrieveLocalize(qiContext))
                 .andThenCompose(loc -> {
                     Log.d(TAG, "Localize retrieved successfully");
 
@@ -137,6 +146,7 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
                         if (status == LocalizationStatus.LOCALIZED) {
                             Log.d(TAG, "Robot is localized");
                             subject.onNext(LocalizationState.LOCALIZED);
+                            basicAwarenessHolder.async().release();
                         }
                     });
 
@@ -144,6 +154,8 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
                     return loc.async().run();
                 })
                 .thenConsume(future -> {
+                    basicAwarenessHolder.async().release();
+
                     if (localize != null) {
                         localize.setOnStatusChangedListener(null);
                     }
