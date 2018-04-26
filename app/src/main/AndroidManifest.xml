@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.softbankrobotics.returntomapframe">
+    package="com.softbankrobotics.sample.returntomapframe">
 
     <uses-feature android:name="com.softbank.hardware.pepper" />
 
@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".mapping.MappingActivity" />
-        <activity android:name=".localization.LocalizationActivity"></activity>
+        <activity android:name=".localization.LocalizationActivity" />
     </application>
 
 </manifest>

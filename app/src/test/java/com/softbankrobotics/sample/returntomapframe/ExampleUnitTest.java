@@ -1,4 +1,4 @@
-package com.softbankrobotics.returntomapframe;
+package com.softbankrobotics.sample.returntomapframe;
 
 import org.junit.Test;
 

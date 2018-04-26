@@ -3,7 +3,7 @@
  * See COPYING for the license
  */
 
-package com.softbankrobotics.returntomapframe.mapping;
+package com.softbankrobotics.sample.returntomapframe.mapping;
 
 enum MappingState {
     NOT_READY,

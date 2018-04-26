@@ -3,7 +3,7 @@
  * See COPYING for the license
  */
 
-package com.softbankrobotics.returntomapframe.core;
+package com.softbankrobotics.sample.returntomapframe.core;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

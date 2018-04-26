@@ -3,7 +3,7 @@
  * See COPYING for the license
  */
 
-package com.softbankrobotics.returntomapframe.localization;
+package com.softbankrobotics.sample.returntomapframe.localization;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,8 +25,8 @@ import com.aldebaran.qi.sdk.object.actuation.LocalizationStatus;
 import com.aldebaran.qi.sdk.object.actuation.Localize;
 import com.aldebaran.qi.sdk.object.holder.AutonomousAbilitiesType;
 import com.aldebaran.qi.sdk.object.holder.Holder;
-import com.softbankrobotics.returntomapframe.core.MapManager;
-import com.softbankrobotics.returntomapframe.R;
+import com.softbankrobotics.sample.returntomapframe.core.MapManager;
+import com.softbankrobotics.sample.returntomapframe.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

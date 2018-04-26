@@ -3,7 +3,7 @@
  * See COPYING for the license
  */
 
-package com.softbankrobotics.returntomapframe.localization;
+package com.softbankrobotics.sample.returntomapframe.localization;
 
 enum LocalizationState {
     NOT_READY,
