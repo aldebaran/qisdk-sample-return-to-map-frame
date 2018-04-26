@@ -195,9 +195,12 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
 
     @NonNull
     private Future<Localize> retrieveLocalize(@NonNull QiContext qiContext) {
+        // Do not reuse cached Localize (see issue #41704).
+        /*
         if (localize != null) {
             return Future.of(localize);
         }
+        */
 
         Log.d(TAG, "Retrieving map...");
         return MapManager.getInstance().retrieveMap(qiContext)
