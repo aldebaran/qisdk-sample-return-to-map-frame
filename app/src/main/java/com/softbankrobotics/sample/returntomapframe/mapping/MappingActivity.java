@@ -132,7 +132,7 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
                 .andThenCompose(loc -> {
                     localizeAndMap = loc;
 
-                    localizeAndMap.setOnStatusChangedListener(status -> {
+                    localizeAndMap.addOnStatusChangedListener(status -> {
                         if (status == LocalizationStatus.LOCALIZED) {
                             stopMapping();
                             saveMap();
@@ -146,7 +146,7 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
                     basicAwarenessHolder.async().release();
 
                     if (localizeAndMap != null) {
-                        localizeAndMap.setOnStatusChangedListener(null);
+                        localizeAndMap.removeAllOnStatusChangedListeners();
                     }
 
                     if (future.hasError()) {

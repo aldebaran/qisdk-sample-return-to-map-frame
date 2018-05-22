@@ -142,7 +142,7 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
                 .andThenCompose(loc -> {
                     Log.d(TAG, "Localize retrieved successfully");
 
-                    loc.setOnStatusChangedListener(status -> {
+                    loc.addOnStatusChangedListener(status -> {
                         if (status == LocalizationStatus.LOCALIZED) {
                             Log.d(TAG, "Robot is localized");
                             subject.onNext(LocalizationState.LOCALIZED);
@@ -157,7 +157,7 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
                     basicAwarenessHolder.async().release();
 
                     if (localize != null) {
-                        localize.setOnStatusChangedListener(null);
+                        localize.removeAllOnStatusChangedListeners();
                     }
 
                     if (future.hasError()) {
