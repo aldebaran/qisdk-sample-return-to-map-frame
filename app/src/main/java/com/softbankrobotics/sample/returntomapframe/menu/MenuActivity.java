@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.aldebaran.qi.sdk.design.activity.RobotActivity;
+import com.aldebaran.qi.sdk.design.activity.conversationstatus.SpeechBarDisplayStrategy;
 import com.softbankrobotics.sample.returntomapframe.core.MapManager;
 import com.softbankrobotics.sample.returntomapframe.R;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizationActivity;
@@ -20,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends RobotActivity {
 
     @BindView(R.id.useMapButton)
     Button useMapButton;
@@ -28,6 +30,8 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.OVERLAY);
         setContentView(R.layout.activity_menu);
         ButterKnife.bind(this);
     }

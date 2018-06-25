@@ -21,6 +21,8 @@ import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.builder.HolderBuilder;
 import com.aldebaran.qi.sdk.builder.LocalizeAndMapBuilder;
+import com.aldebaran.qi.sdk.design.activity.RobotActivity;
+import com.aldebaran.qi.sdk.design.activity.conversationstatus.SpeechBarDisplayStrategy;
 import com.aldebaran.qi.sdk.object.actuation.LocalizationStatus;
 import com.aldebaran.qi.sdk.object.actuation.LocalizeAndMap;
 import com.aldebaran.qi.sdk.object.holder.AutonomousAbilitiesType;
@@ -36,7 +38,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 
-public class MappingActivity extends AppCompatActivity implements RobotLifecycleCallbacks {
+public class MappingActivity extends RobotActivity implements RobotLifecycleCallbacks {
 
     private static final String TAG = "MappingActivity";
 
@@ -61,6 +63,8 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.OVERLAY);
         setContentView(R.layout.activity_mapping);
         ButterKnife.bind(this);
 
