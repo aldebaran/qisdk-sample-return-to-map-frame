@@ -20,6 +20,7 @@ import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.builder.HolderBuilder;
+import com.aldebaran.qi.sdk.builder.LocalizeAndMapBuilder;
 import com.aldebaran.qi.sdk.object.actuation.LocalizationStatus;
 import com.aldebaran.qi.sdk.object.actuation.LocalizeAndMap;
 import com.aldebaran.qi.sdk.object.holder.AutonomousAbilitiesType;
@@ -128,7 +129,7 @@ public class MappingActivity extends AppCompatActivity implements RobotLifecycle
                 .build();
 
         mapping = basicAwarenessHolder.async().hold()
-                .andThenCompose(ignored -> qiContext.getMapping().async().makeLocalizeAndMap(qiContext.getRobotContext()))
+                .andThenCompose(ignored -> LocalizeAndMapBuilder.with(qiContext).buildAsync())
                 .andThenCompose(loc -> {
                     localizeAndMap = loc;
 

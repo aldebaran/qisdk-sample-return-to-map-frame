@@ -21,6 +21,7 @@ import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.builder.GoToBuilder;
 import com.aldebaran.qi.sdk.builder.HolderBuilder;
+import com.aldebaran.qi.sdk.builder.LocalizeBuilder;
 import com.aldebaran.qi.sdk.object.actuation.LocalizationStatus;
 import com.aldebaran.qi.sdk.object.actuation.Localize;
 import com.aldebaran.qi.sdk.object.holder.AutonomousAbilitiesType;
@@ -219,7 +220,9 @@ public class LocalizationActivity extends AppCompatActivity implements RobotLife
                 .andThenCompose(map -> {
                     Log.d(TAG, "Map retrieved successfully");
                     Log.d(TAG, "Building Localize...");
-                    return qiContext.getMapping().async().makeLocalize(qiContext.getRobotContext(), map);
+                    return LocalizeBuilder.with(qiContext)
+                            .withMap(map)
+                            .buildAsync();
                 })
                 .andThenApply(loc -> {
                     Log.d(TAG, "Localize built successfully");
