@@ -8,7 +8,6 @@ package com.softbankrobotics.sample.returntomapframe.mapping;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,16 +18,13 @@ import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
-import com.aldebaran.qi.sdk.builder.HolderBuilder;
 import com.aldebaran.qi.sdk.builder.LocalizeAndMapBuilder;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
 import com.aldebaran.qi.sdk.design.activity.conversationstatus.SpeechBarDisplayStrategy;
 import com.aldebaran.qi.sdk.object.actuation.LocalizationStatus;
 import com.aldebaran.qi.sdk.object.actuation.LocalizeAndMap;
-import com.aldebaran.qi.sdk.object.holder.AutonomousAbilitiesType;
-import com.aldebaran.qi.sdk.object.holder.Holder;
-import com.softbankrobotics.sample.returntomapframe.core.MapManager;
 import com.softbankrobotics.sample.returntomapframe.R;
+import com.softbankrobotics.sample.returntomapframe.core.MapManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -127,13 +123,7 @@ public class MappingActivity extends RobotActivity implements RobotLifecycleCall
 
         subject.onNext(MappingState.MAPPING);
 
-        // Hold basic awareness to avoid robot from tracking humans with his head (see issue #41596).
-        Holder basicAwarenessHolder = HolderBuilder.with(qiContext)
-                .withAutonomousAbilities(AutonomousAbilitiesType.BASIC_AWARENESS)
-                .build();
-
-        mapping = basicAwarenessHolder.async().hold()
-                .andThenCompose(ignored -> LocalizeAndMapBuilder.with(qiContext).buildAsync())
+        mapping = LocalizeAndMapBuilder.with(qiContext).buildAsync()
                 .andThenCompose(loc -> {
                     localizeAndMap = loc;
 
@@ -141,15 +131,12 @@ public class MappingActivity extends RobotActivity implements RobotLifecycleCall
                         if (status == LocalizationStatus.LOCALIZED) {
                             stopMapping();
                             saveMap();
-                            basicAwarenessHolder.async().release();
                         }
                     });
 
                     return localizeAndMap.async().run();
                 })
                 .thenConsume(future -> {
-                    basicAwarenessHolder.async().release();
-
                     if (localizeAndMap != null) {
                         localizeAndMap.removeAllOnStatusChangedListeners();
                     }

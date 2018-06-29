@@ -8,7 +8,6 @@ package com.softbankrobotics.sample.returntomapframe.localization;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,16 +19,13 @@ import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.builder.GoToBuilder;
-import com.aldebaran.qi.sdk.builder.HolderBuilder;
 import com.aldebaran.qi.sdk.builder.LocalizeBuilder;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
 import com.aldebaran.qi.sdk.design.activity.conversationstatus.SpeechBarDisplayStrategy;
 import com.aldebaran.qi.sdk.object.actuation.LocalizationStatus;
 import com.aldebaran.qi.sdk.object.actuation.Localize;
-import com.aldebaran.qi.sdk.object.holder.AutonomousAbilitiesType;
-import com.aldebaran.qi.sdk.object.holder.Holder;
-import com.softbankrobotics.sample.returntomapframe.core.MapManager;
 import com.softbankrobotics.sample.returntomapframe.R;
+import com.softbankrobotics.sample.returntomapframe.core.MapManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -137,13 +133,7 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
 
         subject.onNext(LocalizationState.LOCALIZING);
 
-        // Hold basic awareness to avoid robot from tracking humans with his head (see issue #41596).
-        Holder basicAwarenessHolder = HolderBuilder.with(qiContext)
-                .withAutonomousAbilities(AutonomousAbilitiesType.BASIC_AWARENESS)
-                .build();
-
-        basicAwarenessHolder.async().hold()
-                .andThenCompose(ignored -> retrieveLocalize(qiContext))
+        retrieveLocalize(qiContext)
                 .andThenCompose(loc -> {
                     Log.d(TAG, "Localize retrieved successfully");
 
@@ -151,7 +141,6 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
                         if (status == LocalizationStatus.LOCALIZED) {
                             Log.d(TAG, "Robot is localized");
                             subject.onNext(LocalizationState.LOCALIZED);
-                            basicAwarenessHolder.async().release();
                         }
                     });
 
@@ -159,8 +148,6 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
                     return loc.async().run();
                 })
                 .thenConsume(future -> {
-                    basicAwarenessHolder.async().release();
-
                     if (localize != null) {
                         localize.removeAllOnStatusChangedListeners();
                     }
