@@ -12,6 +12,7 @@ import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
+import com.aldebaran.qi.sdk.design.activity.conversationstatus.SpeechBarDisplayStrategy;
 import com.softbankrobotics.sample.returntomapframe.R;
 
 public class IntroductionActivity extends RobotActivity implements RobotLifecycleCallbacks {
@@ -22,6 +23,7 @@ public class IntroductionActivity extends RobotActivity implements RobotLifecycl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_introduction);
+        setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.OVERLAY);
 
         QiSDK.register(this, this);
     }
