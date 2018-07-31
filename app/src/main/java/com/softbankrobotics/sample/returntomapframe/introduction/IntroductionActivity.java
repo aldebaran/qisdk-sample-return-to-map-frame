@@ -19,6 +19,9 @@ import com.aldebaran.qi.sdk.object.conversation.Say;
 import com.softbankrobotics.sample.returntomapframe.R;
 import com.softbankrobotics.sample.returntomapframe.menu.MenuActivity;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class IntroductionActivity extends RobotActivity implements RobotLifecycleCallbacks {
 
     private static final String TAG = "IntroductionActivity";
@@ -27,6 +30,7 @@ public class IntroductionActivity extends RobotActivity implements RobotLifecycl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_introduction);
+        ButterKnife.bind(this);
         setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.OVERLAY);
 
         QiSDK.register(this, this);
@@ -56,6 +60,11 @@ public class IntroductionActivity extends RobotActivity implements RobotLifecycl
     @Override
     public void onRobotFocusRefused(String reason) {
         Log.e(TAG, "onRobotFocusRefused: " + reason);
+    }
+
+    @OnClick(R.id.closeButton)
+    public void onCloseClicked() {
+        finishAffinity();
     }
 
     private void goToMenu() {

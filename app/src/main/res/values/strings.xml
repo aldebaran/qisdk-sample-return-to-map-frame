@@ -14,4 +14,7 @@
     <!-- Localization -->
     <string name="start_localization">Start localization</string>
     <string name="go_to_map_frame">Go to map frame</string>
+
+    <!-- Content descriptions -->
+    <string name="close_content_description">Close button</string>
 </resources>
