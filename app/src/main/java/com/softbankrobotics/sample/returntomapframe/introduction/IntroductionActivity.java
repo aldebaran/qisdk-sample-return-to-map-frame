@@ -29,9 +29,10 @@ public class IntroductionActivity extends RobotActivity implements RobotLifecycl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.OVERLAY);
         setContentView(R.layout.activity_introduction);
         ButterKnife.bind(this);
-        setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.OVERLAY);
 
         QiSDK.register(this, this);
     }
