@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
@@ -29,7 +30,7 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
     private static final String TAG = "MenuActivity";
 
     @BindView(R.id.useMapButton)
-    Button useMapButton;
+    RadioButton useMapButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

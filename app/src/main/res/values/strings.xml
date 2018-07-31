@@ -5,8 +5,8 @@
     <string name="intro_speech">Welcome, dear developer. In this sample, you will see how I can map my environment to know where I am. And then, I will be able to relocalize myself.</string>
 
     <!-- Menu -->
-    <string name="create_new_map">Create new map</string>
-    <string name="use_saved_map">Use saved map</string>
+    <string name="create_new_map">\"Create a new map\"</string>
+    <string name="use_saved_map">\"Use saved map\"</string>
 
     <!-- Mapping -->
     <string name="start_mapping">Start mapping</string>
