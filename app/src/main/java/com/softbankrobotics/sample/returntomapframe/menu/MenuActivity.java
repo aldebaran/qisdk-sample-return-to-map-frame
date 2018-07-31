@@ -27,6 +27,9 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
 
     private static final String TAG = "MenuActivity";
 
+    @BindView(R.id.createMapButton)
+    RadioButton createMapButton;
+
     @BindView(R.id.useMapButton)
     RadioButton useMapButton;
 
@@ -44,7 +47,12 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
     protected void onResume() {
         super.onResume();
 
+        createMapButton.setChecked(false);
+        useMapButton.setChecked(false);
+
+        createMapButton.setEnabled(true);
         useMapButton.setEnabled(false);
+
         if (MapManager.getInstance().hasMap(getApplicationContext())) {
             useMapButton.setEnabled(true);
         }
@@ -73,11 +81,20 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
 
     @OnClick(R.id.createMapButton)
     public void onClickCreateMap() {
+        disableButtons();
         startActivity(new Intent(this, MappingActivity.class));
     }
 
     @OnClick(R.id.useMapButton)
     public void onClickUseMap() {
+        disableButtons();
         startActivity(new Intent(this, LocalizationActivity.class));
+    }
+
+    private void disableButtons() {
+        runOnUiThread(() -> {
+            createMapButton.setEnabled(false);
+            useMapButton.setEnabled(false);
+        });
     }
 }
