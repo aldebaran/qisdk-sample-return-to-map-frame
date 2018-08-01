@@ -6,6 +6,6 @@ concept: (ok) ^rand["got it" alright]
 
 proposal: %start Do you want to create a new map or to use a saved map?
     u1: (~create) %create ~ok %create_end
-    u1: (~use) %use ^first["%map ~ok %use_end" "You need to create a map first ^stayInScope"]
+    u1: (~use) %use ^first["%map ~ok %use_end" "You need to create a map first ^sameProposal"]
     u1: (repeat) ^sameProposal
     u1: (e:Dialog/NotUnderstood) Sorry? ^sameProposal
