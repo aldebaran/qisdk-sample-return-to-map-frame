@@ -24,6 +24,7 @@ import com.aldebaran.qi.sdk.object.conversation.AutonomousReactionValidity;
 import com.aldebaran.qi.sdk.object.conversation.Bookmark;
 import com.aldebaran.qi.sdk.object.conversation.BookmarkStatus;
 import com.aldebaran.qi.sdk.object.conversation.Chat;
+import com.aldebaran.qi.sdk.object.conversation.QiChatVariable;
 import com.aldebaran.qi.sdk.object.conversation.QiChatbot;
 import com.aldebaran.qi.sdk.object.conversation.Topic;
 import com.softbankrobotics.sample.returntomapframe.R;
@@ -100,13 +101,15 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
                 .withTopic(topic)
                 .build();
 
+        QiChatVariable proposalVariable = qiChatbot.variable("proposal");
+
         if (MapManager.getInstance().hasMap(getApplicationContext())) {
+            proposalVariable.setValue(getString(R.string.menu_sentence_with_map));
             runOnUiThread(() -> useMapButton.setEnabled(true));
-        } else {
-            if (qiChatbot != null && bookmarks != null) {
-                BookmarkStatus bookmarkStatus = qiChatbot.bookmarkStatus(bookmarks.get(MAP_BOOKMARK_NAME));
-                bookmarkStatus.setEnabled(false);
-            }
+        } else if (qiChatbot != null && bookmarks != null) {
+            proposalVariable.setValue(getString(R.string.menu_sentence_no_map));
+            BookmarkStatus bookmarkStatus = qiChatbot.bookmarkStatus(bookmarks.get(MAP_BOOKMARK_NAME));
+            bookmarkStatus.setEnabled(false);
         }
 
         if (qiChatbot != null) {

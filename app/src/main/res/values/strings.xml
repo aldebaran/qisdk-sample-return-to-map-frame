@@ -7,6 +7,8 @@
     <!-- Menu -->
     <string name="create_new_map">\"Create a new map\"</string>
     <string name="use_saved_map">\"Use saved map\"</string>
+    <string name="menu_sentence_no_map">We can create a new map and we will be able to use it later.</string>
+    <string name="menu_sentence_with_map">Do you want to create a new map or to use a saved map?</string>
 
     <!-- Mapping -->
     <string name="start_mapping">Start mapping</string>
