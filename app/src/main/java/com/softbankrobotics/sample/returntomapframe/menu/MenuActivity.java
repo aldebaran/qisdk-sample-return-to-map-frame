@@ -46,6 +46,7 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
     private static final String CREATE_END_BOOKMARK_NAME = "create_end";
     private static final String USE_BOOKMARK_NAME = "use";
     private static final String USE_END_BOOKMARK_NAME = "use_end";
+    private static final String MAP_BOOKMARK_NAME = "map";
 
     @BindView(R.id.createMapButton)
     RadioButton createMapButton;
@@ -103,7 +104,7 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
             runOnUiThread(() -> useMapButton.setEnabled(true));
         } else {
             if (qiChatbot != null && bookmarks != null) {
-                BookmarkStatus bookmarkStatus = qiChatbot.bookmarkStatus(bookmarks.get(USE_BOOKMARK_NAME));
+                BookmarkStatus bookmarkStatus = qiChatbot.bookmarkStatus(bookmarks.get(MAP_BOOKMARK_NAME));
                 bookmarkStatus.setEnabled(false);
             }
         }
@@ -115,7 +116,7 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
                         runOnUiThread(() -> createMapButton.setChecked(true));
                         disableButtons();
                         break;
-                    case USE_BOOKMARK_NAME:
+                    case MAP_BOOKMARK_NAME:
                         runOnUiThread(() -> useMapButton.setChecked(true));
                         disableButtons();
                         break;
