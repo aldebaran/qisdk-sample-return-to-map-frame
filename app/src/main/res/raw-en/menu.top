@@ -1,0 +1,9 @@
+topic: ~menu()
+
+concept: (create) ["{create a} new map" "create"]
+concept: (use) ["{use a} saved map" "use"]
+concept: (ok) ^rand["got it" alright]
+
+proposal: %start Do you want to create a new map or to use a saved map?
+    u1: (~create) %create ~ok %create_end
+    u1: (~use) %use ~ok %use_end
