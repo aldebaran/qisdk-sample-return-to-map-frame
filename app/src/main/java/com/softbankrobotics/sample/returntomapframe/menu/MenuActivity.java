@@ -33,10 +33,15 @@ import com.softbankrobotics.sample.returntomapframe.localization.LocalizationAct
 import com.softbankrobotics.sample.returntomapframe.mapping.MappingActivity;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Single;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MenuActivity extends RobotActivity implements RobotLifecycleCallbacks {
 
@@ -48,6 +53,8 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
     private static final String USE_BOOKMARK_NAME = "use";
     private static final String USE_END_BOOKMARK_NAME = "use_end";
     private static final String MAP_BOOKMARK_NAME = "map";
+    private static final String START_TIMER_BOOKMARK_NAME = "start_timer";
+    private static final String STOP_TIMER_BOOKMARK_NAME = "stop_timer";
 
     @BindView(R.id.createMapButton)
     RadioButton createMapButton;
@@ -61,6 +68,11 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
     private QiChatbot qiChatbot;
     @Nullable
     private Chat chat;
+
+    @Nullable
+    private Disposable timerDisposable;
+    @NonNull
+    private final AtomicBoolean shouldRepeatWithTimer = new AtomicBoolean(true);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +103,8 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
 
     @Override
     public void onRobotFocusGained(QiContext qiContext) {
+        shouldRepeatWithTimer.set(true);
+
         Topic topic = TopicBuilder.with(qiContext)
                 .withResource(R.raw.menu)
                 .build();
@@ -129,6 +143,14 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
                     case USE_END_BOOKMARK_NAME:
                         startLocalizationActivity();
                         break;
+                    case START_TIMER_BOOKMARK_NAME:
+                        if (shouldRepeatWithTimer.getAndSet(false)) {
+                            startTimer();
+                        }
+                        break;
+                    case STOP_TIMER_BOOKMARK_NAME:
+                        stopTimer();
+                        break;
                 }
             });
         }
@@ -144,6 +166,8 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
 
     @Override
     public void onRobotFocusLost() {
+        stopTimer();
+
         bookmarks = null;
         if (qiChatbot != null) {
             qiChatbot.removeAllOnBookmarkReachedListeners();
@@ -206,5 +230,21 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
 
         qiChatbot.async().goToBookmark(bookmark, AutonomousReactionImportance.HIGH, AutonomousReactionValidity.IMMEDIATE);
         return true;
+    }
+
+    private void startTimer() {
+        timerDisposable = Single.timer(5, TimeUnit.SECONDS)
+                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe(ignored -> {
+                    stopTimer();
+                    goToBookmark(START_BOOKMARK_NAME);
+                });
+    }
+
+    private void stopTimer() {
+        if (timerDisposable != null && !timerDisposable.isDisposed()) {
+            timerDisposable.dispose();
+        }
     }
 }
