@@ -172,6 +172,11 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
         }
     }
 
+    @OnClick(R.id.closeButton)
+    public void onCloseClicked() {
+        finishAffinity();
+    }
+
     private void disableButtons() {
         runOnUiThread(() -> {
             createMapButton.setEnabled(false);

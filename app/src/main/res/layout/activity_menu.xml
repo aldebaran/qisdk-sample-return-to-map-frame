@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".menu.MenuActivity">
 
+    <ImageView
+        android:id="@+id/closeButton"
+        android:layout_width="73dp"
+        android:layout_height="60dp"
+        android:contentDescription="@string/close_content_description"
+        android:scaleType="center"
+        android:src="@drawable/ic_baseline_close"
+        android:tint="@color/navigation_tint_selector"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <RadioButton
         android:id="@+id/createMapButton"
         style="@style/RadioButton"
