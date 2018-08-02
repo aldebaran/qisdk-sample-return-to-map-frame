@@ -19,4 +19,5 @@
 
     <!-- Content descriptions -->
     <string name="close_content_description">Close button</string>
+    <string name="warning_content_description">Warning button</string>
 </resources>
