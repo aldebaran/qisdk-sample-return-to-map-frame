@@ -68,7 +68,10 @@ public class MapManager {
 
     private void writeMapToFile(@NonNull Context context, @NonNull String data) {
         Storage storage = new Storage(context);
-        storage.createFile(mapFilePath(storage), data);
+        boolean success = storage.createFile(mapFilePath(storage), data);
+        if (!success) {
+            throw new IllegalStateException("Cannot write map to file");
+        }
     }
 
     @NonNull
