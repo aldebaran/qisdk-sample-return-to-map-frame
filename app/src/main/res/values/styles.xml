@@ -25,6 +25,11 @@
         <item name="android:fontFamily">@font/open_sans_semibold</item>
     </style>
 
+    <style name="Title" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/big_text</item>
+        <item name="android:fontFamily">@font/open_sans_bold</item>
+    </style>
+
     <style name="RadioButton" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:background">@drawable/button_background_selector</item>
         <item name="android:paddingTop">@dimen/button_vertical_padding</item>

@@ -37,25 +37,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:contentDescription="@string/warning_content_description"
         app:layout_constraintBottom_toBottomOf="@+id/infoTextView"
         app:layout_constraintEnd_toStartOf="@+id/infoTextView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/infoTextView"
-        app:srcCompat="@drawable/ic_warning"
-        android:contentDescription="@string/warning_content_description" />
+        app:srcCompat="@drawable/ic_warning" />
 
     <ImageView
         android:id="@+id/successImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/success_content_description"
         app:layout_constraintBottom_toBottomOf="@+id/startMappingButton"
         app:layout_constraintEnd_toEndOf="@+id/startMappingButton"
         app:layout_constraintStart_toStartOf="@+id/startMappingButton"
         app:layout_constraintTop_toTopOf="@+id/startMappingButton"
-        app:srcCompat="@drawable/ic_check"
-        android:contentDescription="@string/success_content_description" />
+        app:srcCompat="@drawable/ic_check" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progressAnimationView"
@@ -90,5 +90,19 @@
         android:tint="@color/navigation_tint_selector"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        style="@style/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/mapping_title"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/backButton" />
 
 </android.support.constraint.ConstraintLayout>
