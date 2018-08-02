@@ -16,6 +16,9 @@
     <string name="mapping_mapping_text">In progress</string>
     <string name="mapping_error_text">Something is wrong</string>
     <string name="mapping_success_text">Successfully done</string>
+    <string name="mapping_briefing_speech">Make sure I am not charging so I can move. Please double check if my back hatch is closed then press start.</string>
+    <string name="mapping_error_speech">Oops, something went wrong. Please check if there is nothing around me avoiding me to turn and scan, then try again.</string>
+    <string name="mapping_success_speech">Perfect! I\'ve created a map. But we are not done! Because this is a sample, you need now to ask me to localize myself. Let\'s go back to the main menu and continue the procedure with the localization.</string>
 
     <!-- Localization -->
     <string name="start_localization">Start localization</string>

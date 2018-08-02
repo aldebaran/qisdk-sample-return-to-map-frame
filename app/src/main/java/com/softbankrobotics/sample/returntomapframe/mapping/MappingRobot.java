@@ -7,15 +7,19 @@ package com.softbankrobotics.sample.returntomapframe.mapping;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.util.Log;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.builder.LocalizeAndMapBuilder;
+import com.aldebaran.qi.sdk.builder.SayBuilder;
 import com.aldebaran.qi.sdk.object.actuation.LocalizationStatus;
 import com.aldebaran.qi.sdk.object.actuation.LocalizeAndMap;
+import com.softbankrobotics.sample.returntomapframe.R;
 import com.softbankrobotics.sample.returntomapframe.core.MapManager;
+import com.softbankrobotics.sample.returntomapframe.utils.FutureCancellations;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -36,6 +40,8 @@ class MappingRobot implements RobotLifecycleCallbacks {
     private LocalizeAndMap localizeAndMap;
     @Nullable
     private Future<Void> mapping;
+    @Nullable
+    private Future<Void> speech;
 
     MappingRobot(@NonNull MappingMachine machine) {
         this.machine = machine;
@@ -134,21 +140,53 @@ class MappingRobot implements RobotLifecycleCallbacks {
                 });
     }
 
+    @NonNull
+    private Future<Void> say(@StringRes int resId) {
+        return FutureCancellations.cancel(speech)
+                .andThenCompose(ignored -> {
+                    if (qiContext == null) {
+                        throw new IllegalStateException("qiContext is null");
+                    }
+
+                    Future<Void> newSpeech = SayBuilder.with(qiContext)
+                            .withText(qiContext.getString(resId))
+                            .buildAsync()
+                            .andThenCompose(say -> say.async().run());
+
+                    speech = newSpeech;
+                    return newSpeech;
+                });
+    }
+
+    @NonNull
+    private Future<Void> cancelCurrentActions() {
+        return FutureCancellations.cancelAll(speech, mapping);
+    }
+
     private void onMappingStateChanged(@NonNull MappingState mappingState) {
         Log.d(TAG, "onMappingStateChanged: " + mappingState);
 
         switch (mappingState) {
             case IDLE:
+            case END:
+                cancelCurrentActions();
                 break;
             case BRIEFING:
+                cancelCurrentActions()
+                        .andThenCompose(ignored -> say(R.string.mapping_briefing_speech));
                 break;
             case MAPPING:
+                cancelCurrentActions()
+                        .andThenConsume(ignored -> startMapping());
                 break;
             case ERROR:
+                cancelCurrentActions()
+                        .andThenCompose(ignored -> say(R.string.mapping_error_speech));
                 break;
             case SUCCESS:
-                break;
-            case END:
+                cancelCurrentActions()
+                        .andThenCompose(ignored -> say(R.string.mapping_success_speech))
+                        .andThenConsume(ignored -> machine.post(MappingEvent.MAPPING_SUCCESS_CONFIRMED));
                 break;
         }
     }
