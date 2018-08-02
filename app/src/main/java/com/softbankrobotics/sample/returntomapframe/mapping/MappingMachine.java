@@ -46,10 +46,7 @@ class MappingMachine {
                 }
                 break;
             case MAPPING_SUCCEEDED:
-                if (currentState.equals(MappingState.MAPPING)) {
-                    return MappingState.SUCCESS;
-                }
-                break;
+                return MappingState.SUCCESS;
             case MAPPING_FAILED:
                 if (currentState.equals(MappingState.MAPPING)) {
                     return MappingState.ERROR;
