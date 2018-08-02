@@ -46,4 +46,15 @@
         app:srcCompat="@drawable/ic_warning"
         android:contentDescription="@string/warning_content_description" />
 
+    <ImageView
+        android:id="@+id/successImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/startMappingButton"
+        app:layout_constraintEnd_toEndOf="@+id/startMappingButton"
+        app:layout_constraintStart_toStartOf="@+id/startMappingButton"
+        app:layout_constraintTop_toTopOf="@+id/startMappingButton"
+        app:srcCompat="@drawable/ic_check"
+        android:contentDescription="@string/success_content_description" />
+
 </android.support.constraint.ConstraintLayout>

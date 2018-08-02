@@ -45,6 +45,9 @@ public class MappingActivity extends RobotActivity {
     @BindView(R.id.warningImage)
     ImageView warningImage;
 
+    @BindView(R.id.successImage)
+    ImageView successImage;
+
     @Nullable
     private Disposable disposable;
 
@@ -97,7 +100,7 @@ public class MappingActivity extends RobotActivity {
                 infoTextView.setVisibility(View.GONE);
                 startMappingButton.setVisibility(View.GONE);
                 warningImage.setVisibility(View.GONE);
-                // TODO: hide success image
+                successImage.setVisibility(View.GONE);
                 // TODO: hide progress anim
                 break;
             case BRIEFING:
@@ -105,7 +108,7 @@ public class MappingActivity extends RobotActivity {
                 startMappingButton.setVisibility(View.VISIBLE);
                 warningImage.setVisibility(View.GONE);
                 infoTextView.setText("Make sure my back hatch is closed");
-                // TODO: hide success image
+                successImage.setVisibility(View.GONE);
                 // TODO: hide progress anim
                 break;
             case MAPPING:
@@ -113,7 +116,7 @@ public class MappingActivity extends RobotActivity {
                 startMappingButton.setVisibility(View.INVISIBLE);
                 warningImage.setVisibility(View.GONE);
                 infoTextView.setText("In progress");
-                // TODO: hide success image
+                successImage.setVisibility(View.GONE);
                 // TODO: show progress anim
                 break;
             case ERROR:
@@ -121,7 +124,7 @@ public class MappingActivity extends RobotActivity {
                 startMappingButton.setVisibility(View.VISIBLE);
                 warningImage.setVisibility(View.VISIBLE);
                 infoTextView.setText("Something is wrong");
-                // TODO: hide success image
+                successImage.setVisibility(View.GONE);
                 // TODO: hide progress anim
                 break;
             case SUCCESS:
@@ -129,7 +132,7 @@ public class MappingActivity extends RobotActivity {
                 startMappingButton.setVisibility(View.INVISIBLE);
                 warningImage.setVisibility(View.GONE);
                 infoTextView.setText("Successfully done");
-                // TODO: show success image
+                successImage.setVisibility(View.VISIBLE);
                 // TODO: hide progress anim
                 break;
             case END:
