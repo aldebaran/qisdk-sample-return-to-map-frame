@@ -96,6 +96,11 @@ public class MappingActivity extends RobotActivity {
         machine.post(MappingEvent.START_MAPPING);
     }
 
+    @OnClick(R.id.closeButton)
+    public void onCloseClicked() {
+        finishAffinity();
+    }
+
     private void onMappingStateChanged(@NonNull MappingState mappingState) {
         Log.d(TAG, "onMappingStateChanged: " + mappingState);
 
