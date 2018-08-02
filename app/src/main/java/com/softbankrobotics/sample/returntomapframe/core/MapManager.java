@@ -30,19 +30,15 @@ public class MapManager {
         return Holder.INSTANCE;
     }
 
-    public void saveMap(@NonNull Context context, @NonNull ExplorationMap map) {
+    @NonNull
+    public Future<Void> saveMap(@NonNull Context context, @NonNull ExplorationMap map) {
         this.explorationMap = map;
 
         Log.d(TAG, "Serializing map...");
-        map.async().serialize()
+        return map.async().serialize()
                 .andThenConsume(data -> {
                     Log.d(TAG, "Map serialized successfully");
                     writeMapToFile(context, data);
-                })
-                .thenConsume(future -> {
-                    if (future.hasError()) {
-                        Log.e(TAG, "Error while serializing map", future.getError());
-                    }
                 });
     }
 

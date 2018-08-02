@@ -13,51 +13,51 @@ import io.reactivex.subjects.BehaviorSubject;
 class MappingMachine {
 
     @NonNull
-    private final BehaviorSubject<MappingUiState> subject = BehaviorSubject.createDefault(MappingUiState.IDLE);
+    private final BehaviorSubject<MappingState> subject = BehaviorSubject.createDefault(MappingState.IDLE);
 
-    void post(@NonNull MappingUiEvent event) {
-        MappingUiState currentState = subject.getValue();
+    void post(@NonNull MappingEvent event) {
+        MappingState currentState = subject.getValue();
         if (currentState == null) {
-            throw new IllegalStateException("MappingMachine must have a MappingUiState to be able to handle a MappingUiEvent.");
+            throw new IllegalStateException("MappingMachine must have a MappingState to be able to handle a MappingEvent.");
         }
 
-        MappingUiState newState = reduce(currentState, event);
+        MappingState newState = reduce(currentState, event);
         subject.onNext(newState);
     }
 
     @NonNull
-    Observable<MappingUiState> mappingState() {
+    Observable<MappingState> mappingState() {
         return subject.distinctUntilChanged();
     }
 
     @NonNull
-    private MappingUiState reduce(@NonNull MappingUiState currentState, @NonNull MappingUiEvent event) {
+    private MappingState reduce(@NonNull MappingState currentState, @NonNull MappingEvent event) {
         switch (event) {
             case FOCUS_GAINED:
-                if (currentState.equals(MappingUiState.IDLE)) {
-                    return MappingUiState.BRIEFING;
+                if (currentState.equals(MappingState.IDLE)) {
+                    return MappingState.BRIEFING;
                 }
                 break;
             case FOCUS_LOST:
-                return MappingUiState.IDLE;
+                return MappingState.IDLE;
             case START_MAPPING:
-                if (currentState.equals(MappingUiState.BRIEFING) || currentState.equals(MappingUiState.ERROR)) {
-                    return MappingUiState.MAPPING;
+                if (currentState.equals(MappingState.BRIEFING) || currentState.equals(MappingState.ERROR)) {
+                    return MappingState.MAPPING;
                 }
                 break;
             case MAPPING_SUCCEEDED:
-                if (currentState.equals(MappingUiState.MAPPING)) {
-                    return MappingUiState.SUCCESS;
+                if (currentState.equals(MappingState.MAPPING)) {
+                    return MappingState.SUCCESS;
                 }
                 break;
             case MAPPING_FAILED:
-                if (currentState.equals(MappingUiState.MAPPING)) {
-                    return MappingUiState.ERROR;
+                if (currentState.equals(MappingState.MAPPING)) {
+                    return MappingState.ERROR;
                 }
                 break;
             case MAPPING_SUCCESS_CONFIRMED:
-                if (currentState.equals(MappingUiState.SUCCESS)) {
-                    return MappingUiState.END;
+                if (currentState.equals(MappingState.SUCCESS)) {
+                    return MappingState.END;
                 }
                 break;
         }

@@ -5,11 +5,11 @@
 
 package com.softbankrobotics.sample.returntomapframe.mapping;
 
-enum MappingUiState {
-    IDLE,
-    BRIEFING,
-    MAPPING,
-    ERROR,
-    SUCCESS,
-    END,
+enum MappingEvent {
+    FOCUS_GAINED,
+    FOCUS_LOST,
+    START_MAPPING,
+    MAPPING_SUCCEEDED,
+    MAPPING_FAILED,
+    MAPPING_SUCCESS_CONFIRMED,
 }
