@@ -12,6 +12,10 @@
 
     <!-- Mapping -->
     <string name="start_mapping">Start mapping</string>
+    <string name="mapping_briefing_text">Make sure my back hatch is closed</string>
+    <string name="mapping_mapping_text">In progress</string>
+    <string name="mapping_error_text">Something is wrong</string>
+    <string name="mapping_success_text">Successfully done</string>
 
     <!-- Localization -->
     <string name="start_localization">Start localization</string>

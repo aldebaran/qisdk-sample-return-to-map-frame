@@ -112,7 +112,7 @@ public class MappingActivity extends RobotActivity {
                 startMappingButton.setVisibility(View.VISIBLE);
                 warningImage.setVisibility(View.GONE);
                 successImage.setVisibility(View.INVISIBLE);
-                infoTextView.setText("Make sure my back hatch is closed");
+                infoTextView.setText(R.string.mapping_briefing_text);
                 progressAnimationView.setVisibility(View.INVISIBLE);
                 break;
             case MAPPING:
@@ -120,7 +120,7 @@ public class MappingActivity extends RobotActivity {
                 startMappingButton.setVisibility(View.INVISIBLE);
                 warningImage.setVisibility(View.GONE);
                 successImage.setVisibility(View.INVISIBLE);
-                infoTextView.setText("In progress");
+                infoTextView.setText(R.string.mapping_mapping_text);
                 progressAnimationView.setVisibility(View.VISIBLE);
                 break;
             case ERROR:
@@ -128,7 +128,7 @@ public class MappingActivity extends RobotActivity {
                 startMappingButton.setVisibility(View.VISIBLE);
                 warningImage.setVisibility(View.VISIBLE);
                 successImage.setVisibility(View.INVISIBLE);
-                infoTextView.setText("Something is wrong");
+                infoTextView.setText(R.string.mapping_error_text);
                 progressAnimationView.setVisibility(View.INVISIBLE);
                 break;
             case SUCCESS:
@@ -136,7 +136,7 @@ public class MappingActivity extends RobotActivity {
                 startMappingButton.setVisibility(View.INVISIBLE);
                 warningImage.setVisibility(View.GONE);
                 successImage.setVisibility(View.VISIBLE);
-                infoTextView.setText("Successfully done");
+                infoTextView.setText(R.string.mapping_success_text);
                 progressAnimationView.setVisibility(View.INVISIBLE);
                 break;
             case END:
