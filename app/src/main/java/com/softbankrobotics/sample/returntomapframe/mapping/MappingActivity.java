@@ -70,7 +70,6 @@ public class MappingActivity extends RobotActivity implements RobotLifecycleCall
     @Override
     protected void onResume() {
         super.onResume();
-        activateImmersiveMode();
 
         disposable = subject.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -210,15 +209,5 @@ public class MappingActivity extends RobotActivity implements RobotLifecycleCall
                 progressBar.setVisibility(View.GONE);
                 break;
         }
-    }
-
-    private void activateImmersiveMode() {
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 }
