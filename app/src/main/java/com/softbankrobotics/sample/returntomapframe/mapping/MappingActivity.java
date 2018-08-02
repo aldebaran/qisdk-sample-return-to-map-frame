@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
 import com.aldebaran.qi.sdk.design.activity.conversationstatus.SpeechBarDisplayStrategy;
@@ -47,6 +48,9 @@ public class MappingActivity extends RobotActivity {
 
     @BindView(R.id.successImage)
     ImageView successImage;
+
+    @BindView(R.id.progressAnimationView)
+    LottieAnimationView progressAnimationView;
 
     @Nullable
     private Disposable disposable;
@@ -97,43 +101,43 @@ public class MappingActivity extends RobotActivity {
 
         switch (mappingState) {
             case IDLE:
-                infoTextView.setVisibility(View.GONE);
-                startMappingButton.setVisibility(View.GONE);
+                infoTextView.setVisibility(View.INVISIBLE);
+                startMappingButton.setVisibility(View.INVISIBLE);
                 warningImage.setVisibility(View.GONE);
-                successImage.setVisibility(View.GONE);
-                // TODO: hide progress anim
+                successImage.setVisibility(View.INVISIBLE);
+                progressAnimationView.setVisibility(View.INVISIBLE);
                 break;
             case BRIEFING:
                 infoTextView.setVisibility(View.VISIBLE);
                 startMappingButton.setVisibility(View.VISIBLE);
                 warningImage.setVisibility(View.GONE);
+                successImage.setVisibility(View.INVISIBLE);
                 infoTextView.setText("Make sure my back hatch is closed");
-                successImage.setVisibility(View.GONE);
-                // TODO: hide progress anim
+                progressAnimationView.setVisibility(View.INVISIBLE);
                 break;
             case MAPPING:
                 infoTextView.setVisibility(View.VISIBLE);
                 startMappingButton.setVisibility(View.INVISIBLE);
                 warningImage.setVisibility(View.GONE);
+                successImage.setVisibility(View.INVISIBLE);
                 infoTextView.setText("In progress");
-                successImage.setVisibility(View.GONE);
-                // TODO: show progress anim
+                progressAnimationView.setVisibility(View.VISIBLE);
                 break;
             case ERROR:
                 infoTextView.setVisibility(View.VISIBLE);
                 startMappingButton.setVisibility(View.VISIBLE);
                 warningImage.setVisibility(View.VISIBLE);
+                successImage.setVisibility(View.INVISIBLE);
                 infoTextView.setText("Something is wrong");
-                successImage.setVisibility(View.GONE);
-                // TODO: hide progress anim
+                progressAnimationView.setVisibility(View.INVISIBLE);
                 break;
             case SUCCESS:
                 infoTextView.setVisibility(View.VISIBLE);
                 startMappingButton.setVisibility(View.INVISIBLE);
                 warningImage.setVisibility(View.GONE);
-                infoTextView.setText("Successfully done");
                 successImage.setVisibility(View.VISIBLE);
-                // TODO: hide progress anim
+                infoTextView.setText("Successfully done");
+                progressAnimationView.setVisibility(View.INVISIBLE);
                 break;
             case END:
                 finish();

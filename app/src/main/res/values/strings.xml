@@ -21,4 +21,7 @@
     <string name="close_content_description">Close button</string>
     <string name="warning_content_description">Warning image</string>
     <string name="success_content_description">Success image</string>
+
+    <!--Lottie file-->
+    <string name="progress_animation_file">lottie/splashy_loader.json</string>
 </resources>

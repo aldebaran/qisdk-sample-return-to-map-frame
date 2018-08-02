@@ -57,4 +57,16 @@
         app:srcCompat="@drawable/ic_check"
         android:contentDescription="@string/success_content_description" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progressAnimationView"
+        android:layout_width="173dp"
+        android:layout_height="173dp"
+        app:layout_constraintBottom_toBottomOf="@+id/startMappingButton"
+        app:layout_constraintEnd_toEndOf="@+id/startMappingButton"
+        app:layout_constraintStart_toStartOf="@+id/startMappingButton"
+        app:layout_constraintTop_toTopOf="@+id/startMappingButton"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="@string/progress_animation_file"
+        app:lottie_loop="true" />
+
 </android.support.constraint.ConstraintLayout>
