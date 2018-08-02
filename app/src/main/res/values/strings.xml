@@ -11,7 +11,7 @@
     <string name="menu_sentence_with_map">Do you want to create a new map or to use a saved map?</string>
 
     <!-- Mapping -->
-    <string name="start_mapping">Start mapping</string>
+    <string name="start">Start</string>
     <string name="mapping_briefing_text">Make sure my back hatch is closed</string>
     <string name="mapping_mapping_text">In progress</string>
     <string name="mapping_error_text">Something is wrong</string>
