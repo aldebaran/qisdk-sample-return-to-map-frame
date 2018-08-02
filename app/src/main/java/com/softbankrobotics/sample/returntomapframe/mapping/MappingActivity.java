@@ -101,6 +101,11 @@ public class MappingActivity extends RobotActivity {
         finishAffinity();
     }
 
+    @OnClick(R.id.backButton)
+    public void onBackClicked() {
+        onBackPressed();
+    }
+
     private void onMappingStateChanged(@NonNull MappingState mappingState) {
         Log.d(TAG, "onMappingStateChanged: " + mappingState);
 

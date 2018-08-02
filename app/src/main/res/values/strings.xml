@@ -26,6 +26,7 @@
 
     <!-- Content descriptions -->
     <string name="close_content_description">Close button</string>
+    <string name="back_content_description">Back button</string>
     <string name="warning_content_description">Warning image</string>
     <string name="success_content_description">Success image</string>
 
