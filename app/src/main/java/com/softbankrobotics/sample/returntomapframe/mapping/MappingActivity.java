@@ -151,6 +151,15 @@ public class MappingActivity extends RobotActivity {
                 infoTextView.setText(R.string.mapping_mapping_text);
                 progressAnimationView.setVisibility(View.VISIBLE);
                 break;
+            case SAVING_MAP:
+                infoTextView.setVisibility(View.VISIBLE);
+                startMappingButton.setVisibility(View.INVISIBLE);
+                warningImage.setVisibility(View.GONE);
+                successImage.setVisibility(View.INVISIBLE);
+                infoTextView.setText(R.string.mapping_saving_map_text);
+                progressAnimationView.setVisibility(View.VISIBLE);
+                playSound(R.raw.success);
+                break;
             case ERROR:
                 infoTextView.setVisibility(View.VISIBLE);
                 startMappingButton.setVisibility(View.VISIBLE);

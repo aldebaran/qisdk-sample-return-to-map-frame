@@ -46,13 +46,23 @@ class MappingMachine {
                 }
                 break;
             case MAPPING_SUCCEEDED:
-                return MappingState.SUCCESS;
+                if (currentState.equals(MappingState.MAPPING)) {
+                    return MappingState.SAVING_MAP;
+                }
+                break;
             case MAPPING_FAILED:
                 if (currentState.equals(MappingState.MAPPING)) {
                     return MappingState.ERROR;
                 }
                 break;
-            case MAPPING_SUCCESS_CONFIRMED:
+            case SAVING_MAP_SUCCEEDED:
+                return MappingState.SUCCESS;
+            case SAVING_MAP_FAILED:
+                if (currentState.equals(MappingState.SAVING_MAP)) {
+                    return MappingState.ERROR;
+                }
+                break;
+            case SUCCESS_CONFIRMED:
                 if (currentState.equals(MappingState.SUCCESS)) {
                     return MappingState.END;
                 }

@@ -9,6 +9,7 @@ enum MappingState {
     IDLE,
     BRIEFING,
     MAPPING,
+    SAVING_MAP,
     ERROR,
     SUCCESS,
     END,

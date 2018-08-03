@@ -89,7 +89,7 @@ class MappingRobot implements RobotLifecycleCallbacks {
                     localizeAndMap.addOnStatusChangedListener(status -> {
                         if (status == LocalizationStatus.LOCALIZED) {
                             stopMapping();
-                            saveMap();
+                            machine.post(MappingEvent.MAPPING_SUCCEEDED);
                         }
                     });
 
@@ -116,7 +116,7 @@ class MappingRobot implements RobotLifecycleCallbacks {
     private void saveMap() {
         if (localizeAndMap == null) {
             Log.e(TAG, "Error while saving map: localizeAndMap is null");
-            machine.post(MappingEvent.MAPPING_FAILED);
+            machine.post(MappingEvent.SAVING_MAP_FAILED);
             return;
         }
 
@@ -132,10 +132,10 @@ class MappingRobot implements RobotLifecycleCallbacks {
                 .thenConsume(future -> {
                     if (future.isSuccess()) {
                         Log.d(TAG, "Map saved successfully");
-                        machine.post(MappingEvent.MAPPING_SUCCEEDED);
+                        machine.post(MappingEvent.SAVING_MAP_SUCCEEDED);
                     } else if (future.hasError()) {
                         Log.e(TAG, "Error while saving map", future.getError());
-                        machine.post(MappingEvent.MAPPING_FAILED);
+                        machine.post(MappingEvent.SAVING_MAP_FAILED);
                     }
                 });
     }
@@ -177,7 +177,14 @@ class MappingRobot implements RobotLifecycleCallbacks {
                 break;
             case MAPPING:
                 cancelCurrentActions()
+                        .andThenCompose(ignored -> say(R.string.mapping_mapping_speech))
+                        .andThenCompose(ignored -> say(R.string.mapping_countdown_speech))
                         .andThenConsume(ignored -> startMapping());
+                break;
+            case SAVING_MAP:
+                cancelCurrentActions()
+                        .andThenCompose(ignored -> say(R.string.mapping_saving_map_speech))
+                        .andThenConsume(ignored -> saveMap());
                 break;
             case ERROR:
                 cancelCurrentActions()
@@ -186,7 +193,7 @@ class MappingRobot implements RobotLifecycleCallbacks {
             case SUCCESS:
                 cancelCurrentActions()
                         .andThenCompose(ignored -> say(R.string.mapping_success_speech))
-                        .andThenConsume(ignored -> machine.post(MappingEvent.MAPPING_SUCCESS_CONFIRMED));
+                        .andThenConsume(ignored -> machine.post(MappingEvent.SUCCESS_CONFIRMED));
                 break;
         }
     }
