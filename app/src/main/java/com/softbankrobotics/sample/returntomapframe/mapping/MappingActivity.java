@@ -5,9 +5,11 @@
 
 package com.softbankrobotics.sample.returntomapframe.mapping;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RawRes;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -55,6 +57,9 @@ public class MappingActivity extends RobotActivity {
     @Nullable
     private Disposable disposable;
 
+    @Nullable
+    private MediaPlayer mediaPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +87,11 @@ public class MappingActivity extends RobotActivity {
             disposable.dispose();
         }
 
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+
         super.onPause();
     }
 
@@ -104,6 +114,14 @@ public class MappingActivity extends RobotActivity {
     @OnClick(R.id.backButton)
     public void onBackClicked() {
         onBackPressed();
+    }
+
+    private void playSound(@RawRes int soundResId) {
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+        }
+        mediaPlayer = MediaPlayer.create(this, soundResId);
+        mediaPlayer.start();
     }
 
     private void onMappingStateChanged(@NonNull MappingState mappingState) {
@@ -140,6 +158,7 @@ public class MappingActivity extends RobotActivity {
                 successImage.setVisibility(View.INVISIBLE);
                 infoTextView.setText(R.string.mapping_error_text);
                 progressAnimationView.setVisibility(View.INVISIBLE);
+                playSound(R.raw.error);
                 break;
             case SUCCESS:
                 infoTextView.setVisibility(View.VISIBLE);
@@ -148,6 +167,7 @@ public class MappingActivity extends RobotActivity {
                 successImage.setVisibility(View.VISIBLE);
                 infoTextView.setText(R.string.mapping_success_text);
                 progressAnimationView.setVisibility(View.INVISIBLE);
+                playSound(R.raw.success);
                 break;
             case END:
                 finish();
