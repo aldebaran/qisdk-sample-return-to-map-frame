@@ -6,85 +6,121 @@
 package com.softbankrobotics.sample.returntomapframe.localization.localize;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
+import android.util.Log;
 
 import com.aldebaran.qi.Future;
+import com.aldebaran.qi.sdk.QiContext;
+import com.aldebaran.qi.sdk.builder.SayBuilder;
+import com.softbankrobotics.sample.returntomapframe.R;
+import com.softbankrobotics.sample.returntomapframe.localization.LocalizeManager;
 import com.softbankrobotics.sample.returntomapframe.localization.Robot;
+import com.softbankrobotics.sample.returntomapframe.utils.FutureCancellations;
+
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 class LocalizeRobot implements Robot {
 
-    /*
+    private static final String TAG = "LocalizeRobot";
+
+    @NonNull
+    private final LocalizeMachine machine;
+    @NonNull
+    private final LocalizeManager localizeManager;
+
     @Nullable
-    private Localize localize;
-    */
+    private QiContext qiContext;
+
+    @Nullable
+    private Disposable disposable;
+
+    @Nullable
+    private Future<Void> speech;
+
+    LocalizeRobot(@NonNull LocalizeMachine machine, @NonNull LocalizeManager localizeManager) {
+        this.machine = machine;
+        this.localizeManager = localizeManager;
+    }
 
     @NonNull
     @Override
     public Future<Void> stop() {
-        return null;
-    }
+        machine.post(LocalizeEvent.STOP);
 
-    /*
-    private void startLocalization() {
-        if (qiContext == null) {
-            Log.e(TAG, "Error while localizing: qiContext is null");
-            return;
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
         }
 
-        subject.onNext(LocalizationState.LOCALIZING);
+        this.qiContext = null;
 
-        retrieveLocalize(qiContext)
-                .andThenCompose(loc -> {
-                    Log.d(TAG, "Localize retrieved successfully");
+        return FutureCancellations.cancel(speech);
+    }
 
-                    loc.addOnStatusChangedListener(status -> {
-                        if (status == LocalizationStatus.LOCALIZED) {
-                            Log.d(TAG, "Robot is localized");
-                            subject.onNext(LocalizationState.LOCALIZED);
-                        }
-                    });
+    void start(@NonNull QiContext qiContext) {
+        this.qiContext = qiContext;
+        machine.post(LocalizeEvent.START);
 
-                    Log.d(TAG, "Running Localize...");
-                    return loc.async().run();
-                })
-                .thenConsume(future -> {
-                    if (localize != null) {
-                        localize.removeAllOnStatusChangedListeners();
-                    }
-
-                    if (future.hasError()) {
-                        Log.e(TAG, "Error while localizing", future.getError());
-                        runOnUiThread(() -> Toast.makeText(this, "Error while localizing", Toast.LENGTH_SHORT).show());
-                    }
-
-                    if (qiContext != null) {
-                        subject.onNext(LocalizationState.READY);
-                    } else {
-                        subject.onNext(LocalizationState.NOT_READY);
-                    }
-                });
+        disposable = machine.localizeState()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(this::onLocalizeStateChanged);
     }
 
     @NonNull
-    private Future<Localize> retrieveLocalize(@NonNull QiContext qiContext) {
-        if (localize != null) {
-            return Future.of(localize);
-        }
+    private Future<Void> say(@StringRes int resId) {
+        return FutureCancellations.cancel(speech)
+                .andThenCompose(ignored -> {
+                    if (qiContext == null) {
+                        throw new IllegalStateException("qiContext is null");
+                    }
 
-        Log.d(TAG, "Retrieving map...");
-        return MapManager.getInstance().retrieveMap(qiContext)
-                .andThenCompose(map -> {
-                    Log.d(TAG, "Map retrieved successfully");
-                    Log.d(TAG, "Building Localize...");
-                    return LocalizeBuilder.with(qiContext)
-                            .withMap(map)
-                            .buildAsync();
-                })
-                .andThenApply(loc -> {
-                    Log.d(TAG, "Localize built successfully");
+                    Future<Void> newSpeech = SayBuilder.with(qiContext)
+                            .withText(qiContext.getString(resId))
+                            .buildAsync()
+                            .andThenCompose(say -> say.async().run());
 
-                    localize = loc;
-                    return localize;
+                    speech = newSpeech;
+                    return newSpeech;
                 });
     }
-    */
+
+    private void onLocalizeStateChanged(@NonNull LocalizeState localizeState) {
+        Log.d(TAG, "onLocalizeStateChanged: " + localizeState);
+
+        switch (localizeState) {
+            case IDLE:
+            case END:
+                FutureCancellations.cancel(speech);
+                break;
+            case BRIEFING:
+                say(R.string.briefing_speech);
+                break;
+            case LOCALIZING:
+                say(R.string.localize_localizing_speech)
+                        .andThenCompose(ignored -> say(R.string.countdown_speech))
+                        .andThenCompose(ignored -> {
+                            if (qiContext == null) {
+                                throw new IllegalStateException("qiContext is null");
+                            }
+                            return localizeManager.startLocalizing(qiContext);
+                        })
+                        .thenConsume(future -> {
+                            if (future.isSuccess()) {
+                                machine.post(LocalizeEvent.LOCALIZE_SUCCEEDED);
+                            } else if (future.hasError()) {
+                                machine.post(LocalizeEvent.LOCALIZE_FAILED);
+                            }
+                        });
+                break;
+            case ERROR:
+                say(R.string.error_speech);
+                break;
+            case SUCCESS:
+                say(R.string.localize_success_speech)
+                        .andThenConsume(ignored -> machine.post(LocalizeEvent.SUCCESS_CONFIRMED));
+                break;
+        }
+    }
 }

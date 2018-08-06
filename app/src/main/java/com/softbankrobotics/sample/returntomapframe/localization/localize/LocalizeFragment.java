@@ -3,44 +3,48 @@
  * See COPYING for the license
  */
 
-package com.softbankrobotics.sample.returntomapframe.mapping;
+package com.softbankrobotics.sample.returntomapframe.localization.localize;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RawRes;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.aldebaran.qi.sdk.QiSDK;
-import com.aldebaran.qi.sdk.design.activity.RobotActivity;
-import com.aldebaran.qi.sdk.design.activity.conversationstatus.SpeechBarDisplayStrategy;
 import com.softbankrobotics.sample.returntomapframe.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MappingActivity extends RobotActivity {
+public class LocalizeFragment extends Fragment {
 
-    private static final String TAG = "MappingActivity";
+    private static final String TAG = "LocalizeFragment";
 
-    @NonNull
-    private final MappingMachine machine = new MappingMachine();
+    @Nullable
+    private LocalizeScreen screen;
+    @Nullable
+    private LocalizeMachine machine;
 
-    @NonNull
-    private final MappingRobot robot = new MappingRobot(machine);
+    @Nullable
+    private Unbinder unbinder;
 
-    @BindView(R.id.startMappingButton)
-    Button startMappingButton;
+    @BindView(R.id.startLocalizeButton)
+    Button startLocalizeButton;
 
     @BindView(R.id.infoTextView)
     TextView infoTextView;
@@ -61,28 +65,27 @@ public class MappingActivity extends RobotActivity {
     private MediaPlayer mediaPlayer;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.OVERLAY);
-        setContentView(R.layout.activity_mapping);
-        ButterKnife.bind(this);
-
-        QiSDK.register(this, robot);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_localize, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
-        disposable = machine.mappingState()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onMappingStateChanged);
+        if (machine != null) {
+            disposable = machine.localizeState()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::onLocalizeStateChanged);
+        }
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }
@@ -96,73 +99,84 @@ public class MappingActivity extends RobotActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        QiSDK.unregister(this, robot);
-        super.onDestroy();
+    public void onDestroyView() {
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+        super.onDestroyView();
     }
 
-    @OnClick(R.id.startMappingButton)
-    public void onClickStartMapping() {
-        machine.post(MappingEvent.START_MAPPING);
+    @OnClick(R.id.startLocalizeButton)
+    public void onClickStartLocalize() {
+        if (machine != null) {
+            machine.post(LocalizeEvent.START_LOCALIZE);
+        }
     }
 
     @OnClick(R.id.closeButton)
     public void onCloseClicked() {
-        finishAffinity();
+        if (screen != null) {
+            screen.onClose();
+        }
     }
 
     @OnClick(R.id.backButton)
     public void onBackClicked() {
-        onBackPressed();
+        if (screen != null) {
+            screen.onBack();
+        }
+    }
+
+    @NonNull
+    static LocalizeFragment newInstance(@NonNull LocalizeScreen screen, @NonNull LocalizeMachine machine) {
+        LocalizeFragment fragment = new LocalizeFragment();
+        fragment.screen = screen;
+        fragment.machine = machine;
+        return fragment;
     }
 
     private void playSound(@RawRes int soundResId) {
         if (mediaPlayer != null) {
             mediaPlayer.release();
         }
-        mediaPlayer = MediaPlayer.create(this, soundResId);
-        mediaPlayer.start();
+
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            mediaPlayer = MediaPlayer.create(activity, soundResId);
+            mediaPlayer.start();
+        }
     }
 
-    private void onMappingStateChanged(@NonNull MappingState mappingState) {
-        Log.d(TAG, "onMappingStateChanged: " + mappingState);
+    private void onLocalizeStateChanged(@NonNull LocalizeState localizeState) {
+        Log.d(TAG, "onLocalizeStateChanged: " + localizeState);
 
-        switch (mappingState) {
+        switch (localizeState) {
             case IDLE:
                 infoTextView.setVisibility(View.INVISIBLE);
-                startMappingButton.setVisibility(View.INVISIBLE);
+                startLocalizeButton.setVisibility(View.INVISIBLE);
                 warningImage.setVisibility(View.GONE);
                 successImage.setVisibility(View.INVISIBLE);
                 progressAnimationView.setVisibility(View.INVISIBLE);
                 break;
             case BRIEFING:
                 infoTextView.setVisibility(View.VISIBLE);
-                startMappingButton.setVisibility(View.VISIBLE);
+                startLocalizeButton.setVisibility(View.VISIBLE);
                 warningImage.setVisibility(View.GONE);
                 successImage.setVisibility(View.INVISIBLE);
                 infoTextView.setText(R.string.briefing_text);
                 progressAnimationView.setVisibility(View.INVISIBLE);
                 break;
-            case MAPPING:
+            case LOCALIZING:
                 infoTextView.setVisibility(View.VISIBLE);
-                startMappingButton.setVisibility(View.INVISIBLE);
+                startLocalizeButton.setVisibility(View.INVISIBLE);
                 warningImage.setVisibility(View.GONE);
                 successImage.setVisibility(View.INVISIBLE);
-                infoTextView.setText(R.string.mapping_mapping_text);
+                infoTextView.setText(R.string.localize_localizing_text);
                 progressAnimationView.setVisibility(View.VISIBLE);
-                break;
-            case SAVING_MAP:
-                infoTextView.setVisibility(View.VISIBLE);
-                startMappingButton.setVisibility(View.INVISIBLE);
-                warningImage.setVisibility(View.GONE);
-                successImage.setVisibility(View.INVISIBLE);
-                infoTextView.setText(R.string.mapping_saving_map_text);
-                progressAnimationView.setVisibility(View.VISIBLE);
-                playSound(R.raw.success);
                 break;
             case ERROR:
                 infoTextView.setVisibility(View.VISIBLE);
-                startMappingButton.setVisibility(View.VISIBLE);
+                startLocalizeButton.setVisibility(View.VISIBLE);
                 warningImage.setVisibility(View.VISIBLE);
                 successImage.setVisibility(View.INVISIBLE);
                 infoTextView.setText(R.string.error_text);
@@ -171,7 +185,7 @@ public class MappingActivity extends RobotActivity {
                 break;
             case SUCCESS:
                 infoTextView.setVisibility(View.VISIBLE);
-                startMappingButton.setVisibility(View.INVISIBLE);
+                startLocalizeButton.setVisibility(View.INVISIBLE);
                 warningImage.setVisibility(View.GONE);
                 successImage.setVisibility(View.VISIBLE);
                 infoTextView.setText(R.string.success_text);
@@ -179,7 +193,9 @@ public class MappingActivity extends RobotActivity {
                 playSound(R.raw.success);
                 break;
             case END:
-                finish();
+                if (screen != null) {
+                    screen.onLocalizeEnd();
+                }
                 break;
         }
     }

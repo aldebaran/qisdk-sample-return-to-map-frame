@@ -15,9 +15,9 @@ import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
-import com.aldebaran.qi.sdk.design.activity.conversationstatus.SpeechBarDisplayStrategy;
 import com.softbankrobotics.sample.returntomapframe.R;
 import com.softbankrobotics.sample.returntomapframe.localization.localizationmenu.LocalizationMenuScreen;
+import com.softbankrobotics.sample.returntomapframe.localization.localize.LocalizeScreen;
 
 import butterknife.ButterKnife;
 
@@ -58,7 +58,7 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
     @Override
     public void onRobotFocusGained(QiContext qiContext) {
         this.qiContext = qiContext;
-        startScreen(new LocalizationMenuScreen(this, localizeManager));
+        startLocalizationMenuScreen();
     }
 
     @Override
@@ -79,8 +79,12 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
                         .commit());
     }
 
+    public void startLocalizationMenuScreen() {
+        startScreen(new LocalizationMenuScreen(this, localizeManager));
+    }
+
     public void startLocalizeScreen() {
-        // TODO: impl
+        startScreen(new LocalizeScreen(this, localizeManager));
     }
 
     public void startGoToOriginScreen() {

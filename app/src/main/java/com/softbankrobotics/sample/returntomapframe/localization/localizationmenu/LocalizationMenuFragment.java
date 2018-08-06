@@ -91,8 +91,11 @@ public class LocalizationMenuFragment extends Fragment {
         }
     }
 
-    void setScreen(@NonNull LocalizationMenuScreen screen) {
-        this.screen = screen;
+    @NonNull
+    static LocalizationMenuFragment newInstance(@NonNull LocalizationMenuScreen screen) {
+        LocalizationMenuFragment fragment = new LocalizationMenuFragment();
+        fragment.screen = screen;
+        return fragment;
     }
 
     void enableGoToOrigin() {

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".localization.localize.LocalizeFragment">
+
+    <Button
+        android:id="@+id/startLocalizeButton"
+        style="@style/Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoTextView" />
+
+    <TextView
+        android:id="@+id/infoTextView"
+        style="@style/TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/startLocalizeButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/warningImage"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Something is wrong" />
+
+    <ImageView
+        android:id="@+id/warningImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/warning_content_description"
+        app:layout_constraintBottom_toBottomOf="@+id/infoTextView"
+        app:layout_constraintEnd_toStartOf="@+id/infoTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/infoTextView"
+        app:srcCompat="@drawable/ic_warning" />
+
+    <ImageView
+        android:id="@+id/successImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/success_content_description"
+        app:layout_constraintBottom_toBottomOf="@+id/startLocalizeButton"
+        app:layout_constraintEnd_toEndOf="@+id/startLocalizeButton"
+        app:layout_constraintStart_toStartOf="@+id/startLocalizeButton"
+        app:layout_constraintTop_toTopOf="@+id/startLocalizeButton"
+        app:srcCompat="@drawable/ic_check" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progressAnimationView"
+        android:layout_width="173dp"
+        android:layout_height="173dp"
+        app:layout_constraintBottom_toBottomOf="@+id/startLocalizeButton"
+        app:layout_constraintEnd_toEndOf="@+id/startLocalizeButton"
+        app:layout_constraintStart_toStartOf="@+id/startLocalizeButton"
+        app:layout_constraintTop_toTopOf="@+id/startLocalizeButton"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="@string/progress_animation_file"
+        app:lottie_loop="true" />
+
+    <ImageView
+        android:id="@+id/closeButton"
+        android:layout_width="73dp"
+        android:layout_height="60dp"
+        android:contentDescription="@string/close_content_description"
+        android:scaleType="center"
+        android:src="@drawable/ic_baseline_close"
+        android:tint="@color/navigation_tint_selector"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="73dp"
+        android:layout_height="60dp"
+        android:contentDescription="@string/back_content_description"
+        android:scaleType="center"
+        android:src="@drawable/ic_baseline_back"
+        android:tint="@color/navigation_tint_selector"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        style="@style/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/localize_title"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/backButton" />
+
+</android.support.constraint.ConstraintLayout>

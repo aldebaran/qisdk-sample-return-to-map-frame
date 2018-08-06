@@ -11,25 +11,25 @@
     <string name="menu_sentence_with_map">Do you want to create a new map or to use a saved map?</string>
 
     <!-- Mapping -->
-    <string name="start">Start</string>
-    <string name="mapping_briefing_text">Make sure my back hatch is closed</string>
     <string name="mapping_mapping_text">Mapping in progress&#8230;</string>
     <string name="mapping_saving_map_text">Saving map&#8230;</string>
-    <string name="mapping_error_text">Something is wrong</string>
-    <string name="mapping_success_text">Successfully done</string>
-    <string name="mapping_briefing_speech">Make sure I am not charging so I can move. Please double check if my back hatch is closed then press start.</string>
     <string name="mapping_mapping_speech">I will now map my environment. Please be sure to be at least at 3 meters from me while I scan the place.</string>
-    <string name="mapping_countdown_speech">5, 4, 3, 2, 1.</string>
     <string name="mapping_saving_map_speech">I will now save the map.</string>
-    <string name="mapping_error_speech">Oops, something went wrong. Please check if there is nothing around me avoiding me to turn and scan, then try again.</string>
     <string name="mapping_success_speech">Perfect! I\'ve created a map. But we are not done! Because this is a sample, you need now to ask me to localize myself. Let\'s go back to the main menu and continue the procedure with the localization.</string>
     <string name="mapping_title">Map creation</string>
 
-    <!-- Localization -->
+    <!-- Localization menu -->
     <string name="localize_yourself">\"Localize yourself\"</string>
     <string name="go_to_initial_position">\"Go to your initial position\"</string>
     <string name="localization_menu_sentence_not_localized">I can localize myself and go to my initial position later.</string>
     <string name="localization_menu_sentence_localized">Based on the map you already saved, do you want me to localize myself or to go to my initial position?</string>
+
+    <!-- Localize -->
+    <string name="localize_title">Localization</string>
+    <string name="localize_localizing_text">Localization in progress&#8230;</string>
+    <string name="localize_localizing_speech">Please be sure to be at least at 3 meters from me while I check if I\'m at the right place.</string>
+    <string name="localize_success_speech">OK, I know where I am.</string>
+
 
     <!-- Content descriptions -->
     <string name="close_content_description">Close button</string>
@@ -39,4 +39,14 @@
 
     <!--Lottie file-->
     <string name="progress_animation_file">lottie/splashy_loader.json</string>
+
+    <!-- Common -->
+    <string name="start">Start</string>
+    <string name="briefing_text">Make sure my back hatch is closed</string>
+    <string name="error_text">Something is wrong</string>
+    <string name="success_text">Successfully done</string>
+    <string name="briefing_speech">Make sure I am not charging so I can move. Please double check if my back hatch is closed then press start.</string>
+    <string name="countdown_speech">5, 4, 3, 2, 1.</string>
+    <string name="error_speech">Oops, something went wrong. Please check if there is nothing around me avoiding me to turn and scan, then try again.</string>
+
 </resources>
