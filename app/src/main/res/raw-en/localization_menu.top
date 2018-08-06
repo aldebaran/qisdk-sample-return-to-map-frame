@@ -1,0 +1,11 @@
+topic: ~localization_menu()
+
+concept: (localize) ["localize {yourself}"]
+concept: (go_to_origin) ["go to {"{your} [initial origin] position"}"]
+concept: (ok) ^rand["got it" alright]
+
+proposal: %start $proposal %start_timer
+    u1: (~localize) %localize %stop_timer ~ok %localize_end
+    u1: (~go_to_origin) %go_to_origin %stop_timer ^first["%localized ~ok %go_to_origin_end" "I need to localize myself first ^sameProposal"]
+    u1: (repeat) %stop_timer ^sameProposal
+    u1: (e:Dialog/NotUnderstood) %stop_timer Sorry? ^sameProposal

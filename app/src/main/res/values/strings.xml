@@ -26,8 +26,10 @@
     <string name="mapping_title">Map creation</string>
 
     <!-- Localization -->
-    <string name="start_localization">Start localization</string>
-    <string name="go_to_map_frame">Go to map frame</string>
+    <string name="localize_yourself">\"Localize yourself\"</string>
+    <string name="go_to_initial_position">\"Go to your initial position\"</string>
+    <string name="localization_menu_sentence_not_localized">I can localize myself and go to my initial position later.</string>
+    <string name="localization_menu_sentence_localized">Based on the map you already saved, do you want me to localize myself or to go to my initial position?</string>
 
     <!-- Content descriptions -->
     <string name="close_content_description">Close button</string>

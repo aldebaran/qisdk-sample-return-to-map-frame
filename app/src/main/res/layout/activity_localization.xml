@@ -1,68 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="52dp"
-    tools:context=".localization.LocalizationActivity">
-
-    <Button
-        android:id="@+id/startLocalizationButton"
-        style="@style/Button"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="26dp"
-        android:text="@string/start_localization"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/goToMapFrameButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/goToMapFrameButton"
-        style="@style/Button"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="26dp"
-        android:text="@string/go_to_map_frame"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/startLocalizationButton"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/localizationProgressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:elevation="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/startLocalizationButton"
-        app:layout_constraintEnd_toEndOf="@+id/startLocalizationButton"
-        app:layout_constraintStart_toStartOf="@+id/startLocalizationButton"
-        app:layout_constraintTop_toTopOf="@+id/startLocalizationButton" />
-
-    <ProgressBar
-        android:id="@+id/goToProgressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:elevation="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/goToMapFrameButton"
-        app:layout_constraintEnd_toEndOf="@+id/goToMapFrameButton"
-        app:layout_constraintStart_toStartOf="@+id/goToMapFrameButton"
-        app:layout_constraintTop_toTopOf="@+id/goToMapFrameButton" />
-
-</android.support.constraint.ConstraintLayout>
+    tools:context=".localization.LocalizationActivity" />

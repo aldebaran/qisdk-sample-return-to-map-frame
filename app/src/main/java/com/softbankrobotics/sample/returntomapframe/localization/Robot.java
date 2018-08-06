@@ -5,10 +5,10 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization;
 
-enum LocalizationState {
-    NOT_READY,
-    READY,
-    LOCALIZING,
-    LOCALIZED,
-    MOVING,
+import android.support.annotation.NonNull;
+
+import com.aldebaran.qi.Future;
+
+public interface Robot {
+    @NonNull Future<Void> stop();
 }

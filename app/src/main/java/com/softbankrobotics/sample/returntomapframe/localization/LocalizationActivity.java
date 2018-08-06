@@ -8,88 +8,40 @@ package com.softbankrobotics.sample.returntomapframe.localization;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
-import com.aldebaran.qi.sdk.builder.GoToBuilder;
-import com.aldebaran.qi.sdk.builder.LocalizeBuilder;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
 import com.aldebaran.qi.sdk.design.activity.conversationstatus.SpeechBarDisplayStrategy;
-import com.aldebaran.qi.sdk.object.actuation.LocalizationStatus;
-import com.aldebaran.qi.sdk.object.actuation.Localize;
 import com.softbankrobotics.sample.returntomapframe.R;
-import com.softbankrobotics.sample.returntomapframe.core.MapManager;
+import com.softbankrobotics.sample.returntomapframe.localization.localizationmenu.LocalizationMenuScreen;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.BehaviorSubject;
 
 public class LocalizationActivity extends RobotActivity implements RobotLifecycleCallbacks {
 
     private static final String TAG = "LocalizationActivity";
 
-    @BindView(R.id.startLocalizationButton)
-    Button startLocalizationButton;
-
-    @BindView(R.id.goToMapFrameButton)
-    Button goToMapFrameButton;
-
-    @BindView(R.id.localizationProgressBar)
-    ProgressBar localizationProgressBar;
-
-    @BindView(R.id.goToProgressBar)
-    ProgressBar goToProgressBar;
-
     @NonNull
-    private final BehaviorSubject<LocalizationState> subject = BehaviorSubject.createDefault(LocalizationState.NOT_READY);
-    @Nullable
-    private Disposable disposable;
+    private final LocalizeManager localizeManager = new LocalizeManager();
 
     @Nullable
     private QiContext qiContext;
+
     @Nullable
-    private Localize localize;
+    private Screen currentScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.OVERLAY);
         setContentView(R.layout.activity_localization);
         ButterKnife.bind(this);
 
         QiSDK.register(this, this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        activateImmersiveMode();
-
-        disposable = subject.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .distinctUntilChanged()
-                .subscribe(this::onLocalizationStateChanged);
-    }
-
-    @Override
-    protected void onPause() {
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
-        }
-
-        super.onPause();
     }
 
     @Override
@@ -99,15 +51,19 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
     }
 
     @Override
+    public void onBackPressed() {
+        // Disabled.
+    }
+
+    @Override
     public void onRobotFocusGained(QiContext qiContext) {
         this.qiContext = qiContext;
-        subject.onNext(LocalizationState.READY);
+        startScreen(new LocalizationMenuScreen(this, localizeManager));
     }
 
     @Override
     public void onRobotFocusLost() {
         this.qiContext = null;
-        subject.onNext(LocalizationState.NOT_READY);
     }
 
     @Override
@@ -115,150 +71,34 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
         Log.e(TAG, "onRobotFocusRefused: " + reason);
     }
 
-    @OnClick(R.id.startLocalizationButton)
-    public void onClickStartLocalization() {
-        startLocalization();
+    public void showFragment(@NonNull Fragment fragment) {
+        runOnUiThread(() ->
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commit());
     }
 
-    @OnClick(R.id.goToMapFrameButton)
-    public void onClickGoToMapFrame() {
-        goToMapFrame();
+    public void startLocalizeScreen() {
+        // TODO: impl
     }
 
-    private void startLocalization() {
-        if (qiContext == null) {
-            Log.e(TAG, "Error while localizing: qiContext is null");
-            return;
+    public void startGoToOriginScreen() {
+        // TODO: impl
+    }
+
+    private void startScreen(@NonNull Screen screen) {
+        if (currentScreen == null) {
+            doStartScreen(screen);
         }
 
-        subject.onNext(LocalizationState.LOCALIZING);
-
-        retrieveLocalize(qiContext)
-                .andThenCompose(loc -> {
-                    Log.d(TAG, "Localize retrieved successfully");
-
-                    loc.addOnStatusChangedListener(status -> {
-                        if (status == LocalizationStatus.LOCALIZED) {
-                            Log.d(TAG, "Robot is localized");
-                            subject.onNext(LocalizationState.LOCALIZED);
-                        }
-                    });
-
-                    Log.d(TAG, "Running Localize...");
-                    return loc.async().run();
-                })
-                .thenConsume(future -> {
-                    if (localize != null) {
-                        localize.removeAllOnStatusChangedListeners();
-                    }
-
-                    if (future.hasError()) {
-                        Log.e(TAG, "Error while localizing", future.getError());
-                        runOnUiThread(() -> Toast.makeText(this, "Error while localizing", Toast.LENGTH_SHORT).show());
-                    }
-
-                    if (qiContext != null) {
-                        subject.onNext(LocalizationState.READY);
-                    } else {
-                        subject.onNext(LocalizationState.NOT_READY);
-                    }
-                });
+        currentScreen.stop().andThenConsume(ignored -> doStartScreen(screen));
     }
 
-    private void goToMapFrame() {
-        if (qiContext == null) {
-            Log.e(TAG, "Error while going to map frame: qiContext is null");
-            return;
+    private void doStartScreen(@NonNull Screen screen) {
+        if (qiContext != null) {
+            currentScreen = screen;
+            screen.start(qiContext);
         }
-
-        subject.onNext(LocalizationState.MOVING);
-
-        qiContext.getMapping().async().mapFrame()
-                .andThenCompose(mapFrame -> GoToBuilder.with(qiContext).withFrame(mapFrame).buildAsync())
-                .andThenCompose(goTo -> goTo.async().run())
-                .thenConsume(future -> {
-                    if (future.isSuccess()) {
-                        Log.d(TAG, "Map frame reached successfully");
-                        subject.onNext(LocalizationState.LOCALIZED);
-                    } else if (future.hasError()) {
-                        Log.e(TAG, "Error while going to map frame", future.getError());
-                        runOnUiThread(() -> Toast.makeText(this, "Error while going to map frame", Toast.LENGTH_SHORT).show());
-
-                        if (qiContext != null) {
-                            if (localize != null && localize.getStatus() == LocalizationStatus.LOCALIZED) {
-                                subject.onNext(LocalizationState.LOCALIZED);
-                            } else {
-                                subject.onNext(LocalizationState.READY);
-                            }
-                        } else {
-                            subject.onNext(LocalizationState.NOT_READY);
-                        }
-                    }
-                });
-    }
-
-    @NonNull
-    private Future<Localize> retrieveLocalize(@NonNull QiContext qiContext) {
-        if (localize != null) {
-            return Future.of(localize);
-        }
-
-        Log.d(TAG, "Retrieving map...");
-        return MapManager.getInstance().retrieveMap(qiContext)
-                .andThenCompose(map -> {
-                    Log.d(TAG, "Map retrieved successfully");
-                    Log.d(TAG, "Building Localize...");
-                    return LocalizeBuilder.with(qiContext)
-                            .withMap(map)
-                            .buildAsync();
-                })
-                .andThenApply(loc -> {
-                    Log.d(TAG, "Localize built successfully");
-
-                    localize = loc;
-                    return localize;
-                });
-    }
-
-    private void onLocalizationStateChanged(@NonNull LocalizationState localizationState) {
-        Log.d(TAG, "onLocalizationStateChanged: " + localizationState);
-
-        switch (localizationState) {
-            case NOT_READY:
-            case LOCALIZING:
-                startLocalizationButton.setEnabled(false);
-                localizationProgressBar.setVisibility(View.VISIBLE);
-                goToMapFrameButton.setEnabled(false);
-                goToProgressBar.setVisibility(View.GONE);
-                break;
-            case MOVING:
-                startLocalizationButton.setEnabled(false);
-                localizationProgressBar.setVisibility(View.GONE);
-                goToMapFrameButton.setEnabled(false);
-                goToProgressBar.setVisibility(View.VISIBLE);
-                break;
-            case READY:
-                startLocalizationButton.setEnabled(true);
-                localizationProgressBar.setVisibility(View.GONE);
-                goToMapFrameButton.setEnabled(false);
-                goToProgressBar.setVisibility(View.GONE);
-                break;
-            case LOCALIZED:
-                startLocalizationButton.setEnabled(false);
-                localizationProgressBar.setVisibility(View.GONE);
-                goToMapFrameButton.setEnabled(true);
-                goToProgressBar.setVisibility(View.GONE);
-                break;
-        }
-    }
-
-    private void activateImmersiveMode() {
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 }
