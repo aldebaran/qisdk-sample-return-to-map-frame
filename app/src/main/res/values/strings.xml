@@ -41,6 +41,7 @@
     <string name="go">Go</string>
 
     <!-- Content descriptions -->
+    <string name="background_content_description">Background image</string>
     <string name="close_content_description">Close button</string>
     <string name="back_content_description">Back button</string>
     <string name="warning_content_description">Warning image</string>
