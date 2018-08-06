@@ -103,6 +103,7 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
     private void startScreen(@NonNull Screen screen) {
         if (currentScreen == null) {
             doStartScreen(screen);
+            return;
         }
 
         currentScreen.stop().andThenConsume(ignored -> doStartScreen(screen));
