@@ -143,24 +143,24 @@ class LocalizationMenuRobot implements Robot {
                 .withChatbot(qiChatbot)
                 .build();
 
-        chat.addOnStartedListener(() -> goToBookmark(START_BOOKMARK_NAME));
+        chat.addOnStartedListener(() -> goToBookmark(START_BOOKMARK_NAME, AutonomousReactionImportance.LOW));
 
         discussion = chat.async().run();
     }
 
     void goToLocalizeBookmark() {
-        if (!goToBookmark(LOCALIZE_BOOKMARK_NAME)) {
+        if (!goToBookmark(LOCALIZE_BOOKMARK_NAME, AutonomousReactionImportance.HIGH)) {
             screen.startLocalizeScreen();
         }
     }
 
     void goToGoToInitialPositionBookmark() {
-        if (!goToBookmark(GO_TO_ORIGIN_BOOKMARK_NAME)) {
+        if (!goToBookmark(GO_TO_ORIGIN_BOOKMARK_NAME, AutonomousReactionImportance.HIGH)) {
             screen.startGoToOriginScreen();
         }
     }
 
-    private boolean goToBookmark(@NonNull String name) {
+    private boolean goToBookmark(@NonNull String name, @NonNull AutonomousReactionImportance importance) {
         Bookmark bookmark;
         if ((bookmarks == null)
                 || ((bookmark = bookmarks.get(name)) == null)
@@ -168,7 +168,7 @@ class LocalizationMenuRobot implements Robot {
             return false;
         }
 
-        qiChatbot.async().goToBookmark(bookmark, AutonomousReactionImportance.HIGH, AutonomousReactionValidity.IMMEDIATE);
+        qiChatbot.async().goToBookmark(bookmark, importance, AutonomousReactionValidity.IMMEDIATE);
         return true;
     }
 
@@ -178,7 +178,7 @@ class LocalizationMenuRobot implements Robot {
                 .subscribeOn(Schedulers.io())
                 .subscribe(ignored -> {
                     stopTimer();
-                    goToBookmark(START_BOOKMARK_NAME);
+                    goToBookmark(START_BOOKMARK_NAME, AutonomousReactionImportance.LOW);
                 });
     }
 

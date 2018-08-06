@@ -159,7 +159,7 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
                 .withChatbot(qiChatbot)
                 .build();
 
-        chat.addOnStartedListener(() -> goToBookmark(START_BOOKMARK_NAME));
+        chat.addOnStartedListener(() -> goToBookmark(START_BOOKMARK_NAME, AutonomousReactionImportance.LOW));
 
         chat.async().run();
     }
@@ -187,7 +187,7 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
     @OnClick(R.id.createMapButton)
     public void onClickCreateMap() {
         disableButtons();
-        if (!goToBookmark(CREATE_BOOKMARK_NAME)) {
+        if (!goToBookmark(CREATE_BOOKMARK_NAME, AutonomousReactionImportance.HIGH)) {
             startMappingActivity();
         }
     }
@@ -195,7 +195,7 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
     @OnClick(R.id.useMapButton)
     public void onClickUseMap() {
         disableButtons();
-        if (!goToBookmark(USE_BOOKMARK_NAME)) {
+        if (!goToBookmark(USE_BOOKMARK_NAME, AutonomousReactionImportance.HIGH)) {
             startLocalizationActivity();
         }
     }
@@ -220,7 +220,7 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
         startActivity(new Intent(this, MappingActivity.class));
     }
 
-    private boolean goToBookmark(@NonNull String name) {
+    private boolean goToBookmark(@NonNull String name, @NonNull AutonomousReactionImportance importance) {
         Bookmark bookmark;
         if ((bookmarks == null)
                 || ((bookmark = bookmarks.get(name)) == null)
@@ -228,7 +228,7 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
             return false;
         }
 
-        qiChatbot.async().goToBookmark(bookmark, AutonomousReactionImportance.HIGH, AutonomousReactionValidity.IMMEDIATE);
+        qiChatbot.async().goToBookmark(bookmark, importance, AutonomousReactionValidity.IMMEDIATE);
         return true;
     }
 
@@ -238,7 +238,7 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
                 .subscribeOn(Schedulers.io())
                 .subscribe(ignored -> {
                     stopTimer();
-                    goToBookmark(START_BOOKMARK_NAME);
+                    goToBookmark(START_BOOKMARK_NAME, AutonomousReactionImportance.LOW);
                 });
     }
 
