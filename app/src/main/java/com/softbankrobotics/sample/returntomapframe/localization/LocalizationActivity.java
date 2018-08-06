@@ -15,6 +15,7 @@ import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
+import com.aldebaran.qi.sdk.design.activity.conversationstatus.SpeechBarDisplayStrategy;
 import com.softbankrobotics.sample.returntomapframe.R;
 import com.softbankrobotics.sample.returntomapframe.localization.localizationmenu.LocalizationMenuScreen;
 import com.softbankrobotics.sample.returntomapframe.localization.localize.LocalizeScreen;
@@ -69,6 +70,14 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
     @Override
     public void onRobotFocusRefused(String reason) {
         Log.e(TAG, "onRobotFocusRefused: " + reason);
+    }
+
+    public void showSpeechBar() {
+        runOnUiThread(() -> setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.ALWAYS));
+    }
+
+    public void hideSpeechBar() {
+        runOnUiThread(() -> setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.OVERLAY));
     }
 
     public void showFragment(@NonNull Fragment fragment) {

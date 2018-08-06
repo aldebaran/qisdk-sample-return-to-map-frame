@@ -30,6 +30,8 @@ public class LocalizationMenuScreen implements Screen {
 
     @Override
     public void start(@NonNull QiContext qiContext) {
+        activity.showSpeechBar();
+
         localizationMenuFragment = LocalizationMenuFragment.newInstance(this);
         activity.showFragment(localizationMenuFragment);
         robot.startDiscussion(qiContext);

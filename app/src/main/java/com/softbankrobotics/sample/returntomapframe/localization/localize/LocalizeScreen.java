@@ -29,6 +29,8 @@ public class LocalizeScreen implements Screen {
 
     @Override
     public void start(@NonNull QiContext qiContext) {
+        activity.hideSpeechBar();
+
         LocalizeFragment fragment = LocalizeFragment.newInstance(this, machine);
         activity.showFragment(fragment);
         robot.start(qiContext);
