@@ -8,6 +8,7 @@ package com.softbankrobotics.sample.returntomapframe.localization.localize;
 enum LocalizeState {
     IDLE,
     BRIEFING,
+    ADVICES,
     LOCALIZING,
     ERROR,
     SUCCESS,

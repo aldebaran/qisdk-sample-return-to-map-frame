@@ -53,6 +53,7 @@
     <!-- Common -->
     <string name="start">Start</string>
     <string name="briefing_text">Make sure my back hatch is closed</string>
+    <string name="advices_text">Please hide from me until I\'m done!</string>
     <string name="error_text">Something is wrong</string>
     <string name="success_text">Successfully done</string>
     <string name="briefing_speech">Make sure I am not charging so I can move. Please double check if my back hatch is closed then press start.</string>

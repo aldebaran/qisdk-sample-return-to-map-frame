@@ -8,6 +8,7 @@ package com.softbankrobotics.sample.returntomapframe.mapping;
 enum MappingState {
     IDLE,
     BRIEFING,
+    ADVICES,
     MAPPING,
     SAVING_MAP,
     ERROR,

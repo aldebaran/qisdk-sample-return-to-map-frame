@@ -52,8 +52,8 @@ public class LocalizeFragment extends Fragment {
     @BindView(R.id.warningImage)
     ImageView warningImage;
 
-    @BindView(R.id.successImage)
-    ImageView successImage;
+    @BindView(R.id.infoImageView)
+    ImageView infoImageView;
 
     @BindView(R.id.progressAnimationView)
     LottieAnimationView progressAnimationView;
@@ -155,41 +155,51 @@ public class LocalizeFragment extends Fragment {
                 infoTextView.setVisibility(View.INVISIBLE);
                 startLocalizeButton.setVisibility(View.INVISIBLE);
                 warningImage.setVisibility(View.GONE);
-                successImage.setVisibility(View.INVISIBLE);
+                infoImageView.setVisibility(View.INVISIBLE);
                 progressAnimationView.setVisibility(View.INVISIBLE);
                 break;
             case BRIEFING:
                 infoTextView.setVisibility(View.VISIBLE);
                 startLocalizeButton.setVisibility(View.VISIBLE);
                 warningImage.setVisibility(View.GONE);
-                successImage.setVisibility(View.INVISIBLE);
-                infoTextView.setText(R.string.briefing_text);
+                infoImageView.setVisibility(View.INVISIBLE);
                 progressAnimationView.setVisibility(View.INVISIBLE);
+                infoTextView.setText(R.string.briefing_text);
+                break;
+            case ADVICES:
+                infoTextView.setVisibility(View.VISIBLE);
+                startLocalizeButton.setVisibility(View.INVISIBLE);
+                warningImage.setVisibility(View.GONE);
+                infoImageView.setVisibility(View.VISIBLE);
+                progressAnimationView.setVisibility(View.INVISIBLE);
+                infoTextView.setText(R.string.advices_text);
+                infoImageView.setImageResource(R.drawable.hiding);
                 break;
             case LOCALIZING:
                 infoTextView.setVisibility(View.VISIBLE);
                 startLocalizeButton.setVisibility(View.INVISIBLE);
                 warningImage.setVisibility(View.GONE);
-                successImage.setVisibility(View.INVISIBLE);
-                infoTextView.setText(R.string.localize_localizing_text);
+                infoImageView.setVisibility(View.INVISIBLE);
                 progressAnimationView.setVisibility(View.VISIBLE);
+                infoTextView.setText(R.string.localize_localizing_text);
                 break;
             case ERROR:
                 infoTextView.setVisibility(View.VISIBLE);
                 startLocalizeButton.setVisibility(View.VISIBLE);
                 warningImage.setVisibility(View.VISIBLE);
-                successImage.setVisibility(View.INVISIBLE);
-                infoTextView.setText(R.string.error_text);
+                infoImageView.setVisibility(View.INVISIBLE);
                 progressAnimationView.setVisibility(View.INVISIBLE);
+                infoTextView.setText(R.string.error_text);
                 playSound(R.raw.error);
                 break;
             case SUCCESS:
                 infoTextView.setVisibility(View.VISIBLE);
                 startLocalizeButton.setVisibility(View.INVISIBLE);
                 warningImage.setVisibility(View.GONE);
-                successImage.setVisibility(View.VISIBLE);
-                infoTextView.setText(R.string.success_text);
+                infoImageView.setVisibility(View.VISIBLE);
                 progressAnimationView.setVisibility(View.INVISIBLE);
+                infoTextView.setText(R.string.success_text);
+                infoImageView.setImageResource(R.drawable.ic_check);
                 playSound(R.raw.success);
                 break;
             case END:

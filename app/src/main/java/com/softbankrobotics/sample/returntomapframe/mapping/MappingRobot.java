@@ -175,10 +175,14 @@ class MappingRobot implements RobotLifecycleCallbacks {
                 cancelCurrentActions()
                         .andThenCompose(ignored -> say(R.string.briefing_speech));
                 break;
-            case MAPPING:
+            case ADVICES:
                 cancelCurrentActions()
                         .andThenCompose(ignored -> say(R.string.mapping_mapping_speech))
                         .andThenCompose(ignored -> say(R.string.countdown_speech))
+                        .andThenConsume(ignored -> machine.post(MappingEvent.ADVICES_ENDED));
+                break;
+            case MAPPING:
+                cancelCurrentActions()
                         .andThenConsume(ignored -> startMapping());
                 break;
             case SAVING_MAP:

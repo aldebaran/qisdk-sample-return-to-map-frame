@@ -42,6 +42,11 @@ class LocalizeMachine {
                 return LocalizeState.IDLE;
             case START_LOCALIZE:
                 if (currentState.equals(LocalizeState.BRIEFING) || currentState.equals(LocalizeState.ERROR)) {
+                    return LocalizeState.ADVICES;
+                }
+                break;
+            case ADVICES_ENDED:
+                if (currentState.equals(LocalizeState.ADVICES)) {
                     return LocalizeState.LOCALIZING;
                 }
                 break;

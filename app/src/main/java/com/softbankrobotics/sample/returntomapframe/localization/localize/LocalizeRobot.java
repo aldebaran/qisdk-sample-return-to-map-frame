@@ -97,15 +97,18 @@ class LocalizeRobot implements Robot {
             case BRIEFING:
                 say(R.string.briefing_speech);
                 break;
-            case LOCALIZING:
+            case ADVICES:
                 say(R.string.localize_localizing_speech)
                         .andThenCompose(ignored -> say(R.string.countdown_speech))
-                        .andThenCompose(ignored -> {
-                            if (qiContext == null) {
-                                throw new IllegalStateException("qiContext is null");
-                            }
-                            return localizeManager.startLocalizing(qiContext);
-                        })
+                        .andThenConsume(ignored -> machine.post(LocalizeEvent.ADVICES_ENDED));
+                break;
+            case LOCALIZING:
+                if (qiContext == null) {
+                    machine.post(LocalizeEvent.LOCALIZE_FAILED);
+                    return;
+                }
+
+                localizeManager.startLocalizing(qiContext)
                         .thenConsume(future -> {
                             if (future.isSuccess()) {
                                 machine.post(LocalizeEvent.LOCALIZE_SUCCEEDED);

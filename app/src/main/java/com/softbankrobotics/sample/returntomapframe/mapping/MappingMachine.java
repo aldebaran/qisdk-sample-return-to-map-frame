@@ -42,6 +42,11 @@ class MappingMachine {
                 return MappingState.IDLE;
             case START_MAPPING:
                 if (currentState.equals(MappingState.BRIEFING) || currentState.equals(MappingState.ERROR)) {
+                    return MappingState.ADVICES;
+                }
+                break;
+            case ADVICES_ENDED:
+                if (currentState.equals(MappingState.ADVICES)) {
                     return MappingState.MAPPING;
                 }
                 break;
