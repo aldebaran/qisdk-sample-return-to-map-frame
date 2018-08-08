@@ -116,11 +116,12 @@ public class MappingActivity extends RobotActivity {
         onBackPressed();
     }
 
-    private void playSound(@RawRes int soundResId) {
+    private void playSound(@RawRes int soundResId, boolean playInLoop) {
         if (mediaPlayer != null) {
             mediaPlayer.release();
         }
         mediaPlayer = MediaPlayer.create(this, soundResId);
+        mediaPlayer.setLooping(playInLoop);
         mediaPlayer.start();
     }
 
@@ -159,6 +160,7 @@ public class MappingActivity extends RobotActivity {
                 infoImageView.setVisibility(View.INVISIBLE);
                 progressAnimationView.setVisibility(View.VISIBLE);
                 infoTextView.setText(R.string.mapping_mapping_text);
+                playSound(R.raw.sonar, true);
                 break;
             case SAVING_MAP:
                 infoTextView.setVisibility(View.VISIBLE);
@@ -167,7 +169,7 @@ public class MappingActivity extends RobotActivity {
                 infoImageView.setVisibility(View.INVISIBLE);
                 progressAnimationView.setVisibility(View.VISIBLE);
                 infoTextView.setText(R.string.mapping_saving_map_text);
-                playSound(R.raw.success);
+                playSound(R.raw.processing, true);
                 break;
             case ERROR:
                 infoTextView.setVisibility(View.VISIBLE);
@@ -176,7 +178,7 @@ public class MappingActivity extends RobotActivity {
                 infoImageView.setVisibility(View.INVISIBLE);
                 progressAnimationView.setVisibility(View.INVISIBLE);
                 infoTextView.setText(R.string.error_text);
-                playSound(R.raw.error);
+                playSound(R.raw.error, false);
                 break;
             case SUCCESS:
                 infoTextView.setVisibility(View.VISIBLE);
@@ -186,7 +188,7 @@ public class MappingActivity extends RobotActivity {
                 progressAnimationView.setVisibility(View.INVISIBLE);
                 infoTextView.setText(R.string.success_text);
                 infoImageView.setImageResource(R.drawable.ic_check);
-                playSound(R.raw.success);
+                playSound(R.raw.success, false);
                 break;
             case END:
                 finish();

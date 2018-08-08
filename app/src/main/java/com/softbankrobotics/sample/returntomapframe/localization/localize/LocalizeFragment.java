@@ -135,7 +135,7 @@ public class LocalizeFragment extends Fragment {
         return fragment;
     }
 
-    private void playSound(@RawRes int soundResId) {
+    private void playSound(@RawRes int soundResId, boolean playInLoop) {
         if (mediaPlayer != null) {
             mediaPlayer.release();
         }
@@ -143,6 +143,7 @@ public class LocalizeFragment extends Fragment {
         FragmentActivity activity = getActivity();
         if (activity != null) {
             mediaPlayer = MediaPlayer.create(activity, soundResId);
+            mediaPlayer.setLooping(playInLoop);
             mediaPlayer.start();
         }
     }
@@ -182,6 +183,7 @@ public class LocalizeFragment extends Fragment {
                 infoImageView.setVisibility(View.INVISIBLE);
                 progressAnimationView.setVisibility(View.VISIBLE);
                 infoTextView.setText(R.string.localize_localizing_text);
+                playSound(R.raw.sonar, true);
                 break;
             case ERROR:
                 infoTextView.setVisibility(View.VISIBLE);
@@ -190,7 +192,7 @@ public class LocalizeFragment extends Fragment {
                 infoImageView.setVisibility(View.INVISIBLE);
                 progressAnimationView.setVisibility(View.INVISIBLE);
                 infoTextView.setText(R.string.error_text);
-                playSound(R.raw.error);
+                playSound(R.raw.error, false);
                 break;
             case SUCCESS:
                 infoTextView.setVisibility(View.VISIBLE);
@@ -200,7 +202,7 @@ public class LocalizeFragment extends Fragment {
                 progressAnimationView.setVisibility(View.INVISIBLE);
                 infoTextView.setText(R.string.success_text);
                 infoImageView.setImageResource(R.drawable.ic_check);
-                playSound(R.raw.success);
+                playSound(R.raw.success, false);
                 break;
             case END:
                 if (screen != null) {
