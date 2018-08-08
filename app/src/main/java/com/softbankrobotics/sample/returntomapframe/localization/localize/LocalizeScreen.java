@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
+import com.softbankrobotics.sample.returntomapframe.R;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizationActivity;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizeManager;
 import com.softbankrobotics.sample.returntomapframe.localization.Screen;
@@ -29,6 +30,11 @@ public class LocalizeScreen implements Screen {
     }
 
     @Override
+    public int getTitle() {
+        return R.string.localize_title;
+    }
+
+    @Override
     public void start(@NonNull QiContext qiContext) {
         activity.hideSpeechBar();
 
@@ -45,13 +51,5 @@ public class LocalizeScreen implements Screen {
 
     void onLocalizeEnd() {
         activity.getScreenMachine().post(ScreenEvent.LOCALIZE_END);
-    }
-
-    void onClose() {
-        activity.finishAffinity();
-    }
-
-    void onBack() {
-        activity.getScreenMachine().post(ScreenEvent.BACK);
     }
 }

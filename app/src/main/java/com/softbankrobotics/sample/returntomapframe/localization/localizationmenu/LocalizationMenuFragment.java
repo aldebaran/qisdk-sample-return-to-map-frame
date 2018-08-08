@@ -77,20 +77,6 @@ public class LocalizationMenuFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.closeButton)
-    public void onCloseClicked() {
-        if (screen != null) {
-            screen.onClose();
-        }
-    }
-
-    @OnClick(R.id.backButton)
-    public void onBackClicked() {
-        if (screen != null) {
-            screen.onBack();
-        }
-    }
-
     @NonNull
     static LocalizationMenuFragment newInstance(@NonNull LocalizationMenuScreen screen) {
         LocalizationMenuFragment fragment = new LocalizationMenuFragment();

@@ -10,4 +10,5 @@ public enum ScreenState {
     LOCALIZATION_MENU,
     LOCALIZE,
     GO_TO_ORIGIN,
+    END,
 }

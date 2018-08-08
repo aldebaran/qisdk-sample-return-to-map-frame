@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
+import com.softbankrobotics.sample.returntomapframe.R;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizationActivity;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizeManager;
 import com.softbankrobotics.sample.returntomapframe.localization.Screen;
@@ -27,6 +28,11 @@ public class LocalizationMenuScreen implements Screen {
     public LocalizationMenuScreen(@NonNull LocalizationActivity activity, @NonNull LocalizeManager localizeManager) {
         this.activity = activity;
         this.robot = new LocalizationMenuRobot(this, localizeManager);
+    }
+
+    @Override
+    public int getTitle() {
+        return R.string.localization_menu_title;
     }
 
     @Override
@@ -88,13 +94,5 @@ public class LocalizationMenuScreen implements Screen {
             localizationMenuFragment.disableChoices();
         }
         robot.goToGoToInitialPositionBookmark();
-    }
-
-    void onClose() {
-        activity.finishAffinity();
-    }
-
-    void onBack() {
-        activity.finish();
     }
 }

@@ -113,20 +113,6 @@ public class LocalizeFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.closeButton)
-    public void onCloseClicked() {
-        if (screen != null) {
-            screen.onClose();
-        }
-    }
-
-    @OnClick(R.id.backButton)
-    public void onBackClicked() {
-        if (screen != null) {
-            screen.onBack();
-        }
-    }
-
     @NonNull
     static LocalizeFragment newInstance(@NonNull LocalizeScreen screen, @NonNull LocalizeMachine machine) {
         LocalizeFragment fragment = new LocalizeFragment();

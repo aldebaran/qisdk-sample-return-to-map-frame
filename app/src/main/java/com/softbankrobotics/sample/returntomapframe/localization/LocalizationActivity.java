@@ -8,8 +8,10 @@ package com.softbankrobotics.sample.returntomapframe.localization;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
@@ -21,7 +23,9 @@ import com.softbankrobotics.sample.returntomapframe.localization.gotoorigin.GoTo
 import com.softbankrobotics.sample.returntomapframe.localization.localizationmenu.LocalizationMenuScreen;
 import com.softbankrobotics.sample.returntomapframe.localization.localize.LocalizeScreen;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -43,6 +47,9 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
 
     @Nullable
     private Disposable disposable;
+
+    @BindView(R.id.titleTextView)
+    TextView titleTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +108,16 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
         Log.e(TAG, "onRobotFocusRefused: " + reason);
     }
 
+    @OnClick(R.id.closeButton)
+    public void onCloseClicked() {
+        finishAffinity();
+    }
+
+    @OnClick(R.id.backButton)
+    public void onBackClicked() {
+        onBackPressed();
+    }
+
     public void showSpeechBar() {
         runOnUiThread(() -> setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.ALWAYS));
     }
@@ -120,6 +137,10 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
     @NonNull
     public ScreenMachine getScreenMachine() {
         return screenMachine;
+    }
+
+    private void setScreenTitle(@StringRes int titleRes) {
+        runOnUiThread(() -> titleTextView.setText(titleRes));
     }
 
     private void startLocalizationMenuScreen() {
@@ -146,6 +167,7 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
     private void doStartScreen(@NonNull Screen screen) {
         if (qiContext != null) {
             currentScreen = screen;
+            setScreenTitle(screen.getTitle());
             screen.start(qiContext);
         }
     }
@@ -168,6 +190,9 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
                 break;
             case GO_TO_ORIGIN:
                 startGoToOriginScreen();
+                break;
+            case END:
+                runOnUiThread(this::finish);
                 break;
         }
     }

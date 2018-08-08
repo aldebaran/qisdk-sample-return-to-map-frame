@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
+import com.softbankrobotics.sample.returntomapframe.R;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizationActivity;
 import com.softbankrobotics.sample.returntomapframe.localization.Screen;
 import com.softbankrobotics.sample.returntomapframe.localization.ScreenEvent;
@@ -28,6 +29,11 @@ public class GoToOriginScreen implements Screen {
     }
 
     @Override
+    public int getTitle() {
+        return R.string.go_to_origin_title;
+    }
+
+    @Override
     public void start(@NonNull QiContext qiContext) {
         activity.hideSpeechBar();
 
@@ -44,13 +50,5 @@ public class GoToOriginScreen implements Screen {
 
     void onGoToOriginEnd() {
         activity.getScreenMachine().post(ScreenEvent.GO_TO_ORIGIN_END);
-    }
-
-    void onClose() {
-        activity.finishAffinity();
-    }
-
-    void onBack() {
-        activity.getScreenMachine().post(ScreenEvent.BACK);
     }
 }

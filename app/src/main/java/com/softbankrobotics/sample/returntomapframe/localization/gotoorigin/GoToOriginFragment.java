@@ -113,20 +113,6 @@ public class GoToOriginFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.closeButton)
-    public void onCloseClicked() {
-        if (screen != null) {
-            screen.onClose();
-        }
-    }
-
-    @OnClick(R.id.backButton)
-    public void onBackClicked() {
-        if (screen != null) {
-            screen.onBack();
-        }
-    }
-
     @NonNull
     static GoToOriginFragment newInstance(@NonNull GoToOriginScreen screen, @NonNull GoToOriginMachine machine) {
         GoToOriginFragment fragment = new GoToOriginFragment();

@@ -44,7 +44,7 @@ public class ScreenMachine {
             case BACK:
                 switch (currentState) {
                     case LOCALIZATION_MENU:
-                        return ScreenState.NONE;
+                        return ScreenState.END;
                     case LOCALIZE:
                         return ScreenState.LOCALIZATION_MENU;
                     case GO_TO_ORIGIN:
