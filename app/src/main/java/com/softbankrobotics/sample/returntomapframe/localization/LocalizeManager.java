@@ -49,7 +49,9 @@ public class LocalizeManager {
                         if (status == LocalizationStatus.LOCALIZED) {
                             Log.d(TAG, "Robot is localized");
                             isLocalized.set(true);
-                            promise.setValue(null);
+                            if (!promise.getFuture().isDone()) {
+                                promise.setValue(null);
+                            }
                         }
                     });
 
@@ -66,9 +68,13 @@ public class LocalizeManager {
 
                     if (future.hasError()) {
                         Log.e(TAG, "Error while localizing", future.getError());
-                        promise.setError(future.getErrorMessage());
+                        if (!promise.getFuture().isDone()) {
+                            promise.setError(future.getErrorMessage());
+                        }
                     } else if (future.isCancelled()) {
-                        promise.setCancelled();
+                        if (!promise.getFuture().isDone()) {
+                            promise.setCancelled();
+                        }
                     }
                 });
 
