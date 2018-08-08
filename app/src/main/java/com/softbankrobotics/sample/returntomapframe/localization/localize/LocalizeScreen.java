@@ -12,6 +12,7 @@ import com.aldebaran.qi.sdk.QiContext;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizationActivity;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizeManager;
 import com.softbankrobotics.sample.returntomapframe.localization.Screen;
+import com.softbankrobotics.sample.returntomapframe.localization.ScreenEvent;
 
 public class LocalizeScreen implements Screen {
 
@@ -43,7 +44,7 @@ public class LocalizeScreen implements Screen {
     }
 
     void onLocalizeEnd() {
-        activity.startLocalizationMenuScreen();
+        activity.getScreenMachine().post(ScreenEvent.LOCALIZE_END);
     }
 
     void onClose() {
@@ -51,6 +52,6 @@ public class LocalizeScreen implements Screen {
     }
 
     void onBack() {
-        activity.startLocalizationMenuScreen();
+        activity.getScreenMachine().post(ScreenEvent.BACK);
     }
 }

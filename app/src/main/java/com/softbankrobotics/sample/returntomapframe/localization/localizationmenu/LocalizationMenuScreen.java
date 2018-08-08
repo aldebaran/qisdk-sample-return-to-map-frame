@@ -13,6 +13,7 @@ import com.aldebaran.qi.sdk.QiContext;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizationActivity;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizeManager;
 import com.softbankrobotics.sample.returntomapframe.localization.Screen;
+import com.softbankrobotics.sample.returntomapframe.localization.ScreenEvent;
 
 public class LocalizationMenuScreen implements Screen {
 
@@ -67,22 +68,22 @@ public class LocalizationMenuScreen implements Screen {
         }
     }
 
-    void startLocalizeScreen() {
-        activity.startLocalizeScreen();
-    }
-
-    void startGoToOriginScreen() {
-        activity.startGoToOriginScreen();
-    }
-
     void onLocalizeSelected() {
+        activity.getScreenMachine().post(ScreenEvent.LOCALIZE_SELECTED);
+    }
+
+    void onGoToOriginSelected() {
+        activity.getScreenMachine().post(ScreenEvent.GO_TO_ORIGIN_SELECTED);
+    }
+
+    void onLocalizeClicked() {
         if (localizationMenuFragment != null) {
             localizationMenuFragment.disableChoices();
         }
         robot.goToLocalizeBookmark();
     }
 
-    void onGoToInitialPositionSelected() {
+    void onGoToInitialPositionClicked() {
         if (localizationMenuFragment != null) {
             localizationMenuFragment.disableChoices();
         }

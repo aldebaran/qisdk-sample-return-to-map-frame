@@ -122,10 +122,10 @@ class LocalizationMenuRobot implements Robot {
                         screen.disableChoices();
                         break;
                     case LOCALIZE_END_BOOKMARK_NAME:
-                        screen.startLocalizeScreen();
+                        screen.onLocalizeSelected();
                         break;
                     case GO_TO_ORIGIN_END_BOOKMARK_NAME:
-                        screen.startGoToOriginScreen();
+                        screen.onGoToOriginSelected();
                         break;
                     case START_TIMER_BOOKMARK_NAME:
                         if (shouldRepeatWithTimer.getAndSet(false)) {
@@ -150,13 +150,13 @@ class LocalizationMenuRobot implements Robot {
 
     void goToLocalizeBookmark() {
         if (!goToBookmark(LOCALIZE_BOOKMARK_NAME, AutonomousReactionImportance.HIGH)) {
-            screen.startLocalizeScreen();
+            screen.onLocalizeSelected();
         }
     }
 
     void goToGoToInitialPositionBookmark() {
         if (!goToBookmark(GO_TO_ORIGIN_BOOKMARK_NAME, AutonomousReactionImportance.HIGH)) {
-            screen.startGoToOriginScreen();
+            screen.onGoToOriginSelected();
         }
     }
 

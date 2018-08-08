@@ -11,6 +11,7 @@ import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizationActivity;
 import com.softbankrobotics.sample.returntomapframe.localization.Screen;
+import com.softbankrobotics.sample.returntomapframe.localization.ScreenEvent;
 
 public class GoToOriginScreen implements Screen {
 
@@ -42,7 +43,7 @@ public class GoToOriginScreen implements Screen {
     }
 
     void onGoToOriginEnd() {
-        activity.startLocalizationMenuScreen();
+        activity.getScreenMachine().post(ScreenEvent.GO_TO_ORIGIN_END);
     }
 
     void onClose() {
@@ -50,6 +51,6 @@ public class GoToOriginScreen implements Screen {
     }
 
     void onBack() {
-        activity.startLocalizationMenuScreen();
+        activity.getScreenMachine().post(ScreenEvent.BACK);
     }
 }

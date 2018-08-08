@@ -66,14 +66,14 @@ public class LocalizationMenuFragment extends Fragment {
     @OnClick(R.id.localizeButton)
     public void onClickLocalize() {
         if (screen != null) {
-            screen.onLocalizeSelected();
+            screen.onLocalizeClicked();
         }
     }
 
     @OnClick(R.id.goToInitialPositionButton)
     public void onClickGoToInitialPosition() {
         if (screen != null) {
-            screen.onGoToInitialPositionSelected();
+            screen.onGoToInitialPositionClicked();
         }
     }
 

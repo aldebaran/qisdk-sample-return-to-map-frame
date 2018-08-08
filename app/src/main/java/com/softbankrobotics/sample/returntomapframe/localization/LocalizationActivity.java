@@ -22,10 +22,15 @@ import com.softbankrobotics.sample.returntomapframe.localization.localizationmen
 import com.softbankrobotics.sample.returntomapframe.localization.localize.LocalizeScreen;
 
 import butterknife.ButterKnife;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class LocalizationActivity extends RobotActivity implements RobotLifecycleCallbacks {
 
     private static final String TAG = "LocalizationActivity";
+
+    @NonNull
+    private final ScreenMachine screenMachine = new ScreenMachine();
 
     @NonNull
     private final LocalizeManager localizeManager = new LocalizeManager();
@@ -35,6 +40,9 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
 
     @Nullable
     private Screen currentScreen;
+
+    @Nullable
+    private Disposable disposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,25 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        disposable = screenMachine.screenState()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(this::onScreenStateChanged);
+    }
+
+    @Override
+    protected void onPause() {
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
+
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         QiSDK.unregister(this, this);
         super.onDestroy();
@@ -54,18 +81,19 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
 
     @Override
     public void onBackPressed() {
-        // Disabled.
+        screenMachine.post(ScreenEvent.BACK);
     }
 
     @Override
     public void onRobotFocusGained(QiContext qiContext) {
         this.qiContext = qiContext;
-        startLocalizationMenuScreen();
+        screenMachine.post(ScreenEvent.FOCUS_GAINED);
     }
 
     @Override
     public void onRobotFocusLost() {
         this.qiContext = null;
+        screenMachine.post(ScreenEvent.FOCUS_LOST);
     }
 
     @Override
@@ -89,15 +117,20 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
                         .commit());
     }
 
-    public void startLocalizationMenuScreen() {
+    @NonNull
+    public ScreenMachine getScreenMachine() {
+        return screenMachine;
+    }
+
+    private void startLocalizationMenuScreen() {
         startScreen(new LocalizationMenuScreen(this, localizeManager));
     }
 
-    public void startLocalizeScreen() {
+    private void startLocalizeScreen() {
         startScreen(new LocalizeScreen(this, localizeManager));
     }
 
-    public void startGoToOriginScreen() {
+    private void startGoToOriginScreen() {
         startScreen(new GoToOriginScreen(this));
     }
 
@@ -114,6 +147,28 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
         if (qiContext != null) {
             currentScreen = screen;
             screen.start(qiContext);
+        }
+    }
+
+    private void onScreenStateChanged(@NonNull ScreenState screenState) {
+        Log.d(TAG, "onScreenStateChanged: " + screenState);
+
+        switch (screenState) {
+            case NONE:
+                if (currentScreen != null) {
+                    currentScreen.stop();
+                    currentScreen = null;
+                }
+                break;
+            case LOCALIZATION_MENU:
+                startLocalizationMenuScreen();
+                break;
+            case LOCALIZE:
+                startLocalizeScreen();
+                break;
+            case GO_TO_ORIGIN:
+                startGoToOriginScreen();
+                break;
         }
     }
 }
