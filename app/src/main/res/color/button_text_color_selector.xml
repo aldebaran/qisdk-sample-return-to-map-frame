@@ -8,7 +8,7 @@
         android:state_checked="false"
         android:state_enabled="false" />
     <item
-        android:color="@android:color/white"
+        android:color="@android:color/black"
         android:state_checked="false"
         android:state_enabled="true"
         android:state_pressed="true" />
