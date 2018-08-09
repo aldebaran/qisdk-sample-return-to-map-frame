@@ -7,6 +7,8 @@ package com.softbankrobotics.sample.returntomapframe.localization.localize;
 
 import android.support.annotation.NonNull;
 
+import com.softbankrobotics.sample.returntomapframe.localization.LocalizeManager;
+
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 
@@ -14,6 +16,13 @@ class LocalizeMachine {
 
     @NonNull
     private final BehaviorSubject<LocalizeState> subject = BehaviorSubject.createDefault(LocalizeState.IDLE);
+
+    @NonNull
+    private final LocalizeManager localizeManager;
+
+    LocalizeMachine(@NonNull LocalizeManager localizeManager) {
+        this.localizeManager = localizeManager;
+    }
 
     void post(@NonNull LocalizeEvent event) {
         LocalizeState currentState = subject.getValue();
@@ -47,7 +56,20 @@ class LocalizeMachine {
                 break;
             case ADVICES_ENDED:
                 if (currentState.equals(LocalizeState.ADVICES)) {
+                    if (localizeManager.mapIsLoaded()) {
+                        return LocalizeState.LOCALIZING;
+                    }
+                    return LocalizeState.LOADING_MAP;
+                }
+                break;
+            case LOADING_MAP_SUCCEEDED:
+                if (currentState.equals(LocalizeState.LOADING_MAP)) {
                     return LocalizeState.LOCALIZING;
+                }
+                break;
+            case LOADING_MAP_FAILED:
+                if (currentState.equals(LocalizeState.LOADING_MAP)) {
+                    return LocalizeState.ERROR;
                 }
                 break;
             case LOCALIZE_SUCCEEDED:

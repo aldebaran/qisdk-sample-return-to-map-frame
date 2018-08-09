@@ -36,16 +36,37 @@ public class LocalizeManager {
         return isLocalized.get();
     }
 
+    public boolean mapIsLoaded() {
+        return localize != null;
+    }
+
     @NonNull
-    public Future<Void> startLocalizing(@NonNull QiContext qiContext) {
+    public Future<Void> loadMap(@NonNull QiContext qiContext) {
+        return MapManager.getInstance().retrieveMap(qiContext)
+                .andThenCompose(map -> {
+                    Log.d(TAG, "Map retrieved successfully");
+                    Log.d(TAG, "Building Localize...");
+                    return LocalizeBuilder.with(qiContext)
+                            .withMap(map)
+                            .buildAsync();
+                })
+                .andThenConsume(loc -> {
+                    Log.d(TAG, "Localize built successfully");
+                    localize = loc;
+                });
+    }
+
+    @NonNull
+    public Future<Void> startLocalizing() {
         Promise<Void> promise = new Promise<>();
 
         FutureCancellations.cancel(localization)
-                .andThenCompose(ignored -> retrieveLocalize(qiContext))
-                .andThenCompose(loc -> {
-                    Log.d(TAG, "Localize retrieved successfully");
+                .andThenCompose(ignored -> {
+                    if (localize == null) {
+                        throw new IllegalStateException("localize is null");
+                    }
 
-                    loc.addOnStatusChangedListener(status -> {
+                    localize.addOnStatusChangedListener(status -> {
                         if (status == LocalizationStatus.LOCALIZED) {
                             Log.d(TAG, "Robot is localized");
                             isLocalized.set(true);
@@ -56,7 +77,7 @@ public class LocalizeManager {
                     });
 
                     Log.d(TAG, "Running Localize...");
-                    localization = loc.async().run();
+                    localization = localize.async().run();
                     return localization;
                 })
                 .thenConsume(future -> {
@@ -79,28 +100,5 @@ public class LocalizeManager {
                 });
 
         return promise.getFuture();
-    }
-
-    @NonNull
-    private Future<Localize> retrieveLocalize(@NonNull QiContext qiContext) {
-        if (localize != null) {
-            return Future.of(localize);
-        }
-
-        Log.d(TAG, "Retrieving map...");
-        return MapManager.getInstance().retrieveMap(qiContext)
-                .andThenCompose(map -> {
-                    Log.d(TAG, "Map retrieved successfully");
-                    Log.d(TAG, "Building Localize...");
-                    return LocalizeBuilder.with(qiContext)
-                            .withMap(map)
-                            .buildAsync();
-                })
-                .andThenApply(loc -> {
-                    Log.d(TAG, "Localize built successfully");
-
-                    localize = loc;
-                    return localize;
-                });
     }
 }

@@ -22,10 +22,11 @@ public class LocalizeScreen implements Screen {
     @NonNull
     private final LocalizeRobot robot;
     @NonNull
-    private final LocalizeMachine machine = new LocalizeMachine();
+    private final LocalizeMachine machine;
 
     public LocalizeScreen(@NonNull LocalizationActivity activity, @NonNull LocalizeManager localizeManager) {
         this.activity = activity;
+        this.machine = new LocalizeMachine(localizeManager);
         this.robot = new LocalizeRobot(machine, localizeManager);
     }
 

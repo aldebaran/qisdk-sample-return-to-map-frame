@@ -9,6 +9,7 @@ enum LocalizeState {
     IDLE,
     BRIEFING,
     ADVICES,
+    LOADING_MAP,
     LOCALIZING,
     ERROR,
     SUCCESS,

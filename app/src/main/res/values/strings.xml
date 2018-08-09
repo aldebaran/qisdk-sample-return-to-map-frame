@@ -13,7 +13,7 @@
     <!-- Mapping -->
     <string name="mapping_mapping_text">Mapping in progress&#8230;</string>
     <string name="mapping_saving_map_text">Saving map&#8230;</string>
-    <string name="mapping_mapping_speech">I will now map my environment. Please be sure to be at least at 3 meters from me while I scan the place.</string>
+    <string name="mapping_advices_speech">I will now map my environment. Please be sure to be at least at 3 meters from me while I scan the place.</string>
     <string name="mapping_saving_map_speech">I will now save the map.</string>
     <string name="mapping_success_speech">Perfect! I\'ve created a map. But we are not done! Because this is a sample, you need now to ask me to localize myself. Let\'s go back to the main menu and continue the procedure with the localization.</string>
     <string name="mapping_title">Map creation</string>
@@ -27,8 +27,9 @@
 
     <!-- Localize -->
     <string name="localize_title">Localization</string>
+    <string name="localize_loading_map_text">Loading map&#8230;</string>
     <string name="localize_localizing_text">Localization in progress&#8230;</string>
-    <string name="localize_localizing_speech">Please be sure to be at least at 3 meters from me while I check if I\'m at the right place.</string>
+    <string name="localize_advices_speech">Please be sure to be at least at 3 meters from me while I check if I\'m at the right place.</string>
     <string name="localize_success_speech">OK, I know where I am.</string>
 
     <!-- Go to origin -->

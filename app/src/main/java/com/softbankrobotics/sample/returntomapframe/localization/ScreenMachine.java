@@ -15,7 +15,6 @@ public class ScreenMachine {
     @NonNull
     private final BehaviorSubject<ScreenState> subject = BehaviorSubject.createDefault(ScreenState.NONE);
 
-
     public void post(@NonNull ScreenEvent event) {
         ScreenState currentState = subject.getValue();
         if (currentState == null) {

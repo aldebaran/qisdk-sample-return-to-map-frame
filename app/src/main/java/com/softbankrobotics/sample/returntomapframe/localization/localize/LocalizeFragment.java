@@ -162,6 +162,15 @@ public class LocalizeFragment extends Fragment {
                 infoTextView.setText(R.string.advices_text);
                 infoImageView.setImageResource(R.drawable.hiding);
                 break;
+            case LOADING_MAP:
+                infoTextView.setVisibility(View.VISIBLE);
+                startLocalizeButton.setVisibility(View.INVISIBLE);
+                warningImage.setVisibility(View.GONE);
+                infoImageView.setVisibility(View.INVISIBLE);
+                progressAnimationView.setVisibility(View.VISIBLE);
+                infoTextView.setText(R.string.localize_loading_map_text);
+                playSound(R.raw.processing, true);
+                break;
             case LOCALIZING:
                 infoTextView.setVisibility(View.VISIBLE);
                 startLocalizeButton.setVisibility(View.INVISIBLE);

@@ -98,9 +98,24 @@ class LocalizeRobot implements Robot {
                 say(R.string.briefing_speech);
                 break;
             case ADVICES:
-                say(R.string.localize_localizing_speech)
+                say(R.string.localize_advices_speech)
                         .andThenCompose(ignored -> say(R.string.countdown_speech))
                         .andThenConsume(ignored -> machine.post(LocalizeEvent.ADVICES_ENDED));
+                break;
+            case LOADING_MAP:
+                if (qiContext == null) {
+                    machine.post(LocalizeEvent.LOADING_MAP_FAILED);
+                    return;
+                }
+
+                localizeManager.loadMap(qiContext)
+                        .thenConsume(future -> {
+                            if (future.isSuccess()) {
+                                machine.post(LocalizeEvent.LOADING_MAP_SUCCEEDED);
+                            } else if (future.hasError()) {
+                                machine.post(LocalizeEvent.LOADING_MAP_FAILED);
+                            }
+                        });
                 break;
             case LOCALIZING:
                 if (qiContext == null) {
@@ -108,7 +123,7 @@ class LocalizeRobot implements Robot {
                     return;
                 }
 
-                localizeManager.startLocalizing(qiContext)
+                localizeManager.startLocalizing()
                         .thenConsume(future -> {
                             if (future.isSuccess()) {
                                 machine.post(LocalizeEvent.LOCALIZE_SUCCEEDED);
