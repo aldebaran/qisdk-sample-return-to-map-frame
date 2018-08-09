@@ -32,7 +32,6 @@ public class LocalizationMenuScreen implements Screen {
 
     @Override
     public void start(@NonNull QiContext qiContext) {
-        activity.showSpeechBar();
         activity.setNavigationTitle(R.string.localization_menu_title);
 
         localizationMenuFragment = LocalizationMenuFragment.newInstance(this);

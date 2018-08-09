@@ -118,14 +118,6 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
         onBackPressed();
     }
 
-    public void showSpeechBar() {
-        runOnUiThread(() -> setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.ALWAYS));
-    }
-
-    public void hideSpeechBar() {
-        runOnUiThread(() -> setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.OVERLAY));
-    }
-
     public void showFragment(@NonNull Fragment fragment) {
         runOnUiThread(() ->
                 getSupportFragmentManager()

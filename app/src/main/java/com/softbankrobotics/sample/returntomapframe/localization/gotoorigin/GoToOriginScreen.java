@@ -30,7 +30,6 @@ public class GoToOriginScreen implements Screen {
 
     @Override
     public void start(@NonNull QiContext qiContext) {
-        activity.hideSpeechBar();
         activity.setNavigationTitle(R.string.go_to_origin_title);
 
         GoToOriginFragment fragment = GoToOriginFragment.newInstance(this, machine);
