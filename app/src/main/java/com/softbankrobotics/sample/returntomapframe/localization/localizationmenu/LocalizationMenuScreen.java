@@ -31,13 +31,9 @@ public class LocalizationMenuScreen implements Screen {
     }
 
     @Override
-    public int getTitle() {
-        return R.string.localization_menu_title;
-    }
-
-    @Override
     public void start(@NonNull QiContext qiContext) {
         activity.showSpeechBar();
+        activity.setNavigationTitle(R.string.localization_menu_title);
 
         localizationMenuFragment = LocalizationMenuFragment.newInstance(this);
         activity.showFragment(localizationMenuFragment);

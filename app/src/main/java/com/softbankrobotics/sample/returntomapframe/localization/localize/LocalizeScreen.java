@@ -31,13 +31,9 @@ public class LocalizeScreen implements Screen {
     }
 
     @Override
-    public int getTitle() {
-        return R.string.localize_title;
-    }
-
-    @Override
     public void start(@NonNull QiContext qiContext) {
         activity.hideSpeechBar();
+        activity.setNavigationTitle(R.string.localize_title);
 
         LocalizeFragment fragment = LocalizeFragment.newInstance(this, machine);
         activity.showFragment(fragment);

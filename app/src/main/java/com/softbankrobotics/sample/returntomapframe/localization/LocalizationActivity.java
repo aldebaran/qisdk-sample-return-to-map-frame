@@ -139,7 +139,7 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
         return screenMachine;
     }
 
-    private void setScreenTitle(@StringRes int titleRes) {
+    public void setNavigationTitle(@StringRes int titleRes) {
         runOnUiThread(() -> titleTextView.setText(titleRes));
     }
 
@@ -167,7 +167,6 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
     private void doStartScreen(@NonNull Screen screen) {
         if (qiContext != null) {
             currentScreen = screen;
-            setScreenTitle(screen.getTitle());
             screen.start(qiContext);
         }
     }
