@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
-import com.aldebaran.qi.sdk.design.activity.conversationstatus.SpeechBarDisplayStrategy;
 import com.softbankrobotics.sample.returntomapframe.R;
 
 import butterknife.BindView;
