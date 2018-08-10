@@ -76,6 +76,12 @@ public class LocalizeFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        infoTextView.setVisibility(View.INVISIBLE);
+        startLocalizeButton.setVisibility(View.INVISIBLE);
+        warningImage.setVisibility(View.INVISIBLE);
+        infoImageView.setVisibility(View.INVISIBLE);
+        progressAnimationView.setVisibility(View.INVISIBLE);
+
         if (machine != null) {
             disposable = machine.localizeState()
                     .subscribeOn(Schedulers.io())

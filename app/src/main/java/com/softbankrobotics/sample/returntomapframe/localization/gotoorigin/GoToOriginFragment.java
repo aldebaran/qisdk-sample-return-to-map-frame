@@ -76,6 +76,12 @@ public class GoToOriginFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        infoTextView.setVisibility(View.INVISIBLE);
+        startGoToButton.setVisibility(View.INVISIBLE);
+        warningImage.setVisibility(View.INVISIBLE);
+        successImage.setVisibility(View.INVISIBLE);
+        progressAnimationView.setVisibility(View.INVISIBLE);
+
         if (machine != null) {
             disposable = machine.goToOriginState()
                     .subscribeOn(Schedulers.io())

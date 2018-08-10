@@ -74,6 +74,12 @@ public class MappingActivity extends RobotActivity {
     protected void onResume() {
         super.onResume();
 
+        infoTextView.setVisibility(View.INVISIBLE);
+        startMappingButton.setVisibility(View.INVISIBLE);
+        warningImage.setVisibility(View.INVISIBLE);
+        infoImageView.setVisibility(View.INVISIBLE);
+        progressAnimationView.setVisibility(View.INVISIBLE);
+
         disposable = machine.mappingState()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
