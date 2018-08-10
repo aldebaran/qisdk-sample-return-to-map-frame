@@ -108,7 +108,7 @@ class GoToOriginRobot implements Robot {
 
     @NonNull
     private Future<Void> cancelCurrentActions() {
-        return FutureCancellations.cancelAll(speech, movement);
+        return FutureCancellations.cancel(speech, movement);
     }
 
     private void onGoToOriginStateChanged(@NonNull GoToOriginState goToOriginState) {

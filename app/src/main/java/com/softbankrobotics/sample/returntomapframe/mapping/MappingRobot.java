@@ -160,7 +160,7 @@ class MappingRobot implements RobotLifecycleCallbacks {
 
     @NonNull
     private Future<Void> cancelCurrentActions() {
-        return FutureCancellations.cancelAll(speech, mapping);
+        return FutureCancellations.cancel(speech, mapping);
     }
 
     private void onMappingStateChanged(@NonNull MappingState mappingState) {
