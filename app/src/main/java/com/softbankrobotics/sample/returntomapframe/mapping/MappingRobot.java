@@ -29,6 +29,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 class MappingRobot implements RobotLifecycleCallbacks {
 
+    @NonNull
     private static final String TAG = "MappingRobot";
 
     @NonNull

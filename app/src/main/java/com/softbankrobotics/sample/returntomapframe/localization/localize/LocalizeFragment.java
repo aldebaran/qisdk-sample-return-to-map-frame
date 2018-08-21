@@ -36,6 +36,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class LocalizeFragment extends Fragment {
 
+    @NonNull
     private static final String TAG = "LocalizeFragment";
 
     @Nullable

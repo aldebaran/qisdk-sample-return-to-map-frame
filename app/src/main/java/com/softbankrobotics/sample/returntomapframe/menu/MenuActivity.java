@@ -48,15 +48,24 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class MenuActivity extends RobotActivity implements RobotLifecycleCallbacks {
 
+    @NonNull
     private static final String TAG = "MenuActivity";
 
+    @NonNull
     private static final String START_BOOKMARK_NAME = "start";
+    @NonNull
     private static final String CREATE_BOOKMARK_NAME = "create";
+    @NonNull
     private static final String CREATE_END_BOOKMARK_NAME = "create_end";
+    @NonNull
     private static final String USE_BOOKMARK_NAME = "use";
+    @NonNull
     private static final String USE_END_BOOKMARK_NAME = "use_end";
+    @NonNull
     private static final String MAP_BOOKMARK_NAME = "map";
+    @NonNull
     private static final String START_TIMER_BOOKMARK_NAME = "start_timer";
+    @NonNull
     private static final String STOP_TIMER_BOOKMARK_NAME = "stop_timer";
 
     @BindView(R.id.createMapButton)

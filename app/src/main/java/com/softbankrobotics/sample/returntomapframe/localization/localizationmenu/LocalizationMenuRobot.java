@@ -39,13 +39,21 @@ import io.reactivex.schedulers.Schedulers;
  */
 class LocalizationMenuRobot implements Robot {
 
+    @NonNull
     private static final String START_BOOKMARK_NAME = "start";
+    @NonNull
     private static final String LOCALIZE_BOOKMARK_NAME = "localize";
+    @NonNull
     private static final String LOCALIZE_END_BOOKMARK_NAME = "localize_end";
+    @NonNull
     private static final String GO_TO_ORIGIN_BOOKMARK_NAME = "go_to_origin";
+    @NonNull
     private static final String GO_TO_ORIGIN_END_BOOKMARK_NAME = "go_to_origin_end";
+    @NonNull
     private static final String LOCALIZED_BOOKMARK_NAME = "localized";
+    @NonNull
     private static final String START_TIMER_BOOKMARK_NAME = "start_timer";
+    @NonNull
     private static final String STOP_TIMER_BOOKMARK_NAME = "stop_timer";
 
     @NonNull

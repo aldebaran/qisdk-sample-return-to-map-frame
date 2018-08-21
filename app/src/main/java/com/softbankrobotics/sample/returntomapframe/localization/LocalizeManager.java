@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class LocalizeManager {
 
+    @NonNull
     private static final String TAG = "LocalizeManager";
 
     @NonNull

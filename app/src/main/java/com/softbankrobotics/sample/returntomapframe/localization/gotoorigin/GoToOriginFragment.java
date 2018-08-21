@@ -36,6 +36,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class GoToOriginFragment extends Fragment {
 
+    @NonNull
     private static final String TAG = "GoToOriginFragment";
 
     @Nullable

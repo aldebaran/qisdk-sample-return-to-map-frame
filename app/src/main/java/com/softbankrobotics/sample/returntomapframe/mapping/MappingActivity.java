@@ -33,6 +33,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class MappingActivity extends RobotActivity {
 
+    @NonNull
     private static final String TAG = "MappingActivity";
 
     @NonNull

@@ -26,6 +26,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 class LocalizeRobot implements Robot {
 
+    @NonNull
     private static final String TAG = "LocalizeRobot";
 
     @NonNull

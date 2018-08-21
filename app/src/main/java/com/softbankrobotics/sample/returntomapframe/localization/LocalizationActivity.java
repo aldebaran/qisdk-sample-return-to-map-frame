@@ -33,6 +33,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class LocalizationActivity extends RobotActivity implements RobotLifecycleCallbacks {
 
+    @NonNull
     private static final String TAG = "LocalizationActivity";
 
     @NonNull

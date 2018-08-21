@@ -20,7 +20,9 @@ import com.snatik.storage.Storage;
  */
 public class MapManager {
 
+    @NonNull
     private static final String TAG = "MapManager";
+    @NonNull
     private static final String MAP_FILENAME = "map.txt";
 
     // The cached map.
