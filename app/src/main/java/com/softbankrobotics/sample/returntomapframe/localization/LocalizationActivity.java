@@ -123,6 +123,7 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
 
     /**
      * Show the specified fragment.
+     *
      * @param fragment the fragment to show
      */
     public void showFragment(@NonNull Fragment fragment) {
@@ -135,6 +136,7 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
 
     /**
      * Provide the {@link ScreenMachine}.
+     *
      * @return The {@link ScreenMachine}.
      */
     @NonNull
@@ -144,6 +146,7 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
 
     /**
      * Set the title in the navigation bar.
+     *
      * @param titleRes the string resource for the title
      */
     public void setNavigationTitle(@StringRes int titleRes) {

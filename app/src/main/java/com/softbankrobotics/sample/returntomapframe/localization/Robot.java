@@ -16,7 +16,9 @@ public interface Robot {
     /**
      * Meant to be called when the robotic component must stop.
      * This is the place where related actions must be stopped.
+     *
      * @return A {@link Future} that is a success when the robotic component has correctly stopped.
      */
-    @NonNull Future<Void> stop();
+    @NonNull
+    Future<Void> stop();
 }

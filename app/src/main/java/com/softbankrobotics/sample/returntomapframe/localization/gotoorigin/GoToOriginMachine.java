@@ -20,6 +20,7 @@ class GoToOriginMachine {
 
     /**
      * Post an event to the machine.
+     *
      * @param event the event
      */
     void post(@NonNull GoToOriginEvent event) {
@@ -34,6 +35,7 @@ class GoToOriginMachine {
 
     /**
      * Provide the current {@link GoToOriginState}.
+     *
      * @return The current {@link GoToOriginState}.
      */
     @NonNull

@@ -33,6 +33,7 @@ public class MapManager {
 
     /**
      * Provide the unique {@link MapManager instance}.
+     *
      * @return The unique {@link MapManager instance}.
      */
     @NonNull
@@ -42,8 +43,9 @@ public class MapManager {
 
     /**
      * Save the specified map to a file.
+     *
      * @param context the context
-     * @param map the map to save
+     * @param map     the map to save
      * @return A {@link Future} wrapping the operation.
      */
     @NonNull
@@ -62,6 +64,7 @@ public class MapManager {
 
     /**
      * Indicate if there is an existing map or not.
+     *
      * @param context the context
      * @return {@code true} if there is a map, {@code false} otherwise.
      */
@@ -78,6 +81,7 @@ public class MapManager {
 
     /**
      * Provide the map.
+     *
      * @param qiContext the qiContext
      * @return A {@link Future} wrapping the operation.
      */

@@ -20,6 +20,7 @@ class MappingMachine {
 
     /**
      * Post an event to the machine.
+     *
      * @param event the event
      */
     void post(@NonNull MappingEvent event) {
@@ -34,6 +35,7 @@ class MappingMachine {
 
     /**
      * Provide the current {@link MappingState}.
+     *
      * @return The current {@link MappingState}.
      */
     @NonNull

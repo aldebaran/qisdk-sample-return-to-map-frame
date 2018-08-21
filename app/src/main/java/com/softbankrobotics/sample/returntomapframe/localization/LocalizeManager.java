@@ -38,6 +38,7 @@ public class LocalizeManager {
 
     /**
      * Indicate if the robot is localized or not.
+     *
      * @return {@code true} if the robot is localized, {@code false} otherwise.
      */
     public boolean isLocalized() {
@@ -46,6 +47,7 @@ public class LocalizeManager {
 
     /**
      * Indicates if the map is loaded.
+     *
      * @return {@code true} if the map is loaded, {@code false} otherwise.
      */
     public boolean mapIsLoaded() {
@@ -54,6 +56,7 @@ public class LocalizeManager {
 
     /**
      * Load the map and create the {@link Localize} action.
+     *
      * @param qiContext the qiContext
      * @return A {@link Future} wrapping the operation.
      */
@@ -75,6 +78,7 @@ public class LocalizeManager {
 
     /**
      * Start the localization.
+     *
      * @return A {@link Future} wrapping the operation.
      * This operation is a success when the robot is localized.
      * If the {@link Localize} action is cancelled before that, the operation is cancelled.

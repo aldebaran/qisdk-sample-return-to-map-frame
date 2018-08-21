@@ -22,6 +22,7 @@ public final class FutureCancellations {
 
     /**
      * Cancel all the provided futures.
+     *
      * @param futuresToCancel the futures to cancel
      * @return A {@link Future} that can only end in a success state, when all the provided futures are cancelled.
      * If the futures to cancel are already done, this method returns immediately.
@@ -45,6 +46,7 @@ public final class FutureCancellations {
 
     /**
      * Cancel the provided {@link Future}.
+     *
      * @param futureToCancel the {@link Future} to cancel
      * @return A {@link Future} that can only end in a success state, when the provided {@link Future} is cancelled.
      * If the {@link Future} to cancel is already done, this method returns immediately.

@@ -134,7 +134,7 @@ class GoToOriginRobot implements Robot {
                 break;
             case ERROR:
                 cancelCurrentActions()
-                    .andThenCompose(ignored -> say(R.string.go_to_origin_error_speech));
+                        .andThenCompose(ignored -> say(R.string.go_to_origin_error_speech));
                 break;
             case SUCCESS:
                 cancelCurrentActions()

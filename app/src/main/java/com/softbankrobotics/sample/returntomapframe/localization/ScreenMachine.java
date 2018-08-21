@@ -20,6 +20,7 @@ public class ScreenMachine {
 
     /**
      * Post an event to the machine.
+     *
      * @param event the event
      */
     public void post(@NonNull ScreenEvent event) {
@@ -34,6 +35,7 @@ public class ScreenMachine {
 
     /**
      * Provide the current {@link ScreenState}.
+     *
      * @return The current {@link ScreenState}.
      */
     @NonNull

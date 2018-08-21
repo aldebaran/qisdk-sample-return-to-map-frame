@@ -29,6 +29,7 @@ class LocalizeMachine {
 
     /**
      * Post an event to the machine.
+     *
      * @param event the event
      */
     void post(@NonNull LocalizeEvent event) {
@@ -43,6 +44,7 @@ class LocalizeMachine {
 
     /**
      * Provide the current {@link LocalizeState}.
+     *
      * @return The current {@link LocalizeState}.
      */
     @NonNull

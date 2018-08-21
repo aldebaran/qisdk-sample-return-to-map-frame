@@ -8,7 +8,8 @@
             android:valueType="floatType" />
     </item>
 
-    <item android:state_checked="false"
+    <item
+        android:state_checked="false"
         android:state_enabled="false">
         <objectAnimator
             android:duration="@android:integer/config_shortAnimTime"
@@ -17,7 +18,8 @@
             android:valueType="floatType" />
     </item>
 
-    <item android:state_checked="false"
+    <item
+        android:state_checked="false"
         android:state_enabled="true"
         android:state_pressed="true">
         <objectAnimator
