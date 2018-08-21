@@ -31,6 +31,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * The go to origin Fragment.
+ */
 public class GoToOriginFragment extends Fragment {
 
     private static final String TAG = "GoToOriginFragment";

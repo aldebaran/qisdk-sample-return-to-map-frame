@@ -43,6 +43,9 @@ import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * The menu Activity.
+ */
 public class MenuActivity extends RobotActivity implements RobotLifecycleCallbacks {
 
     private static final String TAG = "MenuActivity";
@@ -118,6 +121,7 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
         if (qiChatbot != null) {
             QiChatVariable proposalVariable = qiChatbot.variable("proposal");
 
+            // Change the speech and enable/disable the "use map" option, depending on the map existence.
             if (MapManager.getInstance().hasMap(getApplicationContext())) {
                 proposalVariable.setValue(getString(R.string.menu_sentence_with_map));
                 runOnUiThread(() -> useMapButton.setEnabled(true));

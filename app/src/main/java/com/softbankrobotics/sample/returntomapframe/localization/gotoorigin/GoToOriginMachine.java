@@ -10,11 +10,18 @@ import android.support.annotation.NonNull;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 
+/**
+ * The state machine for {@link GoToOriginScreen}.
+ */
 class GoToOriginMachine {
 
     @NonNull
     private final BehaviorSubject<GoToOriginState> subject = BehaviorSubject.createDefault(GoToOriginState.IDLE);
 
+    /**
+     * Post an event to the machine.
+     * @param event the event
+     */
     void post(@NonNull GoToOriginEvent event) {
         GoToOriginState currentState = subject.getValue();
         if (currentState == null) {
@@ -25,6 +32,10 @@ class GoToOriginMachine {
         subject.onNext(newState);
     }
 
+    /**
+     * Provide the current {@link GoToOriginState}.
+     * @return The current {@link GoToOriginState}.
+     */
     @NonNull
     Observable<GoToOriginState> goToOriginState() {
         return subject.distinctUntilChanged();

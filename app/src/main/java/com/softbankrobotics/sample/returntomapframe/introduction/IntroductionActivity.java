@@ -21,6 +21,9 @@ import com.softbankrobotics.sample.returntomapframe.menu.MenuActivity;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * The introduction Activity.
+ */
 public class IntroductionActivity extends RobotActivity implements RobotLifecycleCallbacks {
 
     private static final String TAG = "IntroductionActivity";

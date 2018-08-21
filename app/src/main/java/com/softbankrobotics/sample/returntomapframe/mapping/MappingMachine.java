@@ -10,11 +10,18 @@ import android.support.annotation.NonNull;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 
+/**
+ * The state machine for {@link MappingActivity}.
+ */
 class MappingMachine {
 
     @NonNull
     private final BehaviorSubject<MappingState> subject = BehaviorSubject.createDefault(MappingState.IDLE);
 
+    /**
+     * Post an event to the machine.
+     * @param event the event
+     */
     void post(@NonNull MappingEvent event) {
         MappingState currentState = subject.getValue();
         if (currentState == null) {
@@ -25,6 +32,10 @@ class MappingMachine {
         subject.onNext(newState);
     }
 
+    /**
+     * Provide the current {@link MappingState}.
+     * @return The current {@link MappingState}.
+     */
     @NonNull
     Observable<MappingState> mappingState() {
         return subject.distinctUntilChanged();

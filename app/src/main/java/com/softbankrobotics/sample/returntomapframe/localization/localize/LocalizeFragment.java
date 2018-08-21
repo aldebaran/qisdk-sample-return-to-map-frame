@@ -31,6 +31,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * The localize Fragment.
+ */
 public class LocalizeFragment extends Fragment {
 
     private static final String TAG = "LocalizeFragment";

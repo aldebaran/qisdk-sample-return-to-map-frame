@@ -5,6 +5,9 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization;
 
+/**
+ * A state for screens. Indicates the current screen.
+ */
 public enum ScreenState {
     NONE,
     LOCALIZATION_MENU,

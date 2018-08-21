@@ -5,6 +5,9 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization.localize;
 
+/**
+ * An event for {@link LocalizeScreen}.
+ */
 enum LocalizeEvent {
     START,
     STOP,

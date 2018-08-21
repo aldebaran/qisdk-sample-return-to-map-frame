@@ -10,11 +10,18 @@ import android.support.annotation.NonNull;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 
+/**
+ * The state machine for screens.
+ */
 public class ScreenMachine {
 
     @NonNull
     private final BehaviorSubject<ScreenState> subject = BehaviorSubject.createDefault(ScreenState.NONE);
 
+    /**
+     * Post an event to the machine.
+     * @param event the event
+     */
     public void post(@NonNull ScreenEvent event) {
         ScreenState currentState = subject.getValue();
         if (currentState == null) {
@@ -25,6 +32,10 @@ public class ScreenMachine {
         subject.onNext(newState);
     }
 
+    /**
+     * Provide the current {@link ScreenState}.
+     * @return The current {@link ScreenState}.
+     */
     @NonNull
     Observable<ScreenState> screenState() {
         return subject.distinctUntilChanged();

@@ -34,6 +34,9 @@ import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * The robot for {@link LocalizationMenuScreen}.
+ */
 class LocalizationMenuRobot implements Robot {
 
     private static final String START_BOOKMARK_NAME = "start";
@@ -102,6 +105,7 @@ class LocalizationMenuRobot implements Robot {
         if (qiChatbot != null) {
             QiChatVariable proposalVariable = qiChatbot.variable("proposal");
 
+            // Change the speech and enable/disable the "go to origin" option, depending on the localization status.
             if (localizeManager.isLocalized()) {
                 proposalVariable.setValue(qiContext.getString(R.string.localization_menu_sentence_localized));
                 screen.enableGoToOrigin();

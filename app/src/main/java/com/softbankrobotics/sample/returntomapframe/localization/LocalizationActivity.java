@@ -28,6 +28,9 @@ import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * The localization Activity.
+ */
 public class LocalizationActivity extends RobotActivity implements RobotLifecycleCallbacks {
 
     private static final String TAG = "LocalizationActivity";
@@ -117,6 +120,10 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
         onBackPressed();
     }
 
+    /**
+     * Show the specified fragment.
+     * @param fragment the fragment to show
+     */
     public void showFragment(@NonNull Fragment fragment) {
         runOnUiThread(() ->
                 getSupportFragmentManager()
@@ -125,11 +132,19 @@ public class LocalizationActivity extends RobotActivity implements RobotLifecycl
                         .commit());
     }
 
+    /**
+     * Provide the {@link ScreenMachine}.
+     * @return The {@link ScreenMachine}.
+     */
     @NonNull
     public ScreenMachine getScreenMachine() {
         return screenMachine;
     }
 
+    /**
+     * Set the title in the navigation bar.
+     * @param titleRes the string resource for the title
+     */
     public void setNavigationTitle(@StringRes int titleRes) {
         runOnUiThread(() -> titleTextView.setText(titleRes));
     }

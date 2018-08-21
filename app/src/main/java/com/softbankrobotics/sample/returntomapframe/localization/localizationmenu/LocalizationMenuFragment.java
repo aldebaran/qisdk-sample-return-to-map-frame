@@ -22,6 +22,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+/**
+ * The localization menu Fragment.
+ */
 public class LocalizationMenuFragment extends Fragment {
 
     @Nullable

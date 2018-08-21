@@ -5,6 +5,9 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization.gotoorigin;
 
+/**
+ * A state for {@link GoToOriginScreen}.
+ */
 enum GoToOriginState {
     IDLE,
     BRIEFING,

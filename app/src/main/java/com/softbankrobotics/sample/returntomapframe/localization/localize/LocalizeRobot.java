@@ -21,6 +21,9 @@ import com.softbankrobotics.sample.returntomapframe.utils.FutureCancellations;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * The robot for {@link LocalizeScreen}.
+ */
 class LocalizeRobot implements Robot {
 
     private static final String TAG = "LocalizeRobot";

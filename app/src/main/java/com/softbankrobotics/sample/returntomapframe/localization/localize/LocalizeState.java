@@ -5,6 +5,9 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization.localize;
 
+/**
+ * A state for {@link LocalizeScreen}.
+ */
 enum LocalizeState {
     IDLE,
     BRIEFING,

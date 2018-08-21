@@ -5,6 +5,9 @@
 
 package com.softbankrobotics.sample.returntomapframe.mapping;
 
+/**
+ * A state for {@link MappingActivity}.
+ */
 enum MappingState {
     IDLE,
     BRIEFING,

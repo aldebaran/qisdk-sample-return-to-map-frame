@@ -24,6 +24,9 @@ import com.softbankrobotics.sample.returntomapframe.utils.FutureCancellations;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * The robot for {@link MappingActivity}.
+ */
 class MappingRobot implements RobotLifecycleCallbacks {
 
     private static final String TAG = "MappingRobot";
@@ -82,11 +85,13 @@ class MappingRobot implements RobotLifecycleCallbacks {
             return;
         }
 
+        // Create the LocalizeAndMap and run it.
         mapping = LocalizeAndMapBuilder.with(qiContext).buildAsync()
                 .andThenCompose(loc -> {
                     localizeAndMap = loc;
 
                     localizeAndMap.addOnStatusChangedListener(status -> {
+                        // Once localized, stop the mapping.
                         if (status == LocalizationStatus.LOCALIZED) {
                             stopMapping();
                             machine.post(MappingEvent.MAPPING_SUCCEEDED);
@@ -120,6 +125,7 @@ class MappingRobot implements RobotLifecycleCallbacks {
             return;
         }
 
+        // Dump the map and save it.
         localizeAndMap.async().dumpMap()
                 .andThenCompose(map -> {
                     if (qiContext == null) {

@@ -28,6 +28,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * The mapping Activity.
+ */
 public class MappingActivity extends RobotActivity {
 
     private static final String TAG = "MappingActivity";

@@ -5,6 +5,9 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization.gotoorigin;
 
+/**
+ * An event for {@link GoToOriginScreen}.
+ */
 enum GoToOriginEvent {
     START,
     STOP,

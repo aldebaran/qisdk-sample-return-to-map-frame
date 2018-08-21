@@ -14,6 +14,9 @@ import com.softbankrobotics.sample.returntomapframe.localization.LocalizationAct
 import com.softbankrobotics.sample.returntomapframe.localization.Screen;
 import com.softbankrobotics.sample.returntomapframe.localization.ScreenEvent;
 
+/**
+ * The go to origin screen.
+ */
 public class GoToOriginScreen implements Screen {
 
     @NonNull

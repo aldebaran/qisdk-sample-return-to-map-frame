@@ -5,6 +5,9 @@
 
 package com.softbankrobotics.sample.returntomapframe.mapping;
 
+/**
+ * An event for {@link MappingActivity}.
+ */
 enum MappingEvent {
     FOCUS_GAINED,
     FOCUS_LOST,

@@ -20,6 +20,9 @@ import com.softbankrobotics.sample.returntomapframe.utils.FutureCancellations;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * Manager that starts the localization.
+ */
 public class LocalizeManager {
 
     private static final String TAG = "LocalizeManager";
@@ -32,14 +35,27 @@ public class LocalizeManager {
     @Nullable
     private Future<Void> localization;
 
+    /**
+     * Indicate if the robot is localized or not.
+     * @return {@code true} if the robot is localized, {@code false} otherwise.
+     */
     public boolean isLocalized() {
         return isLocalized.get();
     }
 
+    /**
+     * Indicates if the map is loaded.
+     * @return {@code true} if the map is loaded, {@code false} otherwise.
+     */
     public boolean mapIsLoaded() {
         return localize != null;
     }
 
+    /**
+     * Load the map and create the {@link Localize} action.
+     * @param qiContext the qiContext
+     * @return A {@link Future} wrapping the operation.
+     */
     @NonNull
     public Future<Void> loadMap(@NonNull QiContext qiContext) {
         return MapManager.getInstance().retrieveMap(qiContext)
@@ -56,6 +72,13 @@ public class LocalizeManager {
                 });
     }
 
+    /**
+     * Start the localization.
+     * @return A {@link Future} wrapping the operation.
+     * This operation is a success when the robot is localized.
+     * If the {@link Localize} action is cancelled before that, the operation is cancelled.
+     * If the {@link Localize} action encounters an error before that, the operation fails.
+     */
     @NonNull
     public Future<Void> startLocalizing() {
         Promise<Void> promise = new Promise<>();

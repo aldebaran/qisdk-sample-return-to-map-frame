@@ -21,6 +21,9 @@ import com.softbankrobotics.sample.returntomapframe.utils.FutureCancellations;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * The robot for {@link GoToOriginScreen}.
+ */
 class GoToOriginRobot implements Robot {
 
     private static final String TAG = "GoToOriginRobot";
@@ -92,6 +95,7 @@ class GoToOriginRobot implements Robot {
             return;
         }
 
+        // Retrieve the map frame and go to it.
         movement = qiContext.getMapping().async().mapFrame()
                 .andThenCompose(mapFrame -> GoToBuilder.with(qiContext).withFrame(mapFrame).buildAsync())
                 .andThenCompose(goTo -> goTo.async().run())

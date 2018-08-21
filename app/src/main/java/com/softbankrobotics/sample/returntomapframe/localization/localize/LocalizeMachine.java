@@ -12,6 +12,9 @@ import com.softbankrobotics.sample.returntomapframe.localization.LocalizeManager
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 
+/**
+ * The state machine for {@link LocalizeScreen}.
+ */
 class LocalizeMachine {
 
     @NonNull
@@ -24,6 +27,10 @@ class LocalizeMachine {
         this.localizeManager = localizeManager;
     }
 
+    /**
+     * Post an event to the machine.
+     * @param event the event
+     */
     void post(@NonNull LocalizeEvent event) {
         LocalizeState currentState = subject.getValue();
         if (currentState == null) {
@@ -34,6 +41,10 @@ class LocalizeMachine {
         subject.onNext(newState);
     }
 
+    /**
+     * Provide the current {@link LocalizeState}.
+     * @return The current {@link LocalizeState}.
+     */
     @NonNull
     Observable<LocalizeState> localizeState() {
         return subject.distinctUntilChanged();

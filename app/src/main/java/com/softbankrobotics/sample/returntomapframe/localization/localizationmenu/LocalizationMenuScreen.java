@@ -16,6 +16,9 @@ import com.softbankrobotics.sample.returntomapframe.localization.LocalizeManager
 import com.softbankrobotics.sample.returntomapframe.localization.Screen;
 import com.softbankrobotics.sample.returntomapframe.localization.ScreenEvent;
 
+/**
+ * The localization menu screen.
+ */
 public class LocalizationMenuScreen implements Screen {
 
     @NonNull

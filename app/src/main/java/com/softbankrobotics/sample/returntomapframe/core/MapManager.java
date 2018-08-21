@@ -15,25 +15,41 @@ import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.object.actuation.ExplorationMap;
 import com.snatik.storage.Storage;
 
+/**
+ * Manager that provides and saves the {@link ExplorationMap}.
+ */
 public class MapManager {
 
     private static final String TAG = "MapManager";
     private static final String MAP_FILENAME = "map.txt";
 
+    // The cached map.
     @Nullable
     private ExplorationMap explorationMap;
 
     private MapManager() {}
 
+    /**
+     * Provide the unique {@link MapManager instance}.
+     * @return The unique {@link MapManager instance}.
+     */
     @NonNull
     public static MapManager getInstance() {
         return Holder.INSTANCE;
     }
 
+    /**
+     * Save the specified map to a file.
+     * @param context the context
+     * @param map the map to save
+     * @return A {@link Future} wrapping the operation.
+     */
     @NonNull
     public Future<Void> saveMap(@NonNull Context context, @NonNull ExplorationMap map) {
+        // Cache the map.
         this.explorationMap = map;
 
+        // Serialize the map and write it to the file.
         Log.d(TAG, "Serializing map...");
         return map.async().serialize()
                 .andThenConsume(data -> {
@@ -42,25 +58,40 @@ public class MapManager {
                 });
     }
 
+    /**
+     * Indicate if there is an existing map or not.
+     * @param context the context
+     * @return {@code true} if there is a map, {@code false} otherwise.
+     */
     public boolean hasMap(@NonNull Context context) {
+        // If cached map available, return true directly.
         if (explorationMap != null) {
             return true;
         }
 
+        // Check if the map file exists.
         Storage storage = new Storage(context);
         return storage.isFileExist(mapFilePath(storage));
     }
 
+    /**
+     * Provide the map.
+     * @param qiContext the qiContext
+     * @return A {@link Future} wrapping the operation.
+     */
     @NonNull
     public Future<ExplorationMap> retrieveMap(@NonNull QiContext qiContext) {
+        // If cached map available, return it directly.
         if (explorationMap != null) {
             return Future.of(explorationMap);
         }
 
+        // Read the file and create the ExplorationMap.
         return Future.of(new Storage(qiContext))
                 .andThenApply(storage -> storage.readTextFile(mapFilePath(storage)))
                 .andThenCompose(data -> qiContext.getMapping().async().makeMap(data))
                 .andThenApply(map -> {
+                    // Cache the map.
                     explorationMap = map;
                     return explorationMap;
                 });

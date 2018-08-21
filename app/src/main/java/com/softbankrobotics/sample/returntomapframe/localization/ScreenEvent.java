@@ -5,6 +5,9 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization;
 
+/**
+ * An event for screens.
+ */
 public enum ScreenEvent {
     FOCUS_GAINED,
     FOCUS_LOST,
