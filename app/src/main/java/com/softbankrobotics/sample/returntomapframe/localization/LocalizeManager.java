@@ -86,8 +86,10 @@ public class LocalizeManager {
      */
     @NonNull
     public Future<Void> startLocalizing() {
+        // Promise used to set the operation result.
         Promise<Void> promise = new Promise<>();
 
+        // Cancel the running localization if any, and start a new localization.
         FutureCancellations.cancel(localization)
                 .andThenCompose(ignored -> {
                     if (localize == null) {
@@ -99,6 +101,7 @@ public class LocalizeManager {
                             Log.d(TAG, "Robot is localized");
                             isLocalized.set(true);
                             if (!promise.getFuture().isDone()) {
+                                // Once the robot is localized, consider the operation as a success.
                                 promise.setValue(null);
                             }
                         }
@@ -118,15 +121,18 @@ public class LocalizeManager {
                     if (future.hasError()) {
                         Log.e(TAG, "Error while localizing", future.getError());
                         if (!promise.getFuture().isDone()) {
+                            // Consider the operation as a failure.
                             promise.setError(future.getErrorMessage());
                         }
                     } else if (future.isCancelled()) {
                         if (!promise.getFuture().isDone()) {
+                            // Consider the operation has been cancelled.
                             promise.setCancelled();
                         }
                     }
                 });
 
+        // Return the future associated with the promise.
         return promise.getFuture();
     }
 }
