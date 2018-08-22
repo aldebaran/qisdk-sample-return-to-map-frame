@@ -77,7 +77,8 @@ public class LocalizeManager {
     }
 
     /**
-     * Start the localization.
+     * Localize the robot. This method starts the localization and waits for the robot to be localized.
+     * Once localized, the operation is considered as successful and the robot stays localized until the localization is cancelled or encounters an error.
      *
      * @return A {@link Future} wrapping the operation.
      * This operation is a success when the robot is localized.
@@ -85,7 +86,7 @@ public class LocalizeManager {
      * If the {@link Localize} action encounters an error before that, the operation fails.
      */
     @NonNull
-    public Future<Void> startLocalizing() {
+    public Future<Void> localizeRobot() {
         // Promise used to set the operation result.
         Promise<Void> promise = new Promise<>();
 

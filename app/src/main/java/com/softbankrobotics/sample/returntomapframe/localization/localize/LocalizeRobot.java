@@ -127,7 +127,7 @@ class LocalizeRobot implements Robot {
                     return;
                 }
 
-                localizeManager.startLocalizing()
+                localizeManager.localizeRobot()
                         .thenConsume(future -> {
                             if (future.isSuccess()) {
                                 machine.post(LocalizeEvent.LOCALIZE_SUCCEEDED);
