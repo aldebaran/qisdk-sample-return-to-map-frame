@@ -8,12 +8,12 @@
     <string name="create_new_map">\"Create a new map\"</string>
     <string name="use_saved_map">\"Use saved map\"</string>
     <string name="menu_sentence_no_map">We can create a new map and we will be able to use it later.</string>
-    <string name="menu_sentence_with_map">Do you want to create a new map or to use a saved map?</string>
+    <string name="menu_sentence_with_map">Do you want to create a new map or to use a previously saved map?</string>
 
     <!-- Mapping -->
     <string name="mapping_mapping_text">Mapping in progress…</string>
     <string name="mapping_saving_map_text">Saving map…</string>
-    <string name="mapping_advices_speech">I will now map my environment. Please be sure to be at least at 3 meters from me while I scan the place.</string>
+    <string name="mapping_advices_speech">I will now map my environment. Please be sure to be at least at 3 meters away from me while I scan the place.</string>
     <string name="mapping_saving_map_speech">I will now save the map.</string>
     <string name="mapping_success_speech">Perfect! I\'ve created a map. But we are not done! Because this is a sample, you need now to ask me to localize myself. Let\'s go back to the main menu and continue the procedure with the localization.</string>
     <string name="mapping_title">Map creation</string>
@@ -29,14 +29,14 @@
     <string name="localize_title">Localization</string>
     <string name="localize_loading_map_text">Loading map…</string>
     <string name="localize_localizing_text">Localization in progress…</string>
-    <string name="localize_advices_speech">Please be sure to be at least at 3 meters from me while I check if I\'m at the right place.</string>
+    <string name="localize_advices_speech">Please be sure to be at least at 3 meters away from me while I check if I\'m at the right place.</string>
     <string name="localize_success_speech">OK, I know where I am.</string>
 
     <!-- Go to origin -->
     <string name="go_to_origin_title">Go to original position</string>
     <string name="go_to_origin_briefing_text">First move me, then press Go.</string>
     <string name="go_to_origin_moving_text">Moving…</string>
-    <string name="go_to_origin_briefing_speech">First, obviously, you need to move me so I can go back to my initial position. When you have moved me, press Go.</string>
+    <string name="go_to_origin_briefing_speech">First, open my back hatch and move me. Then, once I am in the desired position, close my back hatch and press Go to make me go back to my initial position.</string>
     <string name="go_to_origin_error_speech">Oops, something went wrong. Please check there is nothing on my way avoiding me to go back to my initial position. Then try again.</string>
     <string name="go_to_origin_success_speech">Awesome! I\'m back to my initial position!</string>
     <string name="go">Go</string>
@@ -54,7 +54,7 @@
     <!-- Common -->
     <string name="start">Start</string>
     <string name="briefing_text">Make sure my back hatch is closed</string>
-    <string name="advices_text">Please hide from me until I\'m done!</string>
+    <string name="advices_text">Please stay away from me until I\'m done!</string>
     <string name="error_text">Something is wrong</string>
     <string name="success_text">Successfully done</string>
     <string name="briefing_speech">Make sure I am not charging so I can move. Please double check if my back hatch is closed then press start.</string>
