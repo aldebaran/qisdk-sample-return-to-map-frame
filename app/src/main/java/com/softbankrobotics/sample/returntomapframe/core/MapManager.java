@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
+import com.aldebaran.qi.sdk.builder.ExplorationMapBuilder;
 import com.aldebaran.qi.sdk.object.actuation.ExplorationMap;
 import com.snatik.storage.Storage;
 
@@ -95,7 +96,7 @@ public class MapManager {
         // Read the file and create the ExplorationMap.
         return Future.of(new Storage(qiContext))
                 .andThenApply(storage -> storage.readTextFile(mapFilePath(storage)))
-                .andThenCompose(data -> qiContext.getMapping().async().makeMap(data))
+                .andThenCompose(data -> ExplorationMapBuilder.with(qiContext).withMapString(data).buildAsync())
                 .andThenApply(map -> {
                     // Cache the map.
                     explorationMap = map;
