@@ -48,6 +48,6 @@ environment.
 Follow instructions so that Pepper can go to his original position
 (map frame).
 
-## License
+## Licence
 
-See the [COPYING](COPYING) file for the license.
+See the [COPYING](COPYING.md) file for the license.

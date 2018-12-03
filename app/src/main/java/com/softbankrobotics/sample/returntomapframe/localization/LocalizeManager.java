@@ -5,8 +5,6 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.aldebaran.qi.Future;
@@ -19,6 +17,9 @@ import com.softbankrobotics.sample.returntomapframe.core.MapManager;
 import com.softbankrobotics.sample.returntomapframe.utils.FutureCancellations;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Manager that starts the localization.

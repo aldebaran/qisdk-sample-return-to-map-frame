@@ -5,8 +5,7 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization;
 
-import android.support.annotation.NonNull;
-
+import androidx.annotation.NonNull;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 

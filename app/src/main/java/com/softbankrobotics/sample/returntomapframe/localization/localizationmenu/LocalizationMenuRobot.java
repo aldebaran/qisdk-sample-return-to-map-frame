@@ -5,9 +5,6 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization.localizationmenu;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.builder.ChatBuilder;
@@ -30,6 +27,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;

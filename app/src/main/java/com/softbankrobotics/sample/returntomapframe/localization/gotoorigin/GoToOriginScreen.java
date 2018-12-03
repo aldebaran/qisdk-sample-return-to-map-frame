@@ -5,14 +5,14 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization.gotoorigin;
 
-import android.support.annotation.NonNull;
-
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.softbankrobotics.sample.returntomapframe.R;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizationActivity;
 import com.softbankrobotics.sample.returntomapframe.localization.Screen;
 import com.softbankrobotics.sample.returntomapframe.localization.ScreenEvent;
+
+import androidx.annotation.NonNull;
 
 /**
  * The go to origin screen.

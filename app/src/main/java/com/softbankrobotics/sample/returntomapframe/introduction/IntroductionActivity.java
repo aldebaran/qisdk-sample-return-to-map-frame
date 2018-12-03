@@ -7,7 +7,6 @@ package com.softbankrobotics.sample.returntomapframe.introduction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.aldebaran.qi.sdk.QiContext;
@@ -19,6 +18,7 @@ import com.aldebaran.qi.sdk.object.conversation.Say;
 import com.softbankrobotics.sample.returntomapframe.R;
 import com.softbankrobotics.sample.returntomapframe.menu.MenuActivity;
 
+import androidx.annotation.NonNull;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 

@@ -5,9 +5,9 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization;
 
-import android.support.annotation.NonNull;
-
 import com.aldebaran.qi.Future;
+
+import androidx.annotation.NonNull;
 
 /**
  * A robotic component.

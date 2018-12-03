@@ -5,9 +5,6 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization.localizationmenu;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.softbankrobotics.sample.returntomapframe.R;
@@ -15,6 +12,9 @@ import com.softbankrobotics.sample.returntomapframe.localization.LocalizationAct
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizeManager;
 import com.softbankrobotics.sample.returntomapframe.localization.Screen;
 import com.softbankrobotics.sample.returntomapframe.localization.ScreenEvent;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * The localization menu screen.
