@@ -60,5 +60,8 @@
     <string name="briefing_speech">Make sure I am not charging so I can move. Please double check if my back hatch is closed then press start.</string>
     <string name="countdown_speech">5, 4, 3, 2, 1.</string>
     <string name="error_speech">Oops, something went wrong. Please check if there is nothing around me avoiding me to turn and scan, then try again.</string>
+    <string name="save">Save</string>
+    <string name="go_to_text">Go to</string>
+    <string name="location">Location</string>
 
 </resources>

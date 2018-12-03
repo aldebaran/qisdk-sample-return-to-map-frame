@@ -20,6 +20,7 @@
         <activity android:name=".menu.MenuActivity" />
         <activity android:name=".mapping.MappingActivity" />
         <activity android:name=".localization.LocalizationActivity" />
+        <activity android:name=".freeframes.GoToWorldTutorialActivity" />
     </application>
 
 </manifest>

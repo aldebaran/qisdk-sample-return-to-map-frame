@@ -11,16 +11,32 @@
         style="@style/RadioButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="140dp"
         android:layout_marginStart="140dp"
         android:layout_marginTop="100dp"
+        android:layout_marginEnd="140dp"
         android:text="@string/localize_yourself"
         app:layout_constraintBottom_toTopOf="@+id/goToInitialPositionButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread" />
+
+    <Button
+        android:id="@+id/gotoButton"
+        style="@style/RadioButton"
+        android:layout_width="674dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="705dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="141dp"
+        android:layout_marginBottom="46dp"
+        android:text="Goto"
+        app:layout_constraintBottom_toTopOf="@+id/localizeButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RadioButton
         android:id="@+id/goToInitialPositionButton"

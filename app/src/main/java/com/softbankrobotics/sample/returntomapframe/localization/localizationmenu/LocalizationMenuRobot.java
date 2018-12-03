@@ -44,6 +44,8 @@ class LocalizationMenuRobot implements Robot {
     @NonNull
     private static final String LOCALIZE_BOOKMARK_NAME = "localize";
     @NonNull
+    private static final String GOTO_BOOKMARK_NAME = "goto";
+    @NonNull
     private static final String LOCALIZE_END_BOOKMARK_NAME = "localize_end";
     @NonNull
     private static final String GO_TO_ORIGIN_BOOKMARK_NAME = "go_to_origin";
@@ -144,6 +146,9 @@ class LocalizationMenuRobot implements Robot {
                             startTimer();
                         }
                         break;
+                    case GOTO_BOOKMARK_NAME:
+                        screen.disableChoices();
+                        break;
                     case STOP_TIMER_BOOKMARK_NAME:
                         stopTimer();
                         break;
@@ -163,6 +168,12 @@ class LocalizationMenuRobot implements Robot {
     void goToLocalizeBookmark() {
         if (!goToBookmark(LOCALIZE_BOOKMARK_NAME, AutonomousReactionImportance.HIGH)) {
             screen.onLocalizeSelected();
+        }
+    }
+
+    void goToloBookmark() {
+        if (!goToBookmark(GOTO_BOOKMARK_NAME, AutonomousReactionImportance.HIGH)) {
+            screen.onGoToSelected();
         }
     }
 

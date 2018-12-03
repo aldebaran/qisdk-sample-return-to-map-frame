@@ -5,6 +5,7 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization.localizationmenu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,9 +14,12 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioButton;
 
 import com.softbankrobotics.sample.returntomapframe.R;
+import com.softbankrobotics.sample.returntomapframe.StartActivityListener;
+import com.softbankrobotics.sample.returntomapframe.freeframes.GoToWorldTutorialActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +48,10 @@ public class LocalizationMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_localization_menu, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        Button gotbutton = view.findViewById((R.id.gotoButton));
+        gotbutton.setOnClickListener(new StartActivityListener(GoToWorldTutorialActivity.class));
+
         return view;
     }
 
@@ -56,6 +64,7 @@ public class LocalizationMenuFragment extends Fragment {
 
         localizeButton.setEnabled(true);
         goToInitialPositionButton.setEnabled(false);
+
     }
 
     @Override
@@ -72,6 +81,7 @@ public class LocalizationMenuFragment extends Fragment {
             screen.onLocalizeClicked();
         }
     }
+
 
     @OnClick(R.id.goToInitialPositionButton)
     public void onClickGoToInitialPosition() {
@@ -101,6 +111,8 @@ public class LocalizationMenuFragment extends Fragment {
     void selectLocalize() {
         runOnUiThread(() -> localizeButton.setChecked(true));
     }
+
+
 
     void selectGoToOrigin() {
         runOnUiThread(() -> goToInitialPositionButton.setChecked(true));
