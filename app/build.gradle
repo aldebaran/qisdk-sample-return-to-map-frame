@@ -11,12 +11,12 @@ repositories { maven { url 'https://maven.fabric.io/public' } }
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.softbankrobotics.sample.returntomapframe"
+        applicationId 'com.softbankrobotics.sample.returntomapframe'
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 4
-        versionName "2.0.2"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionName '2.0.2'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -31,10 +31,11 @@ android {
     }
 }
 
-def qiSdkVersion = '1.4.3'
-def butterKnifeVersion = '9.0.0-rc2'
-
 dependencies {
+
+    def qiSdkVersion = '1.4.3'
+    def butterKnifeVersion = '9.0.0-rc2'
+
     // "libs" folder
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
