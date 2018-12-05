@@ -14,6 +14,7 @@ import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.builder.SayBuilder;
 import com.softbankrobotics.sample.returntomapframe.R;
+import com.softbankrobotics.sample.returntomapframe.core.MapManager;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizeManager;
 import com.softbankrobotics.sample.returntomapframe.localization.Robot;
 import com.softbankrobotics.sample.returntomapframe.utils.FutureCancellations;
@@ -126,6 +127,7 @@ class LocalizeRobot implements Robot {
                     machine.post(LocalizeEvent.LOCALIZE_FAILED);
                     return;
                 }
+                Log.i("mapp data","localizemanager"+localizeManager.localizeRobot().toString());
 
                 localizeManager.localizeRobot()
                         .thenConsume(future -> {

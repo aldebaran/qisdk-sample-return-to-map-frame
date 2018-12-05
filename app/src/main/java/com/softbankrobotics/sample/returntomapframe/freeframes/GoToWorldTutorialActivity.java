@@ -195,6 +195,8 @@ public class GoToWorldTutorialActivity extends RobotActivity implements RobotLif
             // Store the FreeFrame.
             savedLocations.put(location, locationFrame);
             Log.i(TAG,"TransformBuilder"+TransformBuilder.create().fromXTranslation(0)+",transform "+transform.getTranslation());
+            Log.i(TAG," savedLocations.get(location)"+ savedLocations.get(location));
+
         });
     }
 
