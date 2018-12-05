@@ -7,13 +7,6 @@ package com.softbankrobotics.sample.returntomapframe.freeframes;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
@@ -32,87 +25,20 @@ import com.aldebaran.qi.sdk.object.conversation.ConversationStatus;
 import com.aldebaran.qi.sdk.object.conversation.Say;
 import com.aldebaran.qi.sdk.object.geometry.Transform;
 
-import com.softbankrobotics.sample.returntomapframe.R;
-import com.softbankrobotics.sample.returntomapframe.utils.KeyboardUtils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * The activity for the Go to world tutorial.
+ * The activity for the GoTo tutorial.
  */
 public class GoToWorldTutorialActivity extends RobotActivity implements RobotLifecycleCallbacks {
 
-    private static final String TAG = "GoToWorldActivity";
+    private static final String TAG = "GoToTutorialActivity";
 
-    private Button goToButton;
-    private Button saveButton;
-    private ArrayAdapter<String> spinnerAdapter;
-
-    // Store the selected location.
-    private String selectedLocation;
-    // Store the saved locations.
-    private Map<String, FreeFrame> savedLocations = new HashMap<>();
-    // The QiContext provided by the QiSDK.
-    private QiContext qiContext;
-    // Store the Actuation service.
-    private Actuation actuation;
-    // Store the Mapping service.
-    private Mapping mapping;
     // Store the GoTo action.
     private GoTo goTo;
-    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_go_to_world_tutorial);
 
-
-        editText = findViewById(R.id.editText);
-        final Spinner spinner = findViewById(R.id.spinner);
-
-        editText.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                handleSaveClick();
-            }
-            return false;
-        });
-
-        // Save location on save button clicked.
-        saveButton = findViewById(R.id.save_button);
-        saveButton.setOnClickListener(v -> handleSaveClick());
-
-        // Go to location on go to button clicked.
-        goToButton = findViewById(R.id.goto_button);
-        goToButton.setOnClickListener(v -> {
-            if (selectedLocation != null) {
-                goToButton.setEnabled(false);
-                saveButton.setEnabled(false);
-                goToLocation(selectedLocation);
-            }
-        });
-
-        // Store location on selection.
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedLocation = (String) parent.getItemAtPosition(position);
-                Log.i(TAG, "onItemSelected: " + selectedLocation);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                selectedLocation = null;
-                Log.i(TAG, "onNothingSelected");
-            }
-        });
-
-        // Setup spinner adapter.
-        spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new ArrayList<String>());
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(spinnerAdapter);
 
         // Register the RobotLifecycleCallbacks to this Activity.
         QiSDK.register(this, this);
@@ -127,32 +53,64 @@ public class GoToWorldTutorialActivity extends RobotActivity implements RobotLif
 
     @Override
     public void onRobotFocusGained(QiContext qiContext) {
-        Log.i(TAG, "Focus gained.");
-        // Store the provided QiContext and services.
-        this.qiContext = qiContext;
-
         // Bind the conversational events to the view.
         ConversationStatus conversationStatus = qiContext.getConversation().status(qiContext.getRobotContext());
 
-        actuation = qiContext.getActuation();
-        mapping = qiContext.getMapping();
-
         Say say = SayBuilder.with(qiContext)
-                .withText("I can store locations and go to them.")
+                .withText("I can move around: I will go 1 meter forward.")
                 .build();
 
         say.run();
 
-        waitForInstructions();
+        // Get the Actuation service from the QiContext.
+        Actuation actuation = qiContext.getActuation();
+
+        // Get the robot frame.
+        Frame robotFrame = actuation.robotFrame();
+
+        // Create a transform corresponding to a 1 meter forward translation.
+        Transform transform = TransformBuilder.create()
+                .fromXTranslation(1);
+
+        // Get the Mapping service from the QiContext.
+        Mapping mapping = qiContext.getMapping();
+
+        // Create a FreeFrame with the Mapping service.
+        FreeFrame targetFrame = mapping.makeFreeFrame();
+
+        // Update the target location relatively to Pepper's current location.
+        targetFrame.update(robotFrame, transform, 0L);
+
+        // Create a GoTo action.
+        goTo = GoToBuilder.with(qiContext) // Create the builder with the QiContext.
+                .withFrame(targetFrame.frame()) // Set the target frame.
+                .build(); // Build the GoTo action.
+
+        // Add an on started listener on the GoTo action.
+        goTo.addOnStartedListener(() -> {
+            String message = "GoTo action started.";
+            Log.i(TAG, message);
+        });
+
+        // Execute the GoTo action asynchronously.
+        Future<Void> goToFuture = goTo.async().run();
+
+        // Add a lambda to the action execution.
+        goToFuture.thenConsume(future -> {
+            if (future.isSuccess()) {
+                String message = "GoTo action finished with success.";
+                Log.i(TAG, message);
+            } else if (future.hasError()) {
+                String message = "GoTo action finished with error.";
+                Log.e(TAG, message, future.getError());
+            }
+        });
     }
 
     @Override
     public void onRobotFocusLost() {
-        Log.i(TAG, "Focus lost.");
-        // Remove the QiContext.
-        qiContext = null;
 
-         // Remove on started listeners from the GoTo action.
+        // Remove on started listeners from the GoTo action.
         if (goTo != null) {
             goTo.removeAllOnStartedListeners();
         }
@@ -161,73 +119,5 @@ public class GoToWorldTutorialActivity extends RobotActivity implements RobotLif
     @Override
     public void onRobotFocusRefused(String reason) {
         // Nothing here.
-    }
-
-    private void handleSaveClick() {
-        String location = editText.getText().toString();
-        editText.setText("");
-        KeyboardUtils.hideKeyboard(this);
-        // Save location only if new.
-        if (!location.isEmpty() && !savedLocations.containsKey(location)) {
-            spinnerAdapter.add(location);
-            saveLocation(location);
-        }
-    }
-
-    private void waitForInstructions() {
-        String message = "Waiting for instructions...";
-        Log.i(TAG, message);
-        runOnUiThread(() -> {
-            saveButton.setEnabled(true);
-            goToButton.setEnabled(true);
-        });
-    }
-
-    void saveLocation(final String location) {
-        // Get the robot frame asynchronously.
-        Future<Frame> robotFrameFuture = actuation.async().robotFrame();
-        robotFrameFuture.andThenConsume(robotFrame -> {
-            // Create a FreeFrame representing the current robot frame.
-            FreeFrame locationFrame = mapping.makeFreeFrame();
-            Transform transform = TransformBuilder.create().fromXTranslation(0);
-            locationFrame.update(robotFrame, transform, 0L);
-
-            // Store the FreeFrame.
-            savedLocations.put(location, locationFrame);
-            Log.i(TAG,"TransformBuilder"+TransformBuilder.create().fromXTranslation(0)+",transform "+transform.getTranslation());
-            Log.i(TAG," savedLocations.get(location)"+ savedLocations.get(location));
-
-        });
-    }
-
-    void goToLocation(final String location) {
-        // Get the FreeFrame from the saved locations.
-        FreeFrame freeFrame = savedLocations.get(location);
-
-        // Extract the Frame asynchronously.
-        Future<Frame> frameFuture = freeFrame.async().frame();
-        frameFuture.andThenCompose(frame -> {
-            // Create a GoTo action.
-            goTo = GoToBuilder.with(qiContext)
-                    .withFrame(frame)
-                    .build();
-
-            // Display text when the GoTo action starts.
-            goTo.addOnStartedListener(() -> {
-                String message = "Moving...";
-                Log.i(TAG, message);
-            });
-
-            // Execute the GoTo action asynchronously.
-            return goTo.async().run();
-        }).thenConsume(future -> {
-            if (future.isSuccess()) {
-                Log.i(TAG, "Location reached: " + location);
-                waitForInstructions();
-            } else if (future.hasError()) {
-                Log.e(TAG, "Go to location error", future.getError());
-                waitForInstructions();
-            }
-        });
     }
 }
