@@ -1,7 +1,6 @@
 # Return To MapFrame
 
-**Return To MapFrame** is an Android application for **Pepper the robot**.
-It was developed using the QiSDK (https://qisdk.softbankrobotics.com).
+**Return To MapFrame** is an Android application for **Pepper the robot**. It was developed using the QiSDK (https://qisdk.softbankrobotics.com).
 
 This sample shows how to use **LocalizeAndMap** and **Localize**
 actions to:
@@ -48,6 +47,6 @@ environment.
 Follow instructions so that Pepper can go to his original position
 (map frame).
 
-## Licence
+## License
 
-See the [COPYING](COPYING.md) file for the licence.
+See the [COPYING](COPYING.md) file for the license.
