@@ -64,11 +64,4 @@ dependencies {
 
     // Crashlytics
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') { transitive = true }
-
-    // Unit tests
-    testImplementation 'junit:junit:4.12'
-
-    // Instrumented tests
-    androidTestImplementation 'androidx.test:runner:1.1.1-beta01'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1-beta01'
 }
