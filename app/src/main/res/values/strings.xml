@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Return To MapFrame Sample</string>
+    <string name="app_name">Return To MapFrame</string>
 
     <!-- Introduction -->
     <string name="intro_speech">Welcome, dear developer. In this sample, you will see how I can map my environment to know where I am. And then, I will be able to relocalize myself.</string>
