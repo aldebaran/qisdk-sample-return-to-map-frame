@@ -5,7 +5,6 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization.localizationmenu;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,7 +13,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RadioButton;
 
 import com.softbankrobotics.sample.returntomapframe.R;
@@ -43,14 +41,16 @@ public class LocalizationMenuFragment extends Fragment {
     @BindView(R.id.goToInitialPositionButton)
     RadioButton goToInitialPositionButton;
 
+    RadioButton gotbutton;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_localization_menu, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        Button gotbutton = view.findViewById((R.id.gotoButton));
-        gotbutton.setOnClickListener(new StartActivityListener(GoToWorldTutorialActivity.class));
+        this.gotbutton = view.findViewById((R.id.gotoButton));
+        this.gotbutton.setOnClickListener(new StartActivityListener(GoToWorldTutorialActivity.class));
 
         return view;
     }
@@ -61,9 +61,12 @@ public class LocalizationMenuFragment extends Fragment {
 
         localizeButton.setChecked(false);
         goToInitialPositionButton.setChecked(false);
+        gotbutton.setChecked(false);
 
         localizeButton.setEnabled(true);
         goToInitialPositionButton.setEnabled(false);
+        gotbutton.setChecked(false);
+
 
     }
 
@@ -98,24 +101,31 @@ public class LocalizationMenuFragment extends Fragment {
     }
 
     void enableGoToOrigin() {
-        runOnUiThread(() -> goToInitialPositionButton.setEnabled(true));
+        runOnUiThread(() -> {
+            localizeButton.setChecked(true);
+            gotbutton.setChecked(true);});
     }
 
     void disableChoices() {
         runOnUiThread(() -> {
             localizeButton.setEnabled(false);
             goToInitialPositionButton.setEnabled(false);
+            gotbutton.setChecked(false);
         });
     }
 
     void selectLocalize() {
-        runOnUiThread(() -> localizeButton.setChecked(true));
+        runOnUiThread(() -> {
+            localizeButton.setChecked(true);
+            gotbutton.setChecked(true);});
     }
 
 
 
     void selectGoToOrigin() {
-        runOnUiThread(() -> goToInitialPositionButton.setChecked(true));
+        runOnUiThread(() -> {
+            localizeButton.setChecked(true);
+            gotbutton.setChecked(true);});
     }
 
     private void runOnUiThread(@NonNull Runnable runnable) {

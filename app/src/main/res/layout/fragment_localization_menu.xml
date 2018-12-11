@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread" />
 
-    <Button
+    <RadioButton
         android:id="@+id/gotoButton"
         style="@style/RadioButton"
         android:layout_width="674dp"

@@ -5,14 +5,12 @@
 
 package com.softbankrobotics.sample.returntomapframe.localization.localizationmenu;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.softbankrobotics.sample.returntomapframe.R;
-import com.softbankrobotics.sample.returntomapframe.freeframes.GoToWorldTutorialActivity;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizationActivity;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizeManager;
 import com.softbankrobotics.sample.returntomapframe.localization.Screen;
@@ -94,13 +92,6 @@ public class LocalizationMenuScreen implements Screen {
         robot.goToLocalizeBookmark();
     }
 
-    void onGotoClicked() {
-        if (localizationMenuFragment != null) {
-            localizationMenuFragment.disableChoices();
-        }
-        robot.goToloBookmark();
-
-    }
 
     void onGoToInitialPositionClicked() {
         if (localizationMenuFragment != null) {
