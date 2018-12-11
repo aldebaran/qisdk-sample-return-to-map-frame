@@ -70,7 +70,9 @@ public class GoToWorldTutorialActivity1 extends RobotActivity implements RobotLi
 
 
         editText = findViewById(R.id.editText);
+/*
         final Spinner spinner = findViewById(R.id.spinner);
+*/
 
         editText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -94,7 +96,7 @@ public class GoToWorldTutorialActivity1 extends RobotActivity implements RobotLi
         });
 
         // Store location on selection.
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       /* spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedLocation = (String) parent.getItemAtPosition(position);
@@ -111,7 +113,7 @@ public class GoToWorldTutorialActivity1 extends RobotActivity implements RobotLi
         // Setup spinner adapter.
         spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new ArrayList<String>());
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(spinnerAdapter);
+        spinner.setAdapter(spinnerAdapter);*/
 
         // Register the RobotLifecycleCallbacks to this Activity.
         QiSDK.register(this, this);

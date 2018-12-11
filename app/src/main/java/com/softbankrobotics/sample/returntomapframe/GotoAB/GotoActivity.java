@@ -30,7 +30,7 @@ import com.aldebaran.qi.sdk.object.geometry.Transform;
  */
 public class GotoActivity extends RobotActivity implements RobotLifecycleCallbacks {
 
-    private static final String TAG = "GoToTutorialActivity";
+    private static final String TAG = "GotoActivity";
 
     // Store the GoTo action.
     private GoTo goTo;
@@ -120,26 +120,6 @@ public class GotoActivity extends RobotActivity implements RobotLifecycleCallbac
                 goToFuture1.thenConsume(future1 -> {
                     if (future1.isSuccess()) {
                         String message1 = "GoTo action finished with success.";
-                        Actuation actuation2 = qiContext.getActuation();
-
-                        Frame robotFrame2 = actuation2.robotFrame();
-
-                        Transform transform2 = TransformBuilder.create().fromXTranslation(0.8);
-
-                        // Get the Mapping service from the QiContext.
-                        Mapping mapping2 = qiContext.getMapping();
-
-                        // Create a FreeFrame with the Mapping service.
-                        FreeFrame targetFrame2 = mapping2.makeFreeFrame();
-
-                        // Update the target location relatively to Pepper's current location.
-                        targetFrame2.update(robotFrame2, transform2, 0L);
-
-                        // Create a GoTo action.
-                        goTo = GoToBuilder.with(qiContext) // Create the builder with the QiContext.
-                                .withFrame(targetFrame2.frame()) // Set the target frame.
-                                .build(); // Build the GoTo action.
-                        Future<Void> goToFuture2 =goTo.async().run();
                         Log.i(TAG, message1);
                     } else if (future.hasError()) {
                         String message1 = "GoTo action finished with error.";
@@ -150,6 +130,12 @@ public class GotoActivity extends RobotActivity implements RobotLifecycleCallbac
                 Log.i(TAG, message);
             } else if (future.hasError()) {
                 String message = "GoTo action finished with error.";
+                Say say1 = SayBuilder.with(qiContext)
+                        .withText("GoTo action finished with error. Try again")
+                        .build();
+
+                say1.run();
+
                 Log.e(TAG, message, future.getError());
             }
         });

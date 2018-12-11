@@ -24,6 +24,7 @@
         <activity android:name=".localization.LocalizationActivity" />
         <activity android:name=".freeframes.GoToWorldTutorialActivity" />
         <activity android:name=".GotoAB.GotoActivity" />
+        <activity android:name=".GotoAB.GotoPointActivity" />
     </application>
 
 </manifest>
