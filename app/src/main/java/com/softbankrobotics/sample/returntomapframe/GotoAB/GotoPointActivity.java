@@ -199,7 +199,7 @@ public class GotoPointActivity extends RobotActivity implements RobotLifecycleCa
         if (rotValue == null)
             return 0.0;
         else
-            return rotValue;
+            return (rotValue * ((22/7)/180));
     }
 
     public void setRotValue(Double rotValue) {
