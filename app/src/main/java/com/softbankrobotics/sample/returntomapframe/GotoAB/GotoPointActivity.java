@@ -2,7 +2,6 @@ package com.softbankrobotics.sample.returntomapframe.GotoAB;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -33,7 +32,6 @@ public class GotoPointActivity extends RobotActivity implements RobotLifecycleCa
     private Double yValue;
     private Double rotValue;
     private GoTo goTo;
-    private Boolean flag = false;
     private QiContext qiContext;
     private Actuation actuation;
     // Store the Mapping service.
@@ -53,31 +51,9 @@ public class GotoPointActivity extends RobotActivity implements RobotLifecycleCa
         this.yCoordinate = findViewById(R.id.editText);
         this.thetaInRad = findViewById(R.id.editText3);
 
-
-
-        /*this.xCoordinate.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-            }
-            return false;
-        });
-        this.yCoordinate.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-
-            }
-            return false;
-        });
-        this.thetaInRad.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    setRotValue(Double.valueOf(this.thetaInRad.getText().toString()));
-            }
-            return false;
-        });
-*/
         this.gotoButton.setOnClickListener(v -> handleGotoClick());
         this.saveButton.setOnClickListener(v -> handleSaveClick());
 
-
-        // Register the RobotLifecycleCallbacks to this Activity.
         QiSDK.register(this, this);
     }
 
@@ -96,49 +72,43 @@ public class GotoPointActivity extends RobotActivity implements RobotLifecycleCa
         // Get the Actuation service from the QiContext.
 
         // Get the robot frame.
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    robotFrame = actuation.robotFrame();
-                    targetFrame = mapping.makeFreeFrame();
-                    // Create a transform corresponding to a 1 meter forward translation.
-                    Log.i(TAG, "goto X Coordinate: " + getxValue() + " Y Coordinate: " + getyValue() + " Rotation in rad: " + getRotValue());
+        Thread thread = new Thread(() -> {
+            try {
+                robotFrame = actuation.robotFrame();
+                targetFrame = mapping.makeFreeFrame();
+                // Create a transform corresponding to a 1 meter forward translation.
+                Log.i(TAG, "goto X Coordinate: " + getxValue() + " Y Coordinate: " + getyValue() + " Rotation in rad: " + getRotValue());
 
-                    Transform transform = TransformBuilder.create().from2DTransform(getxValue(), getyValue(), getRotValue());
+                Transform transform = TransformBuilder.create().from2DTransform(getxValue(), getyValue(), getRotValue());
 
-                    targetFrame.update(robotFrame, transform, 0L);
+                targetFrame.update(robotFrame, transform, 0L);
 
-                    // Create a GoTo action.
-                    goTo = GoToBuilder.with(qiContext) // Create the builder with the QiContext.
-                            .withFrame(targetFrame.frame()) // Set the target frame.
-                            .build(); // Build the GoTo action.
+                // Create a GoTo action.
+                goTo = GoToBuilder.with(qiContext) // Create the builder with the QiContext.
+                        .withFrame(targetFrame.frame()) // Set the target frame.
+                        .build(); // Build the GoTo action.
 
-                    // Add an on started listener on the GoTo action.
-                    goTo.addOnStartedListener(() -> {
-                        String message = "GoTo action started.";
+                // Add an on started listener on the GoTo action.
+                goTo.addOnStartedListener(() -> {
+                    String message = "GoTo action started.";
 
+                    Log.i(TAG, message);
+                });
+
+                Future<Void> goToFuture = goTo.async().run();
+                goToFuture.thenConsume(future -> {
+                    if (future.isSuccess()) {
+                        String message = "GoTo action finished with success.";
                         Log.i(TAG, message);
-                    });
-
-                    // Execute the GoTo action asynchronously.
-                    Future<Void> goToFuture = goTo.async().run();
-                    // Add a lambda to the action execution.
-                    goToFuture.thenConsume(future -> {
-                        if (future.isSuccess()) {
-                            String message = "GoTo action finished with success.";
-                            Log.i(TAG, message);
-                        } else if (future.hasError()) {
-                            String message = "GoTo action finished with error.";
-                            Log.e(TAG, message, future.getError());
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    } else if (future.hasError()) {
+                        String message = "GoTo action finished with error.";
+                        Log.e(TAG, message, future.getError());
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
-
         thread.start();
     }
 
@@ -162,7 +132,6 @@ public class GotoPointActivity extends RobotActivity implements RobotLifecycleCa
         // Remove the QiContext.
         qiContext = null;
 
-        // Remove on started listeners from the GoTo action.
         if (goTo != null) {
             goTo.removeAllOnStartedListeners();
         }
