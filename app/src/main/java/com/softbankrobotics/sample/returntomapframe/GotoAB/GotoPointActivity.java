@@ -85,7 +85,7 @@ public class GotoPointActivity extends RobotActivity implements RobotLifecycleCa
 
                 // Create a GoTo action.
                 goTo = GoToBuilder.with(qiContext) // Create the builder with the QiContext.
-                        .withFrame(targetFrame.frame()) // Set the target frame.
+                        .withFrame(targetFrame.frame())// Set the target frame.
                         .build(); // Build the GoTo action.
 
                 // Add an on started listener on the GoTo action.
