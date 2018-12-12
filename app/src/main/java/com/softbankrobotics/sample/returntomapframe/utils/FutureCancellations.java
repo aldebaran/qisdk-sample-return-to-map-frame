@@ -58,7 +58,6 @@ public final class FutureCancellations {
         }
 
         futureToCancel.requestCancellation();
-        return futureToCancel.thenConsume(future -> {
-        });
+        return futureToCancel.thenConsume(future -> {});
     }
 }
