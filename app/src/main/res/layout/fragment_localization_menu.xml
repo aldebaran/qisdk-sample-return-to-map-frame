@@ -20,12 +20,13 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3"
         app:layout_constraintVertical_chainStyle="spread" />
 
     <RadioButton
         android:id="@+id/gotoButton"
         style="@style/RadioButton"
-        android:layout_width="674dp"
+        android:layout_width="989dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="705dp"
         android:layout_marginTop="49dp"
@@ -43,14 +44,14 @@
         style="@style/RadioButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:layout_marginEnd="140dp"
         android:layout_marginStart="140dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="69dp"
         android:text="@string/go_to_initial_position"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/localizeButton" />
+
 
 </android.support.constraint.ConstraintLayout>

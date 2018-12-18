@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import com.softbankrobotics.sample.returntomapframe.GotoAB.GotoPointActivity;
+import com.softbankrobotics.sample.returntomapframe.GotoAB.GotoWorldActivity;
 import com.softbankrobotics.sample.returntomapframe.R;
 import com.softbankrobotics.sample.returntomapframe.StartActivityListener;
 import com.softbankrobotics.sample.returntomapframe.freeframes.GoToWorldTutorialActivity;
@@ -43,6 +44,7 @@ public class LocalizationMenuFragment extends Fragment {
     RadioButton goToInitialPositionButton;
 
     RadioButton gotbutton;
+    RadioButton gotoWorld;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -52,6 +54,8 @@ public class LocalizationMenuFragment extends Fragment {
 
         this.gotbutton = view.findViewById((R.id.gotoButton));
         this.gotbutton.setOnClickListener(new StartActivityListener(GotoPointActivity.class));
+
+
 
         return view;
     }
