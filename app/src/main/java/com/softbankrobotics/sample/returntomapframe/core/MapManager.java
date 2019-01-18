@@ -55,6 +55,7 @@ public class MapManager {
         this.explorationMap = map;
 
         // Serialize the map and write it to the file.
+        Log.i("mapp data","map"+map.serialize());
         Log.d(TAG, "Serializing map...");
         return map.async().serialize()
                 .andThenConsume(data -> {

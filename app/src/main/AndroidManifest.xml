@@ -11,15 +11,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".introduction.IntroductionActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".menu.MenuActivity" />
+        <activity android:name=".menu.MenuActivity" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity android:name=".mapping.MappingActivity" />
         <activity android:name=".localization.LocalizationActivity" />
+        <activity android:name=".freeframes.GoToWorldTutorialActivity" />
+        <activity android:name=".GotoAB.GotoActivity" />
+        <activity android:name=".GotoAB.GotoPointActivity" />
+        <activity android:name=".GotoAB.GotoWorldActivity" />
     </application>
 
 </manifest>

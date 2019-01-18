@@ -66,6 +66,7 @@ public class LocalizationMenuScreen implements Screen {
         }
     }
 
+
     void selectGoToOrigin() {
         if (localizationMenuFragment != null) {
             localizationMenuFragment.selectGoToOrigin();
@@ -80,12 +81,17 @@ public class LocalizationMenuScreen implements Screen {
         activity.getScreenMachine().post(ScreenEvent.GO_TO_ORIGIN_SELECTED);
     }
 
+    void onGoToSelected() {
+        activity.getScreenMachine().post(ScreenEvent.GO_TO_ORIGIN_SELECTED);
+    }
+
     void onLocalizeClicked() {
         if (localizationMenuFragment != null) {
             localizationMenuFragment.disableChoices();
         }
         robot.goToLocalizeBookmark();
     }
+
 
     void onGoToInitialPositionClicked() {
         if (localizationMenuFragment != null) {

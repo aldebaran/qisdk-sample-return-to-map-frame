@@ -95,6 +95,8 @@ class GoToOriginRobot implements Robot {
             machine.post(GoToOriginEvent.GO_TO_ORIGIN_FAILED);
             return;
         }
+        Log.i("mapp data","movement"+movement);
+        Log.i("mapp data","qiContext.getMapping().async().mapFrame()"+qiContext.getMapping().async().mapFrame());
 
         // Retrieve the map frame and go to it.
         movement = qiContext.getMapping().async().mapFrame()

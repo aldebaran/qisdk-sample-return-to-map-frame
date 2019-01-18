@@ -27,7 +27,10 @@ import com.aldebaran.qi.sdk.object.conversation.Chat;
 import com.aldebaran.qi.sdk.object.conversation.QiChatVariable;
 import com.aldebaran.qi.sdk.object.conversation.QiChatbot;
 import com.aldebaran.qi.sdk.object.conversation.Topic;
+import com.softbankrobotics.sample.returntomapframe.GotoAB.GotoPointActivity;
+import com.softbankrobotics.sample.returntomapframe.GotoAB.GotoWorldActivity;
 import com.softbankrobotics.sample.returntomapframe.R;
+import com.softbankrobotics.sample.returntomapframe.StartActivityListener;
 import com.softbankrobotics.sample.returntomapframe.core.MapManager;
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizationActivity;
 import com.softbankrobotics.sample.returntomapframe.mapping.MappingActivity;
@@ -86,12 +89,21 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
     @NonNull
     private final AtomicBoolean shouldRepeatWithTimer = new AtomicBoolean(true);
 
+    RadioButton gotbutton;
+
+    RadioButton gotoWorld;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_menu);
         ButterKnife.bind(this);
+        this.gotbutton = findViewById((R.id.gotoButton));
+        this.gotbutton.setOnClickListener(new StartActivityListener(GotoPointActivity.class));
+
+        this.gotoWorld = findViewById(R.id.goToWorld);
+        this.gotoWorld.setOnClickListener(new StartActivityListener(GotoWorldActivity.class));
 
         QiSDK.register(this, this);
     }
