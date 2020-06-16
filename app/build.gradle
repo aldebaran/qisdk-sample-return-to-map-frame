@@ -33,7 +33,7 @@ android {
 
 dependencies {
 
-    def qiSdkVersion = '1.4.4'
+    def qiSdkVersion = '1.7.4'
     def butterKnifeVersion = '10.2.1'
 
     // "libs" folder
