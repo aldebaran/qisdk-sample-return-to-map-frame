@@ -9,8 +9,13 @@ import android.util.Log
 import com.aldebaran.qi.Future
 import com.aldebaran.qi.sdk.QiContext
 import com.aldebaran.qi.sdk.`object`.actuation.ExplorationMap
+import com.aldebaran.qi.sdk.`object`.streamablebuffer.StreamableBuffer
+import com.aldebaran.qi.sdk.`object`.streamablebuffer.StreamableBufferFactory
 import com.aldebaran.qi.sdk.builder.ExplorationMapBuilder
+import com.aldebaran.qi.sdk.util.copyToStream
 import java.io.File
+import java.io.RandomAccessFile
+import java.nio.ByteBuffer
 
 /**
  * Manager that provides and saves the [ExplorationMap].
@@ -37,10 +42,10 @@ object MapManager {
 
         // Serialize the map and write it to the file.
         Log.d(TAG, "Serializing map...")
-        return map.async().serialize()
-                .andThenConsume { data: String ->
+        return map.async().serializeAsStreamableBuffer()
+                .andThenConsume { streamableBuffer: StreamableBuffer ->
                     Log.d(TAG, "Map serialized successfully")
-                    writeMapToFile(context, data)
+                    writeMapToFile(context, streamableBuffer)
                 }
     }
 
@@ -78,11 +83,11 @@ object MapManager {
             Future.of(qiContext)
                     .andThenApply { context ->
                         val mapFile = File(context.filesDir, MAP_FILENAME)
-                        mapFile.inputStream().use { it.bufferedReader().readText() }
+                        StreamableBufferFactory.fromFile(mapFile)
                     }
                     .andThenApply {
                         ExplorationMapBuilder.with(qiContext)
-                                .withMapString(it)
+                                .withStreamableBuffer(it)
                                 .build()
                                 // Cache the map.
                                 .also { explorationMap -> this.explorationMap = explorationMap }
@@ -92,8 +97,22 @@ object MapManager {
         // Read the file and create the ExplorationMap.
     }
 
-    private fun writeMapToFile(context: Context, data: String) {
+    private fun writeMapToFile(context: Context, streamableBuffer: StreamableBuffer) {
         val mapFile = File(context.filesDir, MAP_FILENAME)
-        mapFile.outputStream().use { it.write(data.toByteArray()) }
+        mapFile.outputStream().use {
+            streamableBuffer.copyToStream(it)
+        }
+    }
+
+    private fun StreamableBufferFactory.fromFile(file: File): StreamableBuffer {
+        return fromFunction(file.length()) { offset, size ->
+            RandomAccessFile(file, "r").use {
+                val byteArray = ByteArray(size.toInt())
+                it.seek(offset)
+                it.read(byteArray)
+
+                ByteBuffer.wrap(byteArray)
+            }
+        }
     }
 }
