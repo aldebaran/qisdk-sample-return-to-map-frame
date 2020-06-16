@@ -4,6 +4,8 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 
 repositories { maven { url 'https://maven.fabric.io/public' } }
@@ -33,11 +35,11 @@ android {
 
 dependencies {
 
-    def qiSdkVersion = '1.7.4'
-    def butterKnifeVersion = '10.2.1'
-
     // "libs" folder
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // AndroidX
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -48,12 +50,12 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
 
     // QiSDK
-    implementation "com.aldebaran:qisdk:$qiSdkVersion"
-    implementation "com.aldebaran:qisdk-design:$qiSdkVersion"
+    implementation "com.aldebaran:qisdk:$qisdk_version"
+    implementation "com.aldebaran:qisdk-design:$qisdk_version"
 
     // Fields & methods binding
-    implementation "com.jakewharton:butterknife:$butterKnifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
+    implementation "com.jakewharton:butterknife:$butterknife_version"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
 
     // Files storage
     implementation 'com.snatik:storage:2.1.0'

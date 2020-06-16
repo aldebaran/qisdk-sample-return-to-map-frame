@@ -62,7 +62,7 @@ public class LocalizeManager {
      */
     @NonNull
     public Future<Void> loadMap(@NonNull QiContext qiContext) {
-        return MapManager.getInstance().retrieveMap(qiContext)
+        return MapManager.retrieveMap(qiContext)
                 .andThenCompose(map -> {
                     Log.d(TAG, "Map retrieved successfully");
                     Log.d(TAG, "Building Localize...");

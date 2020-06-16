@@ -133,7 +133,7 @@ class MappingRobot implements RobotLifecycleCallbacks {
                     }
 
                     Log.d(TAG, "Saving map...");
-                    return MapManager.getInstance().saveMap(qiContext, map);
+                    return MapManager.saveMap(qiContext, map);
                 })
                 .thenConsume(future -> {
                     if (future.isSuccess()) {
