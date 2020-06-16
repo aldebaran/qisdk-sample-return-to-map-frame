@@ -10,7 +10,7 @@ import com.aldebaran.qi.Future
 import com.aldebaran.qi.sdk.QiContext
 import com.aldebaran.qi.sdk.`object`.actuation.ExplorationMap
 import com.aldebaran.qi.sdk.builder.ExplorationMapBuilder
-import com.snatik.storage.Storage
+import java.io.File
 
 /**
  * Manager that provides and saves the [ExplorationMap].
@@ -58,8 +58,8 @@ object MapManager {
         }
 
         // Check if the map file exists.
-        val storage = Storage(context)
-        return storage.isFileExist(mapFilePath(storage))
+        val mapFile = File(context.filesDir, MAP_FILENAME)
+        return mapFile.exists()
     }
 
     /**
@@ -75,8 +75,11 @@ object MapManager {
         return if (explorationMap != null) {
             Future.of(explorationMap)
         } else {
-            Future.of(Storage(qiContext))
-                    .andThenApply { it.readTextFile(mapFilePath(it)) }
+            Future.of(qiContext)
+                    .andThenApply { context ->
+                        val mapFile = File(context.filesDir, MAP_FILENAME)
+                        mapFile.inputStream().use { it.bufferedReader().readText() }
+                    }
                     .andThenApply {
                         ExplorationMapBuilder.with(qiContext)
                                 .withMapString(it)
@@ -90,14 +93,7 @@ object MapManager {
     }
 
     private fun writeMapToFile(context: Context, data: String) {
-        val storage = Storage(context)
-        val success = storage.createFile(mapFilePath(storage), data)
-        if (!success) {
-            throw IllegalStateException("Cannot write map to file")
-        }
-    }
-
-    private fun mapFilePath(storage: Storage): String {
-        return "${storage.internalFilesDirectory}/$MAP_FILENAME"
+        val mapFile = File(context.filesDir, MAP_FILENAME)
+        mapFile.outputStream().use { it.write(data.toByteArray()) }
     }
 }

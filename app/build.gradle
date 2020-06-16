@@ -57,9 +57,6 @@ dependencies {
     implementation "com.jakewharton:butterknife:$butterknife_version"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
 
-    // Files storage
-    implementation 'com.snatik:storage:2.1.0'
-
     // After Effects animations
     implementation 'com.airbnb.android:lottie:2.7.0'
 
