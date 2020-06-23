@@ -1,11 +1,8 @@
 /*
- * Copyright (C) 2018 Softbank Robotics Europe
+ * Copyright (C) 2018 SoftBank Robotics Europe
  * See COPYING for the license
  */
-
 package com.softbankrobotics.sample.returntomapframe.localization.localize;
-
-import android.support.annotation.NonNull;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
@@ -14,6 +11,8 @@ import com.softbankrobotics.sample.returntomapframe.localization.LocalizationAct
 import com.softbankrobotics.sample.returntomapframe.localization.LocalizeManager;
 import com.softbankrobotics.sample.returntomapframe.localization.Screen;
 import com.softbankrobotics.sample.returntomapframe.localization.ScreenEvent;
+
+import androidx.annotation.NonNull;
 
 /**
  * The localize screen.

@@ -1,12 +1,8 @@
 /*
- * Copyright (C) 2018 Softbank Robotics Europe
+ * Copyright (C) 2018 SoftBank Robotics Europe
  * See COPYING for the license
  */
-
 package com.softbankrobotics.sample.returntomapframe.localization.localizationmenu;
-
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
@@ -30,6 +26,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;

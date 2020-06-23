@@ -1,15 +1,11 @@
 /*
- * Copyright (C) 2018 Softbank Robotics Europe
+ * Copyright (C) 2018 SoftBank Robotics Europe
  * See COPYING for the license
  */
-
 package com.softbankrobotics.sample.returntomapframe.mapping;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RawRes;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +17,9 @@ import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
 import com.softbankrobotics.sample.returntomapframe.R;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RawRes;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

@@ -1,12 +1,10 @@
 /*
- * Copyright (C) 2018 Softbank Robotics Europe
+ * Copyright (C) 2018 SoftBank Robotics Europe
  * See COPYING for the license
  */
-
 package com.softbankrobotics.sample.returntomapframe.localization;
 
-import android.support.annotation.NonNull;
-
+import androidx.annotation.NonNull;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 

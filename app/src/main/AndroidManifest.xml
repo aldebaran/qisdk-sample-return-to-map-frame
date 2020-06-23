@@ -10,16 +10,26 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".introduction.IntroductionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
         </activity>
-        <activity android:name=".menu.MenuActivity" />
-        <activity android:name=".mapping.MappingActivity" />
-        <activity android:name=".localization.LocalizationActivity" />
-    </application>
 
+        <activity android:name=".menu.MenuActivity" />
+
+        <activity android:name=".mapping.MappingActivity" />
+
+        <activity android:name=".localization.LocalizationActivity" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="a0063537e19980b45bc08374ae8407f9301558c7" />
+
+    </application>
 </manifest>

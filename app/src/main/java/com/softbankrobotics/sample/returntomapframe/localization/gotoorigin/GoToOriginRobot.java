@@ -1,13 +1,9 @@
 /*
- * Copyright (C) 2018 Softbank Robotics Europe
+ * Copyright (C) 2018 SoftBank Robotics Europe
  * See COPYING for the license
  */
-
 package com.softbankrobotics.sample.returntomapframe.localization.gotoorigin;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.util.Log;
 
 import com.aldebaran.qi.Future;
@@ -18,6 +14,9 @@ import com.softbankrobotics.sample.returntomapframe.R;
 import com.softbankrobotics.sample.returntomapframe.localization.Robot;
 import com.softbankrobotics.sample.returntomapframe.utils.FutureCancellations;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 

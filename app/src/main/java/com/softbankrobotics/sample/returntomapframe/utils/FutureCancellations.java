@@ -1,24 +1,24 @@
 /*
- * Copyright (C) 2018 Softbank Robotics Europe
+ * Copyright (C) 2018 SoftBank Robotics Europe
  * See COPYING for the license
  */
-
 package com.softbankrobotics.sample.returntomapframe.utils;
-
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.aldebaran.qi.Future;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 /**
  * Provide utility methods to cancel futures and to be notified when the cancellation is done.
  */
 public final class FutureCancellations {
 
-    private FutureCancellations() {}
+    private FutureCancellations() {
+    }
 
     /**
      * Cancel all the provided futures.

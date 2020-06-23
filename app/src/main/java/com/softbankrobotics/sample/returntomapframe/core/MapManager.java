@@ -1,13 +1,10 @@
 /*
- * Copyright (C) 2018 Softbank Robotics Europe
+ * Copyright (C) 2018 SoftBank Robotics Europe
  * See COPYING for the license
  */
-
 package com.softbankrobotics.sample.returntomapframe.core;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.aldebaran.qi.Future;
@@ -15,6 +12,9 @@ import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.builder.ExplorationMapBuilder;
 import com.aldebaran.qi.sdk.object.actuation.ExplorationMap;
 import com.snatik.storage.Storage;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Manager that provides and saves the {@link ExplorationMap}.
@@ -30,7 +30,8 @@ public class MapManager {
     @Nullable
     private ExplorationMap explorationMap;
 
-    private MapManager() {}
+    private MapManager() {
+    }
 
     /**
      * Provide the unique {@link MapManager instance}.

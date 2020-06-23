@@ -1,16 +1,11 @@
-# Return To Map Frame
+# Return To MapFrame
 
-**ReturnToMapFrame** is an Android application for Pepper the robot.
-It was developed using the QiSDK (https://qisdk.softbankrobotics.com).
+**Return To MapFrame** is an Android application for **Pepper the robot**. It was developed using the QiSDK (https://qisdk.softbankrobotics.com).
 
-This application shows how to use **LocalizeAndMap** and **Localize**
-actions to:
-
+This sample shows how to use **LocalizeAndMap** and **Localize** actions to:
 * Compute a map of an environment.
-* Use a map to make Pepper localize himself in the corresponding
-environment.
-* Make Pepper return to his original position, defined as the position
-  where he started mapping his environment (map frame).
+* Use a map to make Pepper localize himself in the corresponding environment.
+* Make Pepper return to his original position, defined as the position where he started mapping his environment (map frame).
 
 ## Minimum configuration
 
@@ -30,24 +25,20 @@ Select if you want to map Pepper's environment or use a saved map.
 
 ### Create a new map
 
-Follow instructions so that Pepper can map his surroundings and save
-the resulting map.
+Follow instructions so that Pepper can map his surroundings and save the resulting map.
 
 ### Use saved map
 
-Select if you want Pepper to localize himself or if you want him to go
-to his initial position.
+Select if you want Pepper to localize himself or if you want him to go to his initial position.
 
 ### Localization
 
-Follow instructions so that Pepper can localize himself in his
-environment.
+Follow instructions so that Pepper can localize himself in his environment.
 
 ### Go to initial position
 
-Follow instructions so that Pepper can go to his original position
-(map frame).
+Follow instructions so that Pepper can go to his original position (map frame).
 
 ## License
 
-See the [COPYING](COPYING) file for the license.
+See the [COPYING](COPYING.md) file for the license.

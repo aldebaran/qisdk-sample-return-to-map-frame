@@ -1,14 +1,13 @@
 /*
- * Copyright (C) 2018 Softbank Robotics Europe
+ * Copyright (C) 2018 SoftBank Robotics Europe
  * See COPYING for the license
  */
-
 package com.softbankrobotics.sample.returntomapframe.localization;
-
-import android.support.annotation.NonNull;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
+
+import androidx.annotation.NonNull;
 
 /**
  * A screen. Coordinates a visual UI and a robotic UI.

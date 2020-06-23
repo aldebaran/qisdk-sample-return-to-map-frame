@@ -1,15 +1,10 @@
 /*
- * Copyright (C) 2018 Softbank Robotics Europe
+ * Copyright (C) 2018 SoftBank Robotics Europe
  * See COPYING for the license
  */
-
 package com.softbankrobotics.sample.returntomapframe.localization;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -22,6 +17,10 @@ import com.softbankrobotics.sample.returntomapframe.localization.gotoorigin.GoTo
 import com.softbankrobotics.sample.returntomapframe.localization.localizationmenu.LocalizationMenuScreen;
 import com.softbankrobotics.sample.returntomapframe.localization.localize.LocalizeScreen;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
