@@ -130,7 +130,7 @@ public class MenuActivity extends RobotActivity implements RobotLifecycleCallbac
             QiChatVariable proposalVariable = qiChatbot.variable("proposal");
 
             // Change the speech and enable/disable the "use map" option, depending on the map existence.
-            if (MapManager.getInstance().hasMap(getApplicationContext())) {
+            if (MapManager.hasMap(getApplicationContext())) {
                 proposalVariable.setValue(getString(R.string.menu_sentence_with_map));
                 runOnUiThread(() -> useMapButton.setEnabled(true));
             } else if (bookmarks != null) {
